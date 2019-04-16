@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html>
+<head>
+<style>
+t { margin : 0; }
+ul { margin : 0; }
+</style>
+</head>
+
+<body>
+
+<p>Quartz Engine</p>
+<t>Uses 32-bit binaries of:</t>
+<ul style="list-style-type:disc;">
+  <li><a title="" href="https://www.glfw.org/download.html">GLFW</a></li>
+  <li><a title="" href="http://glew.sourceforge.net/">GLEW</a></li>
+</ul>
+<br/>
+<t>Visual Studio: Property Pages:</t><br/>
+<t>Configuration: All Configurations</t><br/>
+<t>Platform: All Platforms</t>
+<ul style="list-style-type:disc;">
+	<li>General:</li>
+	<ul style="list-style-type:disc;">
+		<li>Output Directory: $(SolutionDir)bin\$(Platform)\$(Configuration)\</li>
+		<li>Intermediate Directory: $(SolutionDir)bin\intermediates\$(Platform)\$(Configuration)\</li>
+	</ul>
+	<li>C/C++:</li>
+	<ul style="list-style-type:disc;">
+		<li>General:</li>
+		<ul style="list-style-type:disc;">
+			<li>Additional Include Directories: $(SolutionDir)Dependencies\GLFW\include;$(SolutionDir)Dependencies\GLEW\include</li>
+		</ul>
+		<li>Preprocessor:</li>
+		<ul style="list-style-type:disc;">
+			<li>Preprocessor Definitions: Add GLEW_STATIC</li>
+		</ul>
+	</ul>
+	<li>Linker:</li>
+	<ul style="list-style-type:disc;">
+		<li>General:</li>
+		<ul style="list-style-type:disc;">
+			<li>Additional Library Directories: $(SolutionDir)Dependencies\GLFW\lib-vc2015;$(SolutionDir)Dependencies\GLEW\lib\Release\Win32</li>
+		</ul>
+		<li>Input:</li>
+		<ul style="list-style-type:disc;">
+			<li>Additional Dependencies: glew32s.lib;glfw3.lib;opengl32.lib;User32.lib;Gdi32.lib;Shell32.lib</li>
+		</ul>
+	</ul>
+</ul>
+
+</body>
+</html>
