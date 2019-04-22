@@ -21,9 +21,15 @@
   <ItemGroup>
     <ClCompile Include="src\engineTester\Main.cpp" />
     <ClCompile Include="src\renderEngine\DisplayManager.cpp" />
+    <ClCompile Include="src\renderEngine\Loader.cpp" />
+    <ClCompile Include="src\renderEngine\RawModel.cpp" />
+    <ClCompile Include="src\renderEngine\Renderer.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\renderEngine\DisplayManager.h" />
+    <ClInclude Include="src\renderEngine\Loader.h" />
+    <ClInclude Include="src\renderEngine\RawModel.h" />
+    <ClInclude Include="src\renderEngine\Renderer.h" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>15.0</VCProjectVersion>
