@@ -2,11 +2,12 @@
 
 #include <GL/glew.h>
 
-RawModel Loader::loadToVAO(float* positions, int count) {
+RawModel Loader::loadToVAO(float* positions, int p_count, int* indices, int i_count) {
 	unsigned int vaoID = createVAO();
-	storeDataInAttributeList(0, positions, count);
+	bindIndicesBuffer(indices, i_count);
+	storeDataInAttributeList(0, positions, p_count);
 	unbindVAO();
-	return RawModel(vaoID, count / 3);
+	return RawModel(vaoID, i_count);
 }
 
 unsigned int Loader::createVAO() {
@@ -29,6 +30,14 @@ void Loader::storeDataInAttributeList(int attributeNumber, float* data, int coun
 
 void Loader::unbindVAO() {
 	glBindVertexArray(0);
+}
+
+void Loader::bindIndicesBuffer(int* indices, int count) {
+	unsigned int vboID;
+	glGenBuffers(1, &vboID);
+	vboIDs.emplace_back(vboID);
+	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, vboID);
+	glBufferData(GL_ELEMENT_ARRAY_BUFFER, count * sizeof(int), indices, GL_STATIC_DRAW);
 }
 
 void Loader::cleanUp() {

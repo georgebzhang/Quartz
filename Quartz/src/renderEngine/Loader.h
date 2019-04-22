@@ -6,7 +6,7 @@
 
 class Loader {
 public:
-	RawModel loadToVAO(float* positions, int count);
+	RawModel loadToVAO(float* positions, int p_count, int* indices, int i_count);
 	void cleanUp();
 
 private:
@@ -15,5 +15,6 @@ private:
 
 	unsigned int createVAO();
 	void storeDataInAttributeList(int attributeNumber, float* data, int count);
+	void bindIndicesBuffer(int* indices, int count);
 	void unbindVAO();
 };

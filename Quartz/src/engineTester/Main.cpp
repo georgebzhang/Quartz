@@ -15,13 +15,18 @@ int main(void)
 		-0.5f, 0.5f, 0.0f,
 		-0.5f, -0.5f, 0.0f,
 		0.5f, -0.5f, 0.0f,
-		0.5f, -0.5f, 0.0f,
 		0.5f, 0.5f, 0.0f,
-		-0.5f, 0.5f, 0.0f,
 	};
 
-	int count = sizeof(vertices) / sizeof(vertices[0]);
-	RawModel model = loader.loadToVAO(vertices, count);
+	int indices[] = {
+		0, 1, 3,
+		3, 1, 2
+	};
+
+	int p_count = sizeof(vertices) / sizeof(vertices[0]);
+	int i_count = sizeof(indices) / sizeof(indices[0]);
+
+	RawModel model = loader.loadToVAO(vertices, p_count, indices, i_count);
 
 	while (dm.isActive()) {
 		/* Render here */
