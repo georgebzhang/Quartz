@@ -2,13 +2,15 @@
 
 #include <iostream>
 
+GLFWwindow* DisplayManager::window;
+
 void DisplayManager::open() {
 	/* Initialize the library */
 	if (!glfwInit())
 		return;
 
 	/* Create a windowed mode window and its OpenGL context */
-	window = glfwCreateWindow(640*2, 480*2, "Hello World", NULL, NULL);
+	window = glfwCreateWindow(WIDTH, HEIGHT, "Hello World", NULL, NULL);
 	if (!window)
 	{
 		glfwTerminate();

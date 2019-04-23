@@ -1,15 +1,16 @@
 #include "../renderEngine/DisplayManager.h"
 #include "../renderEngine/Loader.h"
 #include "../renderEngine/Renderer.h"
+#include "../shaders/StaticShader.h"
 
-int main(void)
-{
-	DisplayManager dm;
+#include <iostream>
 
-	dm.open();
+int main(void) {
+	DisplayManager::open();
 
 	Loader loader;
 	Renderer renderer;
+	StaticShader shader("res/shaders/vertexShader.shader", "res/shaders/fragmentShader.shader");
 
 	float vertices[] = {
 		-0.5f, 0.5f, 0.0f,
@@ -28,15 +29,18 @@ int main(void)
 
 	RawModel model = loader.loadToVAO(vertices, p_count, indices, i_count);
 
-	while (dm.isActive()) {
+	while (DisplayManager::isActive()) {
 		/* Render here */
 		renderer.prepare();
+		shader.start();
 		renderer.render(model);
+		shader.stop();
 
-		dm.update();
+		DisplayManager::update();
 	}
 
+	shader.cleanUp();
 	loader.cleanUp();
 
-	dm.close();
+	DisplayManager::close();
 }

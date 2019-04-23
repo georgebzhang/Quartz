@@ -5,11 +5,13 @@
 
 class DisplayManager {
 public:
-	void open();
-	bool isActive();
-	void update();
-	void close();
+	static void open();
+	static bool isActive();
+	static void update();
+	static void close();
 
 private:
-	GLFWwindow* window;
+	static GLFWwindow* window;
+	static const int WIDTH = 640 * 2;
+	static const int HEIGHT = 480 * 2;
 };
