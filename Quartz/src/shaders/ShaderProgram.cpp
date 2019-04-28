@@ -1,5 +1,7 @@
 #include "ShaderProgram.h"
 
+#include "../errors/ErrorHandler.h"
+
 #include <GL/glew.h>
 
 #include <iostream>
@@ -7,29 +9,29 @@
 #include <sstream>
 
 ShaderProgram::ShaderProgram(std::string& vertexFilePath, std::string& fragmentFilePath) {
-	vertexShaderID = loadShader(vertexFilePath, GL_VERTEX_SHADER);
-	fragmentShaderID = loadShader(fragmentFilePath, GL_FRAGMENT_SHADER);
-	programID = glCreateProgram();
-	glAttachShader(programID, vertexShaderID);
-	glAttachShader(programID, fragmentShaderID);
-	glLinkProgram(programID);
-	glValidateProgram(programID);
+	m_VertexShaderID = loadShader(vertexFilePath, GL_VERTEX_SHADER);
+	m_FragmentShaderID = loadShader(fragmentFilePath, GL_FRAGMENT_SHADER);
+	m_ProgramID = glCreateProgram();
+	GLCall(glAttachShader(m_ProgramID, m_VertexShaderID));
+	GLCall(glAttachShader(m_ProgramID, m_FragmentShaderID));
+	GLCall(glLinkProgram(m_ProgramID));
+	GLCall(glValidateProgram(m_ProgramID));
 }
 
 ShaderProgram::~ShaderProgram() {
-
+	GLCall(glDeleteProgram(m_ProgramID));
 }
 
 void ShaderProgram::start() {
-	glUseProgram(programID);
+	GLCall(glUseProgram(m_ProgramID));
 }
 
 void ShaderProgram::stop() {
-	glUseProgram(0);
+	GLCall(glUseProgram(0));
 }
 
 void ShaderProgram::bindAttribute(int attribute, const char* variableName) {
-	glBindAttribLocation(programID, attribute, variableName);
+	glBindAttribLocation(m_ProgramID, attribute, variableName);
 }
 
 int ShaderProgram::loadShader(const std::string& filePath, unsigned int type) {
@@ -75,9 +77,28 @@ int ShaderProgram::loadShader(const std::string& filePath, unsigned int type) {
 
 void ShaderProgram::cleanUp() {
 	stop();
-	glDetachShader(programID, vertexShaderID);
-	glDetachShader(programID, fragmentShaderID);
-	glDeleteShader(vertexShaderID);
-	glDeleteShader(fragmentShaderID);
-	glDeleteProgram(programID);
+	glDetachShader(m_ProgramID, m_VertexShaderID);
+	glDetachShader(m_ProgramID, m_FragmentShaderID);
+	glDeleteShader(m_VertexShaderID);
+	glDeleteShader(m_FragmentShaderID);
+	glDeleteProgram(m_ProgramID);
+}
+
+void ShaderProgram::SetUniform1i(const std::string & name, int value) {
+	GLCall(glUniform1i(GetUniformLocation(name), value));
+}
+
+void ShaderProgram::SetUniform4f(const std::string& name, float v0, float v1, float v2, float v3) {
+	GLCall(glUniform4f(GetUniformLocation(name), v0, v1, v2, v3));
+}
+
+int ShaderProgram::GetUniformLocation(const std::string& name)
+{
+	if (m_UniformLocationCache.find(name) != m_UniformLocationCache.end())
+		return m_UniformLocationCache[name];
+	GLCall(int location = glGetUniformLocation(m_ProgramID, name.c_str()));
+	if (location == -1)
+		std::cout << "Warning: uniform '" << name << "' doesn't exist!" << std::endl;
+	m_UniformLocationCache[name] = location;
+	return location;
 }

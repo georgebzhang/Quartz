@@ -2,12 +2,18 @@
 
 #include <GL/glew.h>
 
-RawModel Loader::loadToVAO(float* positions, int p_count, int* indices, int i_count) {
+//RawModel Loader::loadToVAO(float* positions, int p_count, int* indices, int i_count) {
+RawModel Loader::loadToVAO(float* positions, int p_count, float* textureCoords, int t_count, int* indices, int i_count) {
 	unsigned int vaoID = createVAO();
 	bindIndicesBuffer(indices, i_count);
-	storeDataInAttributeList(0, positions, p_count);
+	storeDataInAttributeList(0, 2, positions, p_count);
+	storeDataInAttributeList(1, 2, textureCoords, t_count);
 	unbindVAO();
 	return RawModel(vaoID, i_count);
+}
+
+Texture Loader::loadTexture(std::string filePath) {
+	return Texture(filePath);
 }
 
 unsigned int Loader::createVAO() {
@@ -18,13 +24,13 @@ unsigned int Loader::createVAO() {
 	return vaoID;
 }
 
-void Loader::storeDataInAttributeList(int attributeNumber, float* data, int count) {
+void Loader::storeDataInAttributeList(int attributeNumber, int single_count, float* data, int count) {
 	unsigned int vboID;
 	glGenBuffers(1, &vboID);
 	vboIDs.emplace_back(vboID);
 	glBindBuffer(GL_ARRAY_BUFFER, vboID);
 	glBufferData(GL_ARRAY_BUFFER, count * sizeof(float), data, GL_STATIC_DRAW);
-	glVertexAttribPointer(attributeNumber, 3, GL_FLOAT, false, 0, (const void*) 0);
+	glVertexAttribPointer(attributeNumber, single_count, GL_FLOAT, false, 0, (const void*) 0);
 	glBindBuffer(GL_ARRAY_BUFFER, 0);
 }
 

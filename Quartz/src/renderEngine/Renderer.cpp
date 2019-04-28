@@ -1,17 +1,26 @@
+#include "../errors/ErrorHandler.h"
 #include "Renderer.h"
 
 #include <GL/glew.h>
 
 void Renderer::prepare() {
-	glClear(GL_COLOR_BUFFER_BIT);
-	glClearColor(1, 0, 0, 1);
+	GLCall(glClear(GL_COLOR_BUFFER_BIT));
+	GLCall(glClearColor(1, 0, 0, 1));
 }
 
 void Renderer::render(RawModel model) {
-	glBindVertexArray(model.getVAOID());
-	glEnableVertexAttribArray(0);
+//void Renderer::render(TexturedModel texturedModel) {
+	//RawModel model = texturedModel.getRawModel();
+	GLCall(glBindVertexArray(model.getVAOID()));
+	GLCall(glEnableVertexAttribArray(0));
+	GLCall(glEnableVertexAttribArray(1));
+
+	//GLCall(texturedModel.getTexture().Bind());
+
 	//glDrawArrays(GL_TRIANGLES, 0, model.getVertexCount());
-	glDrawElements(GL_TRIANGLES, model.getVertexCount(), GL_UNSIGNED_INT, (const void*) 0);
-	glDisableVertexAttribArray(0);
-	glBindVertexArray(0);
+	GLCall(glDrawElements(GL_TRIANGLES, model.getVertexCount(), GL_UNSIGNED_INT, (const void*) 0));
+
+	GLCall(glDisableVertexAttribArray(0));
+	GLCall(glDisableVertexAttribArray(1));
+	GLCall(glBindVertexArray(0));
 }
