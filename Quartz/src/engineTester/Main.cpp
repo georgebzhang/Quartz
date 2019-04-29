@@ -82,22 +82,15 @@ int main(void) {
 	//va.addBuffer(vb1, 1, 2);
 	//IndexBuffer ib(indices, i_count);
 
-	//RawModel model = loader.loadToVAO(vertices, p_count, indices, i_count);
-	RawModel* model = loader.loadToVAO(vertices, p_count, texCoords, t_count, indices, i_count);
-	//std::cout << &model << std::endl;
-	//std::cout << model.getVAOID() << std::endl;
-	//std::cout << model.getVertexCount() << std::endl;
+	RawModel* rawModel = loader.loadToVAO(vertices, p_count, texCoords, t_count, indices, i_count);
 
 	shader.bind();
-	Texture texture("res/textures/image.png");
-	texture.Bind();
+	Texture* texture = new Texture("res/textures/image.png");
+	texture->bind();
 	shader.setUniform1i("u_Texture", 0); // read texture from slot 0
 	shader.unbind();
 
-	//TexturedModel texturedModel(model, texture);
-	//std::cout << &(texturedModel.getRawModel()) << std::endl;
-	//std::cout << texturedModel.getRawModel().getVAOID() << std::endl;
-	//std::cout << texturedModel.getRawModel().getVertexCount() << std::endl;
+	TexturedModel* texturedModel = new TexturedModel(rawModel, texture);
 
 	while (DisplayManager::isActive()) {
 		/* Render here */
@@ -105,15 +98,12 @@ int main(void) {
 		shader.bind();
 
 		//renderer.draw(va, ib, shader);
-		renderer.render(model);
-		//renderer.render(texturedModel);
+		//renderer.render(rawModel);
+		renderer.render(texturedModel);
 
 		shader.unbind();
 		DisplayManager::finishLoop();
 	}
-
-	//shader.cleanUp();
-	//loader.cleanUp();
 
 	DisplayManager::close();
 }

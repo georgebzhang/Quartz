@@ -1,15 +1,14 @@
 #include "TexturedModel.h"
 
-TexturedModel::TexturedModel(RawModel& model, Texture& texture) : m_RawModel(model), m_Texture(texture) {}
-
-RawModel TexturedModel::getRawModel() {
+RawModel* TexturedModel::getRawModel() const {
 	return m_RawModel;
 }
 
-Texture TexturedModel::getTexture() {
+Texture* TexturedModel::getTexture() const {
 	return m_Texture;
 }
 
 TexturedModel::~TexturedModel() {
-
+	delete m_RawModel;
+	delete m_Texture;
 }

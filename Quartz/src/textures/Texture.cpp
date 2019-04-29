@@ -26,11 +26,11 @@ Texture::~Texture() {
 	GLCall(glDeleteTextures(1, &m_ID)); // delete texture from GPU
 }
 
-void Texture::Bind(unsigned int slot) const {
+void Texture::bind(unsigned int slot) const {
 	GLCall(glActiveTexture(GL_TEXTURE0 + slot));
 	GLCall(glBindTexture(GL_TEXTURE_2D, m_ID));
 }
 
-void Texture::Unbind() const {
+void Texture::unbind() const {
 	GLCall(glBindTexture(GL_TEXTURE_2D, 0));
 }

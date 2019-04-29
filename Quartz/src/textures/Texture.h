@@ -9,8 +9,8 @@ public:
 	Texture(const std::string& filePath);
 	~Texture();
 
-	void Bind(unsigned int slot = 0) const;
-	void Unbind() const;
+	void bind(unsigned int slot = 0) const;
+	void unbind() const;
 
 private:
 	unsigned int m_ID;
