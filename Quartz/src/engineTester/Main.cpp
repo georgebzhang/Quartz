@@ -34,7 +34,7 @@ void keyCallback(GLFWwindow* window, int key, int scancode, int action, int mods
 }
 
 int main(void) {
-	DisplayManager dm(camera);
+	DisplayManager dm;
 	dm.open();
 
 	Loader loader;

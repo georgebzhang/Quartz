@@ -5,7 +5,6 @@
 void keyCallback(GLFWwindow* window, int key, int scancode, int action, int mods);
 
 DisplayManager::~DisplayManager() {
-	delete m_Camera;
 	delete m_Window;
 }
 

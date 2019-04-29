@@ -7,7 +7,7 @@
 
 class DisplayManager {
 public:
-	DisplayManager(Camera* camera) : m_Camera(camera) {}
+	DisplayManager() {}
 	~DisplayManager();
 
 	void open();
@@ -19,5 +19,4 @@ private:
 	GLFWwindow* m_Window;
 	const int WIDTH = 640 * 2;
 	const int HEIGHT = 480 * 2;
-	Camera* m_Camera;
 };

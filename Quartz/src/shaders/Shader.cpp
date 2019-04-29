@@ -44,7 +44,7 @@ int Shader::loadShader(const std::string& filePath, unsigned int type) {
 	std::string line;
 	std::stringstream ss;
 
-	while (getline(stream, line)) {
+	while (std::getline(stream, line)) {
 		ss << line << '\n';
 	}
 
