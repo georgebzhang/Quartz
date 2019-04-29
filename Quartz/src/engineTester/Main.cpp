@@ -9,6 +9,7 @@
 #include "../entities/Entity.h"
 #include "../entities/Camera.h"
 #include "../toolbox/Maths.h"
+#include "../renderEngine/OBJLoader.h"
 
 #include <iostream>
 
@@ -37,7 +38,7 @@ int main(void) {
 	DisplayManager dm;
 	dm.open();
 
-	Loader loader;
+	Loader* loader = new Loader();
 	Shader* shader = new Shader("res/shaders/vertexShader.shader", "res/shaders/fragmentShader.shader");
 	Renderer renderer(shader);
 
@@ -60,83 +61,83 @@ int main(void) {
 	//	0.0f, 1.0f
 	//};
 
-	float positions[] = {
-				-0.5f,0.5f,-0.5f,
-				-0.5f,-0.5f,-0.5f,
-				0.5f,-0.5f,-0.5f,
-				0.5f,0.5f,-0.5f,
+	//float positions[] = {
+	//			-0.5f,0.5f,-0.5f,
+	//			-0.5f,-0.5f,-0.5f,
+	//			0.5f,-0.5f,-0.5f,
+	//			0.5f,0.5f,-0.5f,
 
-				-0.5f,0.5f,0.5f,
-				-0.5f,-0.5f,0.5f,
-				0.5f,-0.5f,0.5f,
-				0.5f,0.5f,0.5f,
+	//			-0.5f,0.5f,0.5f,
+	//			-0.5f,-0.5f,0.5f,
+	//			0.5f,-0.5f,0.5f,
+	//			0.5f,0.5f,0.5f,
 
-				0.5f,0.5f,-0.5f,
-				0.5f,-0.5f,-0.5f,
-				0.5f,-0.5f,0.5f,
-				0.5f,0.5f,0.5f,
+	//			0.5f,0.5f,-0.5f,
+	//			0.5f,-0.5f,-0.5f,
+	//			0.5f,-0.5f,0.5f,
+	//			0.5f,0.5f,0.5f,
 
-				-0.5f,0.5f,-0.5f,
-				-0.5f,-0.5f,-0.5f,
-				-0.5f,-0.5f,0.5f,
-				-0.5f,0.5f,0.5f,
+	//			-0.5f,0.5f,-0.5f,
+	//			-0.5f,-0.5f,-0.5f,
+	//			-0.5f,-0.5f,0.5f,
+	//			-0.5f,0.5f,0.5f,
 
-				-0.5f,0.5f,0.5f,
-				-0.5f,0.5f,-0.5f,
-				0.5f,0.5f,-0.5f,
-				0.5f,0.5f,0.5f,
+	//			-0.5f,0.5f,0.5f,
+	//			-0.5f,0.5f,-0.5f,
+	//			0.5f,0.5f,-0.5f,
+	//			0.5f,0.5f,0.5f,
 
-				-0.5f,-0.5f,0.5f,
-				-0.5f,-0.5f,-0.5f,
-				0.5f,-0.5f,-0.5f,
-				0.5f,-0.5f,0.5f
-	};
+	//			-0.5f,-0.5f,0.5f,
+	//			-0.5f,-0.5f,-0.5f,
+	//			0.5f,-0.5f,-0.5f,
+	//			0.5f,-0.5f,0.5f
+	//};
 
-	float texCoords[] = {
-			0,0,
-			0,1,
-			1,1,
-			1,0,
-			0,0,
-			0,1,
-			1,1,
-			1,0,
-			0,0,
-			0,1,
-			1,1,
-			1,0,
-			0,0,
-			0,1,
-			1,1,
-			1,0,
-			0,0,
-			0,1,
-			1,1,
-			1,0,
-			0,0,
-			0,1,
-			1,1,
-			1,0
-	};
+	//float texCoords[] = {
+	//		0,0,
+	//		0,1,
+	//		1,1,
+	//		1,0,
+	//		0,0,
+	//		0,1,
+	//		1,1,
+	//		1,0,
+	//		0,0,
+	//		0,1,
+	//		1,1,
+	//		1,0,
+	//		0,0,
+	//		0,1,
+	//		1,1,
+	//		1,0,
+	//		0,0,
+	//		0,1,
+	//		1,1,
+	//		1,0,
+	//		0,0,
+	//		0,1,
+	//		1,1,
+	//		1,0
+	//};
 
-	unsigned int indices[] = {
-			0,1,3,
-			3,1,2,
-			4,5,7,
-			7,5,6,
-			8,9,11,
-			11,9,10,
-			12,13,15,
-			15,13,14,
-			16,17,19,
-			19,17,18,
-			20,21,23,
-			23,21,22
-	};
+	//unsigned int indices[] = {
+	//		0,1,3,
+	//		3,1,2,
+	//		4,5,7,
+	//		7,5,6,
+	//		8,9,11,
+	//		11,9,10,
+	//		12,13,15,
+	//		15,13,14,
+	//		16,17,19,
+	//		19,17,18,
+	//		20,21,23,
+	//		23,21,22
+	//};
 
-	int p_count = sizeof(positions) / sizeof(positions[0]);
-	int i_count = sizeof(indices) / sizeof(indices[0]);
-	int t_count = sizeof(texCoords) / sizeof(texCoords[0]);
+	//int p_count = sizeof(positions) / sizeof(positions[0]);
+	//int i_count = sizeof(indices) / sizeof(indices[0]);
+	//int t_count = sizeof(texCoords) / sizeof(texCoords[0]);
 
 	GLCall(glEnable(GL_BLEND));
 	GLCall(glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA));
@@ -148,10 +149,11 @@ int main(void) {
 	//va.addBuffer(vb1, 1, 2);
 	//IndexBuffer ib(indices, i_count);
 
-	RawModel* rawModel = loader.loadToVAO(positions, p_count, texCoords, t_count, indices, i_count);
+	//RawModel* rawModel = loader.loadToVAO(positions, p_count, texCoords, t_count, indices, i_count);
+	RawModel* rawModel = OBJLoader::loadOBJModel("res/models/stall.obj", loader);
 
 	shader->bind();
-	Texture* texture = new Texture("res/textures/image.png");
+	Texture* texture = new Texture("res/textures/stallTexture.png");
 	texture->bind();
 	shader->setUniform1i("u_Texture", 0); // read texture from slot 0
 	shader->unbind();
