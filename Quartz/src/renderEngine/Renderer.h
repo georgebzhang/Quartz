@@ -7,9 +7,9 @@
 
 class Renderer {
 public:
-	void prepare();
-	//void render(RawModel model);
-	void render(TexturedModel texturedModel);
+	void prepare() const;
+	void render(const RawModel* model) const;
+	//void render(TexturedModel texturedModel);
 	void draw(const VertexArray& va, const IndexBuffer& ib, const Shader& shader) const;
 
 private:

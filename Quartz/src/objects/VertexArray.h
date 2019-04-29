@@ -9,7 +9,7 @@ public:
 
 	void bind() const;
 	void unbind() const;
-	void addBuffer(const VertexBuffer& vb, unsigned int attribute, int count);
+	void addBuffer(const VertexBuffer* vb, unsigned int attribute, int count);
 
 private:
 	unsigned int m_ID;

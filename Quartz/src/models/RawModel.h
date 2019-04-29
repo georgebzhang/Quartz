@@ -1,13 +1,16 @@
 #pragma once
 
+#include "../objects/VertexArray.h"
+#include "../objects/IndexBuffer.h"
+
 class RawModel {
 public:
-	RawModel(int vaoID, int vertexCount);
-	int getVAOID();
-	int getVertexCount();
+	RawModel(VertexArray* va, IndexBuffer* ib) : m_VA(va), m_IB(ib) {}
+	VertexArray* getVA() const;
+	IndexBuffer* getIB() const;
 	~RawModel();
 
 private:
-	int m_VAOID;
-	int m_VertexCount;
+	VertexArray* m_VA;
+	IndexBuffer* m_IB;
 };

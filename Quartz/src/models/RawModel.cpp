@@ -1,17 +1,16 @@
 #include "RawModel.h"
 
-RawModel::RawModel(int vaoID, int vertexCount) {
-	m_VAOID = vaoID;
-	m_VertexCount = vertexCount;
+#include <iostream>
+
+VertexArray* RawModel::getVA() const {
+	return m_VA;
 }
 
-int RawModel::getVAOID() {
-	return m_VAOID;
-}
-
-int RawModel::getVertexCount() {
-	return m_VertexCount;
+IndexBuffer* RawModel::getIB() const {
+	return m_IB;
 }
 
 RawModel::~RawModel() {
+	delete m_VA;
+	delete m_IB;
 }

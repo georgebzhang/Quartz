@@ -75,15 +75,15 @@ int main(void) {
 	GLCall(glEnable(GL_BLEND));
 	GLCall(glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA));
 
-	VertexArray va;
-	VertexBuffer vb0(positions, p_count * sizeof(float));
-	va.addBuffer(vb0, 0, 2);
-	VertexBuffer vb1(texCoords, t_count * sizeof(float));
-	va.addBuffer(vb1, 1, 2);
-	IndexBuffer ib(indices, i_count);
+	//VertexArray va;
+	//VertexBuffer vb0(positions, p_count * sizeof(float));
+	//va.addBuffer(vb0, 0, 2);
+	//VertexBuffer vb1(texCoords, t_count * sizeof(float));
+	//va.addBuffer(vb1, 1, 2);
+	//IndexBuffer ib(indices, i_count);
 
 	//RawModel model = loader.loadToVAO(vertices, p_count, indices, i_count);
-	//RawModel model = loader.loadToVAO(vertices, p_count, texCoords, t_count, indices, i_count);
+	RawModel* model = loader.loadToVAO(vertices, p_count, texCoords, t_count, indices, i_count);
 	//std::cout << &model << std::endl;
 	//std::cout << model.getVAOID() << std::endl;
 	//std::cout << model.getVertexCount() << std::endl;
@@ -101,12 +101,14 @@ int main(void) {
 
 	while (DisplayManager::isActive()) {
 		/* Render here */
-		//std::cout << "hi" << std::endl;
 		renderer.prepare();
+		shader.bind();
 
-		renderer.draw(va, ib, shader);
+		//renderer.draw(va, ib, shader);
+		renderer.render(model);
 		//renderer.render(texturedModel);
 
+		shader.unbind();
 		DisplayManager::finishLoop();
 	}
 

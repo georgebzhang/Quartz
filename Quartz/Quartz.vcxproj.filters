@@ -5,7 +5,6 @@
     <ClCompile Include="src\engineTester\Main.cpp" />
     <ClCompile Include="src\renderEngine\Loader.cpp" />
     <ClCompile Include="src\renderEngine\Renderer.cpp" />
-    <ClCompile Include="src\textures\ModelTexture.cpp" />
     <ClCompile Include="src\models\TexturedModel.cpp" />
     <ClCompile Include="src\textures\Texture.cpp" />
     <ClCompile Include="src\vendor\glm\detail\glm.cpp" />
@@ -21,7 +20,6 @@
     <ClInclude Include="src\renderEngine\DisplayManager.h" />
     <ClInclude Include="src\renderEngine\Loader.h" />
     <ClInclude Include="src\renderEngine\Renderer.h" />
-    <ClInclude Include="src\textures\ModelTexture.h" />
     <ClInclude Include="src\models\TexturedModel.h" />
     <ClInclude Include="src\textures\Texture.h" />
     <ClInclude Include="src\vendor\glm\detail\_features.hpp" />

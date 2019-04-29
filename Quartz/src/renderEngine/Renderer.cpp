@@ -3,30 +3,26 @@
 
 #include <GL/glew.h>
 
-void Renderer::prepare() {
+void Renderer::prepare() const {
 	GLCall(glClear(GL_COLOR_BUFFER_BIT));
 	GLCall(glClearColor(1, 0, 0, 1));
 }
 
-//void Renderer::render(RawModel model) {
-void Renderer::render(TexturedModel texturedModel) {
-	std::cout << &(texturedModel.getRawModel()) << std::endl;
-	std::cout << texturedModel.getRawModel().getVAOID() << std::endl;
-	std::cout << texturedModel.getRawModel().getVertexCount() << std::endl;
-	//std::cin.get();
-	RawModel model = texturedModel.getRawModel();
-	GLCall(glBindVertexArray(model.getVAOID()));
+void Renderer::render(const RawModel* model) const {
+//void Renderer::render(TexturedModel texturedModel) {
+//	std::cout << &(texturedModel.getRawModel()) << std::endl;
+//	std::cout << texturedModel.getRawModel().getVAOID() << std::endl;
+//	std::cout << texturedModel.getRawModel().getVertexCount() << std::endl;
+	//RawModel model = texturedModel.getRawModel();
+	model->getVA()->bind();
+	model->getIB()->bind();
 	GLCall(glEnableVertexAttribArray(0));
 	GLCall(glEnableVertexAttribArray(1));
-
-	//GLCall(texturedModel.getTexture().Bind());
-
-	//glDrawArrays(GL_TRIANGLES, 0, model.getVertexCount());
-	GLCall(glDrawElements(GL_TRIANGLES, model.getVertexCount(), GL_UNSIGNED_INT, (const void*) 0));
-
+	GLCall(glDrawElements(GL_TRIANGLES, model->getIB()->getCount(), GL_UNSIGNED_INT, (const void*) 0));
 	GLCall(glDisableVertexAttribArray(0));
 	GLCall(glDisableVertexAttribArray(1));
-	GLCall(glBindVertexArray(0));
+	model->getIB()->unbind();
+	model->getVA()->unbind();
 }
 
 void Renderer::draw(const VertexArray& va, const IndexBuffer& ib, const Shader& shader) const {

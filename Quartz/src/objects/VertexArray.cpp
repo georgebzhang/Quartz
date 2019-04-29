@@ -18,10 +18,10 @@ void VertexArray::unbind() const {
 	GLCall(glBindVertexArray(0));
 }
 
-void VertexArray::addBuffer(const VertexBuffer& vb, unsigned int attribute, int count) {
+void VertexArray::addBuffer(const VertexBuffer* vb, unsigned int attribute, int count) {
 	bind();
-	vb.bind();
+	vb->bind();
 	GLCall(glVertexAttribPointer(attribute, count, GL_FLOAT, false, 0, (const void*) 0));
-	vb.unbind();
+	vb->unbind();
 	unbind();
 }

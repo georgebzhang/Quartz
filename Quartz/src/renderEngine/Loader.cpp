@@ -5,20 +5,14 @@
 #include <GL/glew.h>
 
 //RawModel Loader::loadToVAO(float* positions, int p_count, int* indices, int i_count) {
-RawModel Loader::loadToVAO(float* positions, int p_count, float* texCoords, int t_count, unsigned int* indices, int i_count) {
-	VertexArray va;
-	VertexBuffer vb0(positions, p_count * sizeof(float));
-	va.addBuffer(vb0, 0, 2);
-	VertexBuffer vb1(texCoords, t_count * sizeof(float));
-	va.addBuffer(vb1, 1, 2);
-	IndexBuffer ib(indices, i_count);
-
-	unsigned int vaoID = createVAO();
-	bindIndicesBuffer(indices, i_count);
-	storeDataInAttributeList(0, 2, positions, p_count);
-	storeDataInAttributeList(1, 2, texCoords, t_count);
-	unbindVAO();
-	return RawModel(vaoID, i_count);
+RawModel* Loader::loadToVAO(float* positions, int p_count, float* texCoords, int t_count, unsigned int* indices, int i_count) {
+	VertexArray* va = new VertexArray();
+	VertexBuffer* vb0 = new VertexBuffer(positions, p_count * sizeof(float));
+	va->addBuffer(vb0, 0, 2);
+	VertexBuffer* vb1 = new VertexBuffer(texCoords, t_count * sizeof(float));
+	va->addBuffer(vb1, 1, 2);
+	IndexBuffer* ib = new IndexBuffer(indices, i_count);
+	return new RawModel(va, ib);
 }
 
 //Texture Loader::loadTexture(std::string filePath) {
