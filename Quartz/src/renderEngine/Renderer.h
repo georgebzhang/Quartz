@@ -8,6 +8,9 @@
 
 class Renderer {
 public:
+	Renderer(Shader* shader);
+	~Renderer() {}
+
 	void prepare() const;
 	//void render(const RawModel* model) const;
 	//void render(const TexturedModel* texturedModel) const;

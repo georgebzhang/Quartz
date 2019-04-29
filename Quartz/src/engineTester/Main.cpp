@@ -14,8 +14,8 @@ int main(void) {
 	DisplayManager::open();
 
 	Loader loader;
-	Renderer renderer;
 	Shader* shader = new Shader("res/shaders/vertexShader.shader", "res/shaders/fragmentShader.shader");
+	Renderer renderer(shader);
 
 	//float vertices[] = {
 	//	-0.5f, 0.5f, 0.0f,
@@ -92,15 +92,15 @@ int main(void) {
 	shader->unbind();
 
 	TexturedModel* texturedModel = new TexturedModel(rawModel, texture);
-	glm::vec3 position(-1.0f, 0.0f, 0.0f);
+	glm::vec3 position(0.0f, 0.0f, -1.0f);
 	glm::vec3 rotation(0.0f, 0.0f, 0.0f);
 	glm::vec3 scale(1.0f, 1.0f, 1.0f);
 	Entity* entity = new Entity(texturedModel, position, rotation, scale);
 
 	while (DisplayManager::isActive()) {
 		/* Render here */
-		entity->translate(glm::vec3(0.002f, 0.0f, 0.0f));
-		entity->rotate(glm::vec3(0.0f, 1.0f, 0.0f));
+		entity->translate(glm::vec3(0.0f, 0.0f, -0.1f));
+		//entity->rotate(glm::vec3(0.0f, 1.0f, 0.0f));
 		renderer.prepare();
 		shader->bind();
 

@@ -2,7 +2,16 @@
 #include "Renderer.h"
 #include "../toolbox/Maths.h"
 
+#include "glm/gtc/matrix_transform.hpp"
+
 #include <GL/glew.h>
+
+Renderer::Renderer(Shader* shader) {
+	shader->bind();
+	glm::mat4 projectionMatrix = glm::perspectiveFov(70.0f, 640.0f * 2, 480.0f * 2, 0.1f, 1000.0f);
+	shader->setUniformMat4f("u_ProjectionMatrix", projectionMatrix);
+	shader->unbind();
+}
 
 void Renderer::prepare() const {
 	GLCall(glClear(GL_COLOR_BUFFER_BIT));
