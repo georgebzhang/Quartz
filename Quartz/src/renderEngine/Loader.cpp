@@ -3,7 +3,7 @@
 #include <GL/glew.h>
 
 //RawModel Loader::loadToVAO(float* positions, int p_count, int* indices, int i_count) {
-RawModel Loader::loadToVAO(float* positions, int p_count, float* textureCoords, int t_count, int* indices, int i_count) {
+RawModel Loader::loadToVAO(float* positions, int p_count, float* textureCoords, int t_count, unsigned int* indices, int i_count) {
 	unsigned int vaoID = createVAO();
 	bindIndicesBuffer(indices, i_count);
 	storeDataInAttributeList(0, 2, positions, p_count);
@@ -12,9 +12,9 @@ RawModel Loader::loadToVAO(float* positions, int p_count, float* textureCoords, 
 	return RawModel(vaoID, i_count);
 }
 
-Texture Loader::loadTexture(std::string filePath) {
-	return Texture(filePath);
-}
+//Texture Loader::loadTexture(std::string filePath) {
+//	return Texture(filePath);
+//}
 
 unsigned int Loader::createVAO() {
 	unsigned int vaoID;
@@ -38,7 +38,7 @@ void Loader::unbindVAO() {
 	glBindVertexArray(0);
 }
 
-void Loader::bindIndicesBuffer(int* indices, int count) {
+void Loader::bindIndicesBuffer(unsigned int* indices, int count) {
 	unsigned int vboID;
 	glGenBuffers(1, &vboID);
 	vboIDs.emplace_back(vboID);

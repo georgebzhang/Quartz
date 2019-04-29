@@ -1,7 +1,6 @@
 #include "TexturedModel.h"
 
-TexturedModel::TexturedModel(RawModel& model, Texture& texture) : m_RawModel(model), m_Texture(texture) {
-}
+TexturedModel::TexturedModel(RawModel& model, Texture& texture) : m_RawModel(model), m_Texture(texture) {}
 
 RawModel TexturedModel::getRawModel() {
 	return m_RawModel;

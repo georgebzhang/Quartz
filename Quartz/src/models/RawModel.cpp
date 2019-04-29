@@ -1,16 +1,16 @@
 #include "RawModel.h"
 
 RawModel::RawModel(int vaoID, int vertexCount) {
-	this->vaoID = vaoID;
-	this->vertexCount = vertexCount;
+	m_VAOID = vaoID;
+	m_VertexCount = vertexCount;
 }
 
 int RawModel::getVAOID() {
-	return vaoID;
+	return m_VAOID;
 }
 
 int RawModel::getVertexCount() {
-	return vertexCount;
+	return m_VertexCount;
 }
 
 RawModel::~RawModel() {

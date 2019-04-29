@@ -21,13 +21,15 @@
   <ItemGroup>
     <ClCompile Include="src\engineTester\Main.cpp" />
     <ClCompile Include="src\errors\ErrorHandler.cpp" />
+    <ClCompile Include="src\models\RawModel.cpp" />
     <ClCompile Include="src\models\TexturedModel.cpp" />
+    <ClCompile Include="src\objects\IndexBuffer.cpp" />
+    <ClCompile Include="src\objects\VertexArray.cpp" />
+    <ClCompile Include="src\objects\VertexBuffer.cpp" />
     <ClCompile Include="src\renderEngine\DisplayManager.cpp" />
     <ClCompile Include="src\renderEngine\Loader.cpp" />
-    <ClCompile Include="src\models\RawModel.cpp" />
     <ClCompile Include="src\renderEngine\Renderer.cpp" />
-    <ClCompile Include="src\shaders\ShaderProgram.cpp" />
-    <ClCompile Include="src\shaders\StaticShader.cpp" />
+    <ClCompile Include="src\shaders\Shader.cpp" />
     <ClCompile Include="src\textures\ModelTexture.cpp" />
     <ClCompile Include="src\textures\Texture.cpp" />
     <ClCompile Include="src\vendor\glm\detail\glm.cpp" />
@@ -35,13 +37,15 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\errors\ErrorHandler.h" />
+    <ClInclude Include="src\models\RawModel.h" />
     <ClInclude Include="src\models\TexturedModel.h" />
+    <ClInclude Include="src\objects\IndexBuffer.h" />
+    <ClInclude Include="src\objects\VertexArray.h" />
+    <ClInclude Include="src\objects\VertexBuffer.h" />
     <ClInclude Include="src\renderEngine\DisplayManager.h" />
     <ClInclude Include="src\renderEngine\Loader.h" />
-    <ClInclude Include="src\models\RawModel.h" />
     <ClInclude Include="src\renderEngine\Renderer.h" />
-    <ClInclude Include="src\shaders\ShaderProgram.h" />
-    <ClInclude Include="src\shaders\StaticShader.h" />
+    <ClInclude Include="src\shaders\Shader.h" />
     <ClInclude Include="src\textures\ModelTexture.h" />
     <ClInclude Include="src\textures\Texture.h" />
     <ClInclude Include="src\vendor\glm\common.hpp" />

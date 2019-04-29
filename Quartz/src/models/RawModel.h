@@ -8,6 +8,6 @@ public:
 	~RawModel();
 
 private:
-	int vaoID;
-	int vertexCount;
+	int m_VAOID;
+	int m_VertexCount;
 };

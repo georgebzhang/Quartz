@@ -12,6 +12,6 @@ public:
 	~TexturedModel();
 
 private:
-	RawModel m_RawModel;
-	Texture m_Texture;
+	RawModel& m_RawModel;
+	Texture& m_Texture;
 };

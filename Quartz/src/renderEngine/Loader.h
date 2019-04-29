@@ -8,8 +8,8 @@
 class Loader {
 public:
 	//RawModel loadToVAO(float* positions, int p_count, int* indices, int i_count);
-	RawModel loadToVAO(float* positions, int p_count, float* textureCoords, int t_count, int* indices, int i_count);
-	Texture loadTexture(std::string filePath);
+	RawModel loadToVAO(float* positions, int p_count, float* textureCoords, int t_count, unsigned int* indices, int i_count);
+	//Texture loadTexture(std::string filePath);
 	void cleanUp();
 
 private:
@@ -19,6 +19,6 @@ private:
 
 	unsigned int createVAO();
 	void storeDataInAttributeList(int attributeNumber, int single_count, float* data, int count);
-	void bindIndicesBuffer(int* indices, int count);
+	void bindIndicesBuffer(unsigned int* indices, int count);
 	void unbindVAO();
 };

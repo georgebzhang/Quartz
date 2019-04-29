@@ -1,9 +1,11 @@
 #include "../renderEngine/DisplayManager.h"
 #include "../renderEngine/Loader.h"
 #include "../renderEngine/Renderer.h"
-#include "../shaders/StaticShader.h"
+#include "../shaders/Shader.h"
 #include "../models/TexturedModel.h"
 #include "../errors/ErrorHandler.h"
+#include "../objects/VertexArray.h"
+#include "../objects/IndexBuffer.h"
 
 #include <iostream>
 
@@ -12,7 +14,7 @@ int main(void) {
 
 	Loader loader;
 	Renderer renderer;
-	StaticShader shader("res/shaders/vertexShader.shader", "res/shaders/fragmentShader.shader");
+	Shader shader("res/shaders/vertexShader.shader", "res/shaders/fragmentShader.shader");
 
 	//float vertices[] = {
 	//	-0.5f, 0.5f, 0.0f,
@@ -35,12 +37,19 @@ int main(void) {
 		-0.5f, 0.5f
 	};
 
+	float positions[] = {
+		-0.5f, -0.5f,
+		0.5f, -0.5f,
+		0.5f, 0.5f,
+		-0.5f, 0.5f
+	};
+
 	//int indices[] = {
 	//	0, 1, 3,
 	//	3, 1, 2
 	//};
 
-	int indices[] = {
+	unsigned int indices[] = {
 		0, 1, 2,
 		2, 3, 0
 	};
@@ -52,7 +61,7 @@ int main(void) {
 	//	1, 0
 	//};
 
-	float textureCoords[] = {
+	float texCoords[] = {
 		0.0f, 0.0f,
 		1.0f, 0.0f,
 		1.0f, 1.0f,
@@ -61,36 +70,42 @@ int main(void) {
 
 	int p_count = sizeof(vertices) / sizeof(vertices[0]);
 	int i_count = sizeof(indices) / sizeof(indices[0]);
-	int t_count = sizeof(textureCoords) / sizeof(textureCoords[0]);
+	int t_count = sizeof(texCoords) / sizeof(texCoords[0]);
 
 	GLCall(glEnable(GL_BLEND));
 	GLCall(glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA));
 
+	VertexArray va;
+	VertexBuffer vb0(positions, p_count * sizeof(float));
+	va.addBuffer(vb0, 0, 2);
+	VertexBuffer vb1(texCoords, t_count * sizeof(float));
+	va.addBuffer(vb1, 1, 2);
+	IndexBuffer ib(indices, i_count);
+
 	//RawModel model = loader.loadToVAO(vertices, p_count, indices, i_count);
-	RawModel model = loader.loadToVAO(vertices, p_count, textureCoords, t_count, indices, i_count);
+	//RawModel model = loader.loadToVAO(vertices, p_count, texCoords, t_count, indices, i_count);
+	//std::cout << &model << std::endl;
+	//std::cout << model.getVAOID() << std::endl;
+	//std::cout << model.getVertexCount() << std::endl;
 
-	shader.start();
-
-	//Texture texture = loader.loadTexture("res/textures/Chernologo.png");
-	Texture texture("res/textures/Chernologo.png");
-	//std::cout << &texture << std::endl;
-	//std::cin.get();
+	shader.bind();
+	Texture texture("res/textures/image.png");
 	texture.Bind();
-	//shader.SetUniform4f("u_Color", 0.0f, 1.0f, 0.0f, 1.0f);
 	shader.SetUniform1i("u_Texture", 0); // read texture from slot 0
+	shader.unbind();
 
-	//shader.stop();
-
-	TexturedModel texturedModel(model, texture);
+	//TexturedModel texturedModel(model, texture);
+	//std::cout << &(texturedModel.getRawModel()) << std::endl;
+	//std::cout << texturedModel.getRawModel().getVAOID() << std::endl;
+	//std::cout << texturedModel.getRawModel().getVertexCount() << std::endl;
 
 	while (DisplayManager::isActive()) {
 		/* Render here */
+		//std::cout << "hi" << std::endl;
 		renderer.prepare();
-		shader.start();
 
-		renderer.render(model);
-
-		//shader.stop();
+		renderer.draw(va, ib, shader);
+		//renderer.render(texturedModel);
 
 		DisplayManager::update();
 	}
