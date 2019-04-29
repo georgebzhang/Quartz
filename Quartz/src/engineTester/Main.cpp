@@ -92,9 +92,9 @@ int main(void) {
 	shader->unbind();
 
 	TexturedModel* texturedModel = new TexturedModel(rawModel, texture);
-	glm::vec3* position = new glm::vec3(-1.0f, 0.0f, 0.0f);
-	glm::vec3* rotation = new glm::vec3(0.0f, 0.0f, 0.0f);
-	glm::vec3* scale = new glm::vec3(1.0f, 1.0f, 1.0f);
+	glm::vec3 position(-1.0f, 0.0f, 0.0f);
+	glm::vec3 rotation(0.0f, 0.0f, 0.0f);
+	glm::vec3 scale(1.0f, 1.0f, 1.0f);
 	Entity* entity = new Entity(texturedModel, position, rotation, scale);
 
 	while (DisplayManager::isActive()) {
