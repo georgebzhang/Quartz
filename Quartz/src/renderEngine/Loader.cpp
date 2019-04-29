@@ -8,7 +8,7 @@
 RawModel* Loader::loadToVAO(float* positions, int p_count, float* texCoords, int t_count, unsigned int* indices, int i_count) {
 	VertexArray* va = new VertexArray();
 	VertexBuffer* vb0 = new VertexBuffer(positions, p_count * sizeof(float));
-	va->addBuffer(vb0, 0, 2);
+	va->addBuffer(vb0, 0, 3);
 	VertexBuffer* vb1 = new VertexBuffer(texCoords, t_count * sizeof(float));
 	va->addBuffer(vb1, 1, 2);
 	IndexBuffer* ib = new IndexBuffer(indices, i_count);

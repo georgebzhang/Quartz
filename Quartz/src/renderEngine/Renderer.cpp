@@ -14,7 +14,8 @@ Renderer::Renderer(Shader* shader) {
 }
 
 void Renderer::prepare() const {
-	GLCall(glClear(GL_COLOR_BUFFER_BIT));
+	GLCall(glEnable(GL_DEPTH_TEST));
+	GLCall(glClear(GL_COLOR_BUFFER_BIT|GL_DEPTH_BUFFER_BIT));
 	GLCall(glClearColor(1, 0, 0, 1));
 }
 

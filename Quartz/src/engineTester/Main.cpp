@@ -20,16 +20,16 @@ void keyCallback(GLFWwindow* window, int key, int scancode, int action, int mods
 	//if (key == GLFW_KEY_ESCAPE && action == GLFW_PRESS)
 	//	glfwSetWindowShouldClose(window, GLFW_TRUE);
 	if (key == GLFW_KEY_W) {
-		camera->translate(glm::vec3(0.0f, 0.0f, -0.1f));
+		camera->translate(glm::vec3(0.0f, 0.0f, -0.05f));
 	}
 	if (key == GLFW_KEY_S) {
-		camera->translate(glm::vec3(0.0f, 0.0f, 0.1f));
+		camera->translate(glm::vec3(0.0f, 0.0f, 0.05f));
 	}
 	if (key == GLFW_KEY_A) {
-		camera->translate(glm::vec3(0.1f, 0.0f, 0.0f));
+		camera->translate(glm::vec3(0.05f, 0.0f, 0.0f));
 	}
 	if (key == GLFW_KEY_D) {
-		camera->translate(glm::vec3(-0.1f, 0.0f, 0.0f));
+		camera->translate(glm::vec3(-0.05f, 0.0f, 0.0f));
 	}
 }
 
@@ -41,23 +41,97 @@ int main(void) {
 	Shader* shader = new Shader("res/shaders/vertexShader.shader", "res/shaders/fragmentShader.shader");
 	Renderer renderer(shader);
 
-	float positions[] = {
-		-0.5f, -0.5f,
-		0.5f, -0.5f,
-		0.5f, 0.5f,
-		-0.5f, 0.5f
-	};
+	//float positions[] = {
+	//	-0.5f, -0.5f,
+	//	0.5f, -0.5f,
+	//	0.5f, 0.5f,
+	//	-0.5f, 0.5f
+	//};
 
-	unsigned int indices[] = {
-		0, 1, 2,
-		2, 3, 0
+	//unsigned int indices[] = {
+	//	0, 1, 2,
+	//	2, 3, 0
+	//};
+
+	//float texCoords[] = {
+	//	0.0f, 0.0f,
+	//	1.0f, 0.0f,
+	//	1.0f, 1.0f,
+	//	0.0f, 1.0f
+	//};
+
+	float positions[] = {
+				-0.5f,0.5f,-0.5f,
+				-0.5f,-0.5f,-0.5f,
+				0.5f,-0.5f,-0.5f,
+				0.5f,0.5f,-0.5f,
+
+				-0.5f,0.5f,0.5f,
+				-0.5f,-0.5f,0.5f,
+				0.5f,-0.5f,0.5f,
+				0.5f,0.5f,0.5f,
+
+				0.5f,0.5f,-0.5f,
+				0.5f,-0.5f,-0.5f,
+				0.5f,-0.5f,0.5f,
+				0.5f,0.5f,0.5f,
+
+				-0.5f,0.5f,-0.5f,
+				-0.5f,-0.5f,-0.5f,
+				-0.5f,-0.5f,0.5f,
+				-0.5f,0.5f,0.5f,
+
+				-0.5f,0.5f,0.5f,
+				-0.5f,0.5f,-0.5f,
+				0.5f,0.5f,-0.5f,
+				0.5f,0.5f,0.5f,
+
+				-0.5f,-0.5f,0.5f,
+				-0.5f,-0.5f,-0.5f,
+				0.5f,-0.5f,-0.5f,
+				0.5f,-0.5f,0.5f
 	};
 
 	float texCoords[] = {
-		0.0f, 0.0f,
-		1.0f, 0.0f,
-		1.0f, 1.0f,
-		0.0f, 1.0f
+			0,0,
+			0,1,
+			1,1,
+			1,0,
+			0,0,
+			0,1,
+			1,1,
+			1,0,
+			0,0,
+			0,1,
+			1,1,
+			1,0,
+			0,0,
+			0,1,
+			1,1,
+			1,0,
+			0,0,
+			0,1,
+			1,1,
+			1,0,
+			0,0,
+			0,1,
+			1,1,
+			1,0
+	};
+
+	unsigned int indices[] = {
+			0,1,3,
+			3,1,2,
+			4,5,7,
+			7,5,6,
+			8,9,11,
+			11,9,10,
+			12,13,15,
+			15,13,14,
+			16,17,19,
+			19,17,18,
+			20,21,23,
+			23,21,22
 	};
 
 	int p_count = sizeof(positions) / sizeof(positions[0]);
@@ -83,7 +157,7 @@ int main(void) {
 	shader->unbind();
 
 	TexturedModel* texturedModel = new TexturedModel(rawModel, texture);
-	glm::vec3 position(0.0f, 0.0f, -1.0f);
+	glm::vec3 position(0.0f, 0.0f, -5.0f);
 	glm::vec3 rotation(0.0f, 0.0f, 0.0f);
 	glm::vec3 scale(1.0f, 1.0f, 1.0f);
 	Entity* entity = new Entity(texturedModel, position, rotation, scale);
@@ -91,8 +165,8 @@ int main(void) {
 
 	while (dm.isActive()) {
 		/* Render here */
-		entity->translate(glm::vec3(0.0f, 0.0f, -0.01f));
-		//entity->rotate(glm::vec3(0.0f, 1.0f, 0.0f));
+		//entity->translate(glm::vec3(0.0f, 0.0f, -0.01f));
+		entity->rotate(glm::vec3(1.0f, 1.0f, 0.0f));
 		renderer.prepare();
 		shader->bind();
 
