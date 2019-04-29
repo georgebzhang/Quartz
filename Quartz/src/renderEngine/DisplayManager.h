@@ -3,15 +3,21 @@
 #include <GL/glew.h>
 #include <GLFW/glfw3.h>
 
+#include "../entities/Camera.h"
+
 class DisplayManager {
 public:
-	static void open();
-	static bool isActive();
-	static void finishLoop();
-	static void close();
+	DisplayManager(Camera* camera) : m_Camera(camera) {}
+	~DisplayManager();
+
+	void open();
+	bool isActive();
+	void finishLoop();
+	void close();
 
 private:
-	static GLFWwindow* window;
-	static const int WIDTH = 640 * 2;
-	static const int HEIGHT = 480 * 2;
+	GLFWwindow* m_Window;
+	const int WIDTH = 640 * 2;
+	const int HEIGHT = 480 * 2;
+	Camera* m_Camera;
 };

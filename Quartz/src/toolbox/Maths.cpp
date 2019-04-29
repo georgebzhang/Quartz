@@ -11,3 +11,12 @@ glm::mat4 Maths::createTransformationMatrix(const glm::vec3 translation, const g
 	matrix = glm::scale(matrix, scale);
 	return matrix;
 }
+
+glm::mat4 Maths::createViewMatrix(const Camera* camera) {
+	glm::mat4 matrix(1.0f);
+	matrix = glm::rotate(matrix, glm::radians(camera->getPitch()), glm::vec3(1.0f, 0.0f, 0.0f));
+	matrix = glm::rotate(matrix, glm::radians(camera->getYaw()), glm::vec3(0.0f, 1.0f, 0.0f));
+	//matrix = glm::rotate(matrix, glm::radians(camera.getRoll()), glm::vec3(0.0f, 0.0f, 1.0f));
+	matrix = glm::translate(matrix, -camera->getPosition());
+	return matrix;
+}

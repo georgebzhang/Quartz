@@ -7,36 +7,39 @@
 #include "../objects/VertexArray.h"
 #include "../objects/IndexBuffer.h"
 #include "../entities/Entity.h"
+#include "../entities/Camera.h"
+#include "../toolbox/Maths.h"
 
 #include <iostream>
 
+
+Camera* camera = new Camera();
+
+void keyCallback(GLFWwindow* window, int key, int scancode, int action, int mods) {
+	//std::cout << key << std::endl;
+	//if (key == GLFW_KEY_ESCAPE && action == GLFW_PRESS)
+	//	glfwSetWindowShouldClose(window, GLFW_TRUE);
+	if (key == GLFW_KEY_W) {
+		camera->translate(glm::vec3(0.0f, 0.0f, -0.1f));
+	}
+	if (key == GLFW_KEY_S) {
+		camera->translate(glm::vec3(0.0f, 0.0f, 0.1f));
+	}
+	if (key == GLFW_KEY_A) {
+		camera->translate(glm::vec3(0.1f, 0.0f, 0.0f));
+	}
+	if (key == GLFW_KEY_D) {
+		camera->translate(glm::vec3(-0.1f, 0.0f, 0.0f));
+	}
+}
+
 int main(void) {
-	DisplayManager::open();
+	DisplayManager dm(camera);
+	dm.open();
 
 	Loader loader;
 	Shader* shader = new Shader("res/shaders/vertexShader.shader", "res/shaders/fragmentShader.shader");
 	Renderer renderer(shader);
-
-	//float vertices[] = {
-	//	-0.5f, 0.5f, 0.0f,
-	//	-0.5f, -0.5f, 0.0f,
-	//	0.5f, -0.5f, 0.0f,
-	//	0.5f, 0.5f, 0.0f,
-	//};
-
-	//float vertices[] = {
-	//	-0.5f, -0.5f, 0.0f,
-	//	0.5f, -0.5f, 0.0f,
-	//	0.5f, 0.5f, 0.0f,
-	//	-0.5f, 0.5f, 0.0f,
-	//};
-
-	float vertices[] = {
-		-0.5f, -0.5f,
-		0.5f, -0.5f,
-		0.5f, 0.5f,
-		-0.5f, 0.5f
-	};
 
 	float positions[] = {
 		-0.5f, -0.5f,
@@ -45,22 +48,10 @@ int main(void) {
 		-0.5f, 0.5f
 	};
 
-	//int indices[] = {
-	//	0, 1, 3,
-	//	3, 1, 2
-	//};
-
 	unsigned int indices[] = {
 		0, 1, 2,
 		2, 3, 0
 	};
-
-	//float textureCoords[] = {
-	//	0, 0,
-	//	0, 1,
-	//	1, 1,
-	//	1, 0
-	//};
 
 	float texCoords[] = {
 		0.0f, 0.0f,
@@ -69,7 +60,7 @@ int main(void) {
 		0.0f, 1.0f
 	};
 
-	int p_count = sizeof(vertices) / sizeof(vertices[0]);
+	int p_count = sizeof(positions) / sizeof(positions[0]);
 	int i_count = sizeof(indices) / sizeof(indices[0]);
 	int t_count = sizeof(texCoords) / sizeof(texCoords[0]);
 
@@ -83,7 +74,7 @@ int main(void) {
 	//va.addBuffer(vb1, 1, 2);
 	//IndexBuffer ib(indices, i_count);
 
-	RawModel* rawModel = loader.loadToVAO(vertices, p_count, texCoords, t_count, indices, i_count);
+	RawModel* rawModel = loader.loadToVAO(positions, p_count, texCoords, t_count, indices, i_count);
 
 	shader->bind();
 	Texture* texture = new Texture("res/textures/image.png");
@@ -97,21 +88,24 @@ int main(void) {
 	glm::vec3 scale(1.0f, 1.0f, 1.0f);
 	Entity* entity = new Entity(texturedModel, position, rotation, scale);
 
-	while (DisplayManager::isActive()) {
+
+	while (dm.isActive()) {
 		/* Render here */
-		entity->translate(glm::vec3(0.0f, 0.0f, -0.1f));
+		entity->translate(glm::vec3(0.0f, 0.0f, -0.01f));
 		//entity->rotate(glm::vec3(0.0f, 1.0f, 0.0f));
 		renderer.prepare();
 		shader->bind();
 
+		glm::mat4 viewMatrix = Maths::createViewMatrix(camera);
+		shader->setUniformMat4f("u_ViewMatrix", viewMatrix);
 		//renderer.draw(va, ib, shader);
 		//renderer.render(rawModel);
 		//renderer.render(texturedModel);
 		renderer.render(entity, shader);
 
 		shader->unbind();
-		DisplayManager::finishLoop();
+		dm.finishLoop();
 	}
 
-	DisplayManager::close();
+	dm.close();
 }

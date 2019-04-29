@@ -2,7 +2,12 @@
 
 #include <iostream>
 
-GLFWwindow* DisplayManager::window;
+void keyCallback(GLFWwindow* window, int key, int scancode, int action, int mods);
+
+DisplayManager::~DisplayManager() {
+	delete m_Camera;
+	delete m_Window;
+}
 
 void DisplayManager::open() {
 	/* Initialize the library */
@@ -10,19 +15,22 @@ void DisplayManager::open() {
 		return;
 
 	/* Create a windowed mode window and its OpenGL context */
-	window = glfwCreateWindow(WIDTH, HEIGHT, "Hello World", NULL, NULL);
-	if (!window)
+	m_Window = glfwCreateWindow(WIDTH, HEIGHT, "Hello World", NULL, NULL);
+	if (!m_Window)
 	{
 		glfwTerminate();
 		return;
 	}
+
+	glfwSetKeyCallback(m_Window, keyCallback);
+	glfwSetInputMode(m_Window, GLFW_STICKY_KEYS, GLFW_TRUE);
 
 	//glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 3);
 	//glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 3);
 	//glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE); // setting OpenGL profile to CORE instead of COMPAT
 
 	/* Make the window's context current */
-	glfwMakeContextCurrent(window);
+	glfwMakeContextCurrent(m_Window);
 
 	glfwSwapInterval(1); // synchronize with monitor refresh rate
 
@@ -33,7 +41,7 @@ void DisplayManager::open() {
 }
 
 bool DisplayManager::isActive() {
-	return !glfwWindowShouldClose(window);
+	return !glfwWindowShouldClose(m_Window);
 }
 
 void DisplayManager::finishLoop() {
@@ -42,7 +50,7 @@ void DisplayManager::finishLoop() {
 	glEnd();
 
 	/* Swap front and back buffers */
-	glfwSwapBuffers(window);
+	glfwSwapBuffers(m_Window);
 
 	/* Poll for and process events */
 	glfwPollEvents();
