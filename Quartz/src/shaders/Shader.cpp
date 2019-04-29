@@ -35,10 +35,6 @@ void Shader::unbind() const {
 	GLCall(glUseProgram(0));
 }
 
-//void Shader::bindAttribute(int attribute, const char* variableName) {
-//	glBindAttribLocation(m_ProgramID, attribute, variableName);
-//}
-
 int Shader::loadShader(const std::string& filePath, unsigned int type) {
 	std::ifstream stream(filePath);
 	std::string line;

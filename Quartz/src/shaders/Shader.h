@@ -16,10 +16,6 @@ public:
 	void setUniform4f(const std::string& name, float v0, float v1, float v2, float v3);
 	void setUniformMat4f(const std::string& name, const glm::mat4& matrix);
 
-protected:
-	//virtual void bindAttributes() = 0;
-	//void bindAttribute(int attribute, const char* variableName);
-
 private:
 	int m_ProgramID;
 	int m_VertexShaderID;
