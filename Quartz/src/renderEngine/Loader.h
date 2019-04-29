@@ -17,8 +17,8 @@ private:
 	//std::vector<unsigned int> vboIDs;
 	//std::vector<unsigned int> textureIDs;
 
-	unsigned int createVAO();
-	void storeDataInAttributeList(int attributeNumber, int single_count, float* data, int count);
-	void bindIndicesBuffer(unsigned int* indices, int count);
-	void unbindVAO();
+	//unsigned int createVAO();
+	//void storeDataInAttributeList(int attributeNumber, int single_count, float* data, int count);
+	//void bindIndicesBuffer(unsigned int* indices, int count);
+	//void unbindVAO();
 };

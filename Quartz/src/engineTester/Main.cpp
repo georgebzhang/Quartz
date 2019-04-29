@@ -6,6 +6,7 @@
 #include "../errors/ErrorHandler.h"
 #include "../objects/VertexArray.h"
 #include "../objects/IndexBuffer.h"
+#include "../entities/Entity.h"
 
 #include <iostream>
 
@@ -14,7 +15,7 @@ int main(void) {
 
 	Loader loader;
 	Renderer renderer;
-	Shader shader("res/shaders/vertexShader.shader", "res/shaders/fragmentShader.shader");
+	Shader* shader = new Shader("res/shaders/vertexShader.shader", "res/shaders/fragmentShader.shader");
 
 	//float vertices[] = {
 	//	-0.5f, 0.5f, 0.0f,
@@ -84,24 +85,29 @@ int main(void) {
 
 	RawModel* rawModel = loader.loadToVAO(vertices, p_count, texCoords, t_count, indices, i_count);
 
-	shader.bind();
+	shader->bind();
 	Texture* texture = new Texture("res/textures/image.png");
 	texture->bind();
-	shader.setUniform1i("u_Texture", 0); // read texture from slot 0
-	shader.unbind();
+	shader->setUniform1i("u_Texture", 0); // read texture from slot 0
+	shader->unbind();
 
 	TexturedModel* texturedModel = new TexturedModel(rawModel, texture);
+	glm::vec3* position = new glm::vec3(-1.0f, 0.0f, 0.0f);
+	glm::vec3* rotation = new glm::vec3(0.0f, 0.0f, 0.0f);
+	glm::vec3* scale = new glm::vec3(1.0f, 1.0f, 1.0f);
+	Entity* entity = new Entity(texturedModel, position, rotation, scale);
 
 	while (DisplayManager::isActive()) {
 		/* Render here */
 		renderer.prepare();
-		shader.bind();
+		shader->bind();
 
 		//renderer.draw(va, ib, shader);
 		//renderer.render(rawModel);
-		renderer.render(texturedModel);
+		//renderer.render(texturedModel);
+		renderer.render(entity, shader);
 
-		shader.unbind();
+		shader->unbind();
 		DisplayManager::finishLoop();
 	}
 
