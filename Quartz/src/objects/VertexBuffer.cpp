@@ -2,7 +2,7 @@
 
 #include "../errors/ErrorHandler.h"
 
-VertexBuffer::VertexBuffer(const float* data, unsigned int size) {
+VertexBuffer::VertexBuffer(const void* data, unsigned int size) {
 	GLCall(glGenBuffers(1, &m_ID));
 	bind();
 	GLCall(glBufferData(GL_ARRAY_BUFFER, size, data, GL_STATIC_DRAW));

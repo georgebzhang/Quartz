@@ -13,7 +13,7 @@ void Renderer::render(TexturedModel texturedModel) {
 	std::cout << &(texturedModel.getRawModel()) << std::endl;
 	std::cout << texturedModel.getRawModel().getVAOID() << std::endl;
 	std::cout << texturedModel.getRawModel().getVertexCount() << std::endl;
-	std::cin.get();
+	//std::cin.get();
 	RawModel model = texturedModel.getRawModel();
 	GLCall(glBindVertexArray(model.getVAOID()));
 	GLCall(glEnableVertexAttribArray(0));

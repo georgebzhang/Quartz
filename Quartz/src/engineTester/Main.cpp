@@ -91,7 +91,7 @@ int main(void) {
 	shader.bind();
 	Texture texture("res/textures/image.png");
 	texture.Bind();
-	shader.SetUniform1i("u_Texture", 0); // read texture from slot 0
+	shader.setUniform1i("u_Texture", 0); // read texture from slot 0
 	shader.unbind();
 
 	//TexturedModel texturedModel(model, texture);
@@ -107,11 +107,11 @@ int main(void) {
 		renderer.draw(va, ib, shader);
 		//renderer.render(texturedModel);
 
-		DisplayManager::update();
+		DisplayManager::finishLoop();
 	}
 
-	shader.cleanUp();
-	loader.cleanUp();
+	//shader.cleanUp();
+	//loader.cleanUp();
 
 	DisplayManager::close();
 }

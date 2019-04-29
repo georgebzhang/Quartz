@@ -19,6 +19,11 @@ Shader::Shader(const std::string& vertexFilePath, const std::string& fragmentFil
 }
 
 Shader::~Shader() {
+	unbind();
+	GLCall(glDetachShader(m_ProgramID, m_VertexShaderID));
+	GLCall(glDetachShader(m_ProgramID, m_FragmentShaderID));
+	GLCall(glDeleteShader(m_VertexShaderID));
+	GLCall(glDeleteShader(m_FragmentShaderID));
 	GLCall(glDeleteProgram(m_ProgramID));
 }
 
@@ -36,7 +41,6 @@ void Shader::unbind() const {
 
 int Shader::loadShader(const std::string& filePath, unsigned int type) {
 	std::ifstream stream(filePath);
-
 	std::string line;
 	std::stringstream ss;
 
@@ -44,18 +48,11 @@ int Shader::loadShader(const std::string& filePath, unsigned int type) {
 		ss << line << '\n';
 	}
 
-	//ss << '\0';
-
-	//std::cout << ss.str() << std::endl;
-	//std::cin.get();
-
-	std::string src = ss.str();
-
-	const char* source = src.c_str();
+	std::string ssource = ss.str();
+	const char* csource = ssource.c_str();
 
 	int shaderID = glCreateShader(type);
-	//glShaderSource(shaderID, 1, &source, (const int*) 0);
-	glShaderSource(shaderID, 1, &source, nullptr);
+	glShaderSource(shaderID, 1, &csource, (const int*) 0);
 	glCompileShader(shaderID);
 
 	int result;
@@ -75,24 +72,15 @@ int Shader::loadShader(const std::string& filePath, unsigned int type) {
 	return shaderID;
 }
 
-void Shader::cleanUp() {
-	unbind();
-	glDetachShader(m_ProgramID, m_VertexShaderID);
-	glDetachShader(m_ProgramID, m_FragmentShaderID);
-	glDeleteShader(m_VertexShaderID);
-	glDeleteShader(m_FragmentShaderID);
-	glDeleteProgram(m_ProgramID);
+void Shader::setUniform1i(const std::string & name, int value) {
+	GLCall(glUniform1i(getUniformLocation(name), value));
 }
 
-void Shader::SetUniform1i(const std::string & name, int value) {
-	GLCall(glUniform1i(GetUniformLocation(name), value));
+void Shader::setUniform4f(const std::string& name, float v0, float v1, float v2, float v3) {
+	GLCall(glUniform4f(getUniformLocation(name), v0, v1, v2, v3));
 }
 
-void Shader::SetUniform4f(const std::string& name, float v0, float v1, float v2, float v3) {
-	GLCall(glUniform4f(GetUniformLocation(name), v0, v1, v2, v3));
-}
-
-int Shader::GetUniformLocation(const std::string& name)
+int Shader::getUniformLocation(const std::string& name)
 {
 	if (m_UniformLocationCache.find(name) != m_UniformLocationCache.end())
 		return m_UniformLocationCache[name];

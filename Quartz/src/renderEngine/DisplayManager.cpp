@@ -36,7 +36,7 @@ bool DisplayManager::isActive() {
 	return !glfwWindowShouldClose(window);
 }
 
-void DisplayManager::update() {
+void DisplayManager::finishLoop() {
 	// rendering moved to main
 
 	glEnd();

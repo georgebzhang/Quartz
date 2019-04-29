@@ -7,7 +7,7 @@ class DisplayManager {
 public:
 	static void open();
 	static bool isActive();
-	static void update();
+	static void finishLoop();
 	static void close();
 
 private:
