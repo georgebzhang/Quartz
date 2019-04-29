@@ -99,6 +99,8 @@ int main(void) {
 
 	while (DisplayManager::isActive()) {
 		/* Render here */
+		entity->translate(glm::vec3(0.002f, 0.0f, 0.0f));
+		entity->rotate(glm::vec3(0.0f, 1.0f, 0.0f));
 		renderer.prepare();
 		shader->bind();
 
