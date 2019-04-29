@@ -2,7 +2,7 @@
 #include "Texture.h"
 
 Texture::Texture(const std::string & filePath) : m_ID(0), m_FilePath(filePath), m_LocalBuffer(nullptr), m_Width(0), m_Height(0), m_BPP(0) {
-	stbi_set_flip_vertically_on_load(1); // flips texture vertically
+	stbi_set_flip_vertically_on_load(0); // flips texture vertically if 1
 	m_LocalBuffer = stbi_load(filePath.c_str(), &m_Width, &m_Height, &m_BPP, 4); // 4 for RGBA
 	//std::cout << m_LocalBuffer << std::endl;
 	//std::cout << m_Width << " " << m_Height << " " << m_BPP << std::endl;

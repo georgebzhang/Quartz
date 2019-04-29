@@ -159,7 +159,7 @@ int main(void) {
 	shader->unbind();
 
 	TexturedModel* texturedModel = new TexturedModel(rawModel, texture);
-	glm::vec3 position(0.0f, 0.0f, -5.0f);
+	glm::vec3 position(0.0f, -2.0f, -15.0f);
 	glm::vec3 rotation(0.0f, 0.0f, 0.0f);
 	glm::vec3 scale(1.0f, 1.0f, 1.0f);
 	Entity* entity = new Entity(texturedModel, position, rotation, scale);
@@ -168,7 +168,7 @@ int main(void) {
 	while (dm.isActive()) {
 		/* Render here */
 		//entity->translate(glm::vec3(0.0f, 0.0f, -0.01f));
-		entity->rotate(glm::vec3(1.0f, 1.0f, 0.0f));
+		entity->rotate(glm::vec3(0.0f, 1.0f, 0.0f));
 		renderer.prepare();
 		shader->bind();
 
