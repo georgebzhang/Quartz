@@ -36,3 +36,10 @@ void Texture::setConstants(float ka, float kd, float ks, float p) {
 	setSpecularReflectionConstant(ks);
 	setShininessConstant(p);
 }
+
+void Texture::loadUniforms(Shader* shader) const {
+	shader->setUniform1f("u_ka", m_ka);
+	shader->setUniform1f("u_kd", m_kd);
+	shader->setUniform1f("u_ks", m_ks);
+	shader->setUniform1f("u_p", m_p);
+}

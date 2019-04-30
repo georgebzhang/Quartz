@@ -1,5 +1,7 @@
 #pragma once
 
+#include "../shaders/Shader.h"
+
 #include "glm/glm.hpp"
 
 class Camera {
@@ -13,6 +15,8 @@ public:
 	inline float getRoll() const { return m_Roll; }
 
 	void translate(const glm::vec3 translation);
+
+	void loadUniforms(Shader* shader) const;
 
 private:
 	glm::vec3 m_Position;

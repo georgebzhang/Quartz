@@ -11,9 +11,9 @@ public:
 	~DisplayManager() {}
 
 	void open();
-	bool isActive();
+	bool isOpen() { return !glfwWindowShouldClose(m_Window); }
 	void finishLoop();
-	void close();
+	void close() { glfwTerminate(); }
 
 private:
 	GLFWwindow* m_Window;

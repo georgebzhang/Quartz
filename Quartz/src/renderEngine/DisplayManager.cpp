@@ -36,10 +36,6 @@ void DisplayManager::open() {
 	std::cout << glGetString(GL_VERSION) << std::endl;
 }
 
-bool DisplayManager::isActive() {
-	return !glfwWindowShouldClose(m_Window);
-}
-
 void DisplayManager::finishLoop() {
 	// rendering moved to main
 
@@ -50,8 +46,4 @@ void DisplayManager::finishLoop() {
 
 	/* Poll for and process events */
 	glfwPollEvents();
-}
-
-void DisplayManager::close() {
-	glfwTerminate();
 }

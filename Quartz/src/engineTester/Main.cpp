@@ -40,6 +40,7 @@ int main(void) {
 	Texture* texture = new Texture("res/textures/white.png");
 	texture->bind();
 	shader->setUniform1i("u_Texture", 0); // read texture from slot 0
+	texture->loadUniforms(shader);
 	shader->unbind();
 
 	TexturedModel* texturedModel = new TexturedModel(rawModel, texture);
@@ -48,21 +49,21 @@ int main(void) {
 	glm::vec3 scale(1.0f, 1.0f, 1.0f);
 	Entity* entity = new Entity(texturedModel, position, rotation, scale);
 
-	glm::vec3 position2(0.0f, 0.0f, -20.0f);
-	glm::vec3 color(1.0f, 1.0f, 1.0f);
-	Light* light = new Light(position2, color);
+	glm::vec3 intensity(1.0f, 1.0f, 1.0f);
+	intensity *= 10;
+	glm::vec3 position2(0.0f, 5.0f, -20.0f);
+	glm::vec3 color(0.0f, 1.0f, 1.0f);
+	Light* light = new Light(intensity, position2, color);
 
-	while (dm.isActive()) {
+	while (dm.isOpen()) {
 		/* Render here */
 		//entity->translate(glm::vec3(0.0f, 0.0f, -0.01f));
 		entity->rotate(glm::vec3(0.0f, 1.0f, 0.0f));
 		renderer.prepare();
 		shader->bind();
 
-		shader->setUniform3fv("u_LightPosition", light->getPosition());
-		shader->setUniform3fv("u_LightColor", light->getColor());
-		glm::mat4 viewMatrix = Maths::createViewMatrix(camera);
-		shader->setUniformMat4f("u_ViewMatrix", viewMatrix);
+		light->loadUniforms(shader);
+		camera->loadUniforms(shader);
 
 		renderer.render(entity, shader);
 
