@@ -16,7 +16,3 @@ RawModel* Loader::loadToVAO(float* positions, int p_count, float* texCoords, int
 	IndexBuffer* ib = new IndexBuffer(indices, i_count);
 	return new RawModel(va, ib);
 }
-
-//Texture Loader::loadTexture(std::string filePath) {
-//	return Texture(filePath);
-//}

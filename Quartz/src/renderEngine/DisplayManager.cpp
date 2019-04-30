@@ -1,12 +1,9 @@
 #include "DisplayManager.h"
+#include "../entities/Camera.h"
 
 #include <iostream>
 
 void keyCallback(GLFWwindow* window, int key, int scancode, int action, int mods);
-
-DisplayManager::~DisplayManager() {
-	delete m_Window;
-}
 
 void DisplayManager::open() {
 	/* Initialize the library */

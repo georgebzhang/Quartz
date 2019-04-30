@@ -7,32 +7,20 @@
 #include "../objects/VertexArray.h"
 #include "../objects/IndexBuffer.h"
 #include "../entities/Entity.h"
-#include "../entities/Camera.h"
 #include "../toolbox/Maths.h"
 #include "../renderEngine/OBJLoader.h"
 #include "../entities/Light.h"
 
 #include <iostream>
 
-
 Camera* camera = new Camera(glm::vec3(0.0f, 3.0f, 0.0f));
 
 void keyCallback(GLFWwindow* window, int key, int scancode, int action, int mods) {
-	//std::cout << key << std::endl;
-	//if (key == GLFW_KEY_ESCAPE && action == GLFW_PRESS)
-	//	glfwSetWindowShouldClose(window, GLFW_TRUE);
-	if (key == GLFW_KEY_W) {
-		camera->translate(glm::vec3(0.0f, 0.0f, -0.2f));
-	}
-	if (key == GLFW_KEY_S) {
-		camera->translate(glm::vec3(0.0f, 0.0f, 0.2f));
-	}
-	if (key == GLFW_KEY_A) {
-		camera->translate(glm::vec3(0.2f, 0.0f, 0.0f));
-	}
-	if (key == GLFW_KEY_D) {
-		camera->translate(glm::vec3(-0.2f, 0.0f, 0.0f));
-	}
+	if (key == GLFW_KEY_ESCAPE) glfwSetWindowShouldClose(window, GLFW_TRUE);
+	if (key == GLFW_KEY_W) camera->translate(glm::vec3(0.0f, 0.0f, -0.2f));
+	if (key == GLFW_KEY_S) camera->translate(glm::vec3(0.0f, 0.0f, 0.2f));
+	if (key == GLFW_KEY_A) camera->translate(glm::vec3(0.2f, 0.0f, 0.0f));
+	if (key == GLFW_KEY_D) camera->translate(glm::vec3(-0.2f, 0.0f, 0.0f));
 }
 
 int main(void) {
@@ -46,14 +34,6 @@ int main(void) {
 	GLCall(glEnable(GL_BLEND));
 	GLCall(glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA));
 
-	//VertexArray va;
-	//VertexBuffer vb0(positions, p_count * sizeof(float));
-	//va.addBuffer(vb0, 0, 2);
-	//VertexBuffer vb1(texCoords, t_count * sizeof(float));
-	//va.addBuffer(vb1, 1, 2);
-	//IndexBuffer ib(indices, i_count);
-
-	//RawModel* rawModel = loader.loadToVAO(positions, p_count, texCoords, t_count, indices, i_count);
 	RawModel* rawModel = OBJLoader::loadOBJModel("res/models/dragon.obj", loader);
 
 	shader->bind();
@@ -84,9 +64,6 @@ int main(void) {
 		glm::mat4 viewMatrix = Maths::createViewMatrix(camera);
 		shader->setUniformMat4f("u_ViewMatrix", viewMatrix);
 
-		//renderer.draw(va, ib, shader);
-		//renderer.render(rawModel);
-		//renderer.render(texturedModel);
 		renderer.render(entity, shader);
 
 		shader->unbind();

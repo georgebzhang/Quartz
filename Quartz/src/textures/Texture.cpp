@@ -1,4 +1,3 @@
-#include "../errors/ErrorHandler.h"
 #include "Texture.h"
 
 Texture::Texture(const std::string & filePath) : m_ID(0), m_FilePath(filePath), m_LocalBuffer(nullptr), m_Width(0), m_Height(0), m_BPP(0) {
@@ -22,10 +21,6 @@ Texture::Texture(const std::string & filePath) : m_ID(0), m_FilePath(filePath), 
 		stbi_image_free(m_LocalBuffer);
 }
 
-Texture::~Texture() {
-	GLCall(glDeleteTextures(1, &m_ID)); // delete texture from GPU
-}
-
 void Texture::bind(unsigned int slot) const {
 	GLCall(glActiveTexture(GL_TEXTURE0 + slot));
 	GLCall(glBindTexture(GL_TEXTURE_2D, m_ID));
@@ -33,4 +28,11 @@ void Texture::bind(unsigned int slot) const {
 
 void Texture::unbind() const {
 	GLCall(glBindTexture(GL_TEXTURE_2D, 0));
+}
+
+void Texture::setConstants(float ka, float kd, float ks, float p) {
+	setAmbientReflectionConstant(ka);
+	setDiffuseReflectionConstant(kd);
+	setSpecularReflectionConstant(ks);
+	setShininessConstant(p);
 }

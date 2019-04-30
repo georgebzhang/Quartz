@@ -7,9 +7,7 @@
 
 class Loader {
 public:
-	//RawModel loadToVAO(float* positions, int p_count, int* indices, int i_count);
 	RawModel* loadToVAO(float* positions, int p_count, float* texCoords, int t_count, float* normals, int n_count, unsigned int* indices, int i_count);
-	//Texture loadTexture(std::string filePath);
 
 private:
 

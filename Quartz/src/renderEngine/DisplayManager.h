@@ -8,7 +8,7 @@
 class DisplayManager {
 public:
 	DisplayManager() {}
-	~DisplayManager();
+	~DisplayManager() {}
 
 	void open();
 	bool isActive();
