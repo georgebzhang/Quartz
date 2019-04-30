@@ -1,10 +1,8 @@
 #version 330 core
 
-in vec4 v_Position;
+in vec3 v_Position;
 in vec2 v_TexCoords;
 in vec3 v_Normal;
-in vec3 v_ToLight;
-in vec3 v_LightPosition;
 
 out vec4 out_Color;
 
@@ -24,13 +22,16 @@ uniform float u_ks;
 uniform float u_p;
 
 void main(void) {
-	vec3 unitNormal = normalize(v_Normal);
-	vec3 unitToLight = normalize(v_ToLight);
-	vec4 I_falloff = vec4(u_I, 1.0) / pow(length(vec4(u_LightPosition, 1.0) - v_Position), 2);
+	vec3 n = normalize(v_Normal);
+	vec3 l = normalize(u_LightPosition - v_Position);
+	vec3 v = normalize(u_CamPosition - v_Position);
+	vec3 h = (v + l) / length(v + l);
 
-	vec4 ambient = u_ka * vec4(u_Ia, 1.0);
-	vec4 diffuse = u_kd * I_falloff * max(dot(unitNormal, unitToLight), 0);
-	vec4 specular = u_ks * I_falloff * pow(max(dot(unitNormal, unitToLight), 0), u_p);
-	out_Color = (ambient + diffuse) * texture(u_Texture, v_TexCoords);
-	out_Color.a = 1; // needed, since u_ka, u_kd, u_ks scale alpha in above calculations
+	vec3 I_falloff = u_I / pow(length(u_LightPosition - v_Position), 2);
+
+	vec3 ambient = u_ka * u_Ia;
+	vec3 diffuse = u_kd * I_falloff * max(dot(n, l), 0);
+	vec3 specular = u_ks * I_falloff * pow(max(dot(n, h), 0), u_p);
+	out_Color = (vec4(ambient, 1.0) + vec4(diffuse, 1.0)) * texture(u_Texture, v_TexCoords) + vec4(specular, 1.0);
+	out_Color.a = 1; // just in case u_ka, u_kd, u_ks scale alpha in above calculations
 }

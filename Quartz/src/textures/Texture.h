@@ -35,8 +35,8 @@ private:
 	unsigned char* m_LocalBuffer;
 	int m_Width, m_Height, m_BPP;
 
-	float m_ka = 0.25; // ambient reflection constant
-	float m_kd = 1; // diffuse reflection constant
-	float m_ks = 1; // specular reflection constant
-	float m_p = 5; // shininess constant
+	float m_ka = 0.2; // ambient reflection constant
+	float m_kd = 0.5; // diffuse reflection constant
+	float m_ks = 10; // specular reflection constant
+	float m_p = 100; // shininess constant
 };
