@@ -7,6 +7,8 @@
 #include <GL/glew.h>
 
 Renderer::Renderer(Shader* shader) {
+	glEnable(GL_CULL_FACE);
+	glCullFace(GL_BACK); // optimization: does not render triangle that face inwards
 	shader->bind();
 	glm::mat4 projectionMatrix = glm::perspectiveFov(70.0f, 640.0f * 2, 480.0f * 2, 0.1f, 1000.0f);
 	shader->setUniformMat4f("u_ProjectionMatrix", projectionMatrix);

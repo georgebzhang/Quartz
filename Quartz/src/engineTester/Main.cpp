@@ -23,6 +23,10 @@ void keyCallback(GLFWwindow* window, int key, int scancode, int action, int mods
 	if (key == GLFW_KEY_D) camera->translate(glm::vec3(-0.2f, 0.0f, 0.0f));
 }
 
+float randFloat() {
+	return (float)rand() / RAND_MAX;
+}
+
 int main(void) {
 	DisplayManager dm;
 	dm.open();
@@ -44,10 +48,10 @@ int main(void) {
 	shader->unbind();
 
 	TexturedModel* texturedModel = new TexturedModel(rawModel, texture);
-	glm::vec3 position(0.0f, 0.0f, -25.0f);
-	glm::vec3 rotation(0.0f, 0.0f, 0.0f);
-	glm::vec3 scale(1.0f, 1.0f, 1.0f);
-	Entity* entity = new Entity(texturedModel, position, rotation, scale);
+	//glm::vec3 position(0.0f, 0.0f, -25.0f);
+	//glm::vec3 rotation(0.0f, 0.0f, 0.0f);
+	//glm::vec3 scale(1.0f, 1.0f, 1.0f);
+	//Entity* entity = new Entity(texturedModel, position, rotation, scale);
 
 	glm::vec3 intensity(1.0f, 1.0f, 1.0f);
 	intensity *= 10;
@@ -55,17 +59,28 @@ int main(void) {
 	glm::vec3 color(0.0f, 1.0f, 1.0f);
 	Light* light = new Light(intensity, position2, color);
 
+	std::vector<Entity*> dragons;
+
+	for (int i = 0; i < 10; ++i) {
+		glm::vec3 position(randFloat() * 100 - 50, randFloat() * 100 - 50, randFloat() * -300);
+		glm::vec3 rotation(randFloat() * 180, randFloat() * 180, 0.0f);
+		glm::vec3 scale(1.0f, 1.0f, 1.0f);
+		dragons.emplace_back(new Entity(texturedModel, position, rotation, scale));
+	}
+
 	while (dm.isOpen()) {
 		/* Render here */
 		//entity->translate(glm::vec3(0.0f, 0.0f, -0.01f));
-		entity->rotate(glm::vec3(0.0f, 1.0f, 0.0f));
+		//entity->rotate(glm::vec3(0.0f, 1.0f, 0.0f));
 		renderer.prepare();
 		shader->bind();
 
 		light->loadUniforms(shader);
 		camera->loadUniforms(shader);
 
-		renderer.render(entity, shader);
+		for (Entity* dragon : dragons) {
+			renderer.render(dragon, shader);
+		}
 
 		shader->unbind();
 		dm.finishLoop();
