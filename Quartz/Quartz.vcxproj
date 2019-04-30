@@ -22,6 +22,7 @@
     <ClCompile Include="src\engineTester\Main.cpp" />
     <ClCompile Include="src\entities\Camera.cpp" />
     <ClCompile Include="src\entities\Entity.cpp" />
+    <ClCompile Include="src\entities\Light.cpp" />
     <ClCompile Include="src\errors\ErrorHandler.cpp" />
     <ClCompile Include="src\models\RawModel.cpp" />
     <ClCompile Include="src\models\TexturedModel.cpp" />
@@ -41,6 +42,7 @@
   <ItemGroup>
     <ClInclude Include="src\entities\Camera.h" />
     <ClInclude Include="src\entities\Entity.h" />
+    <ClInclude Include="src\entities\Light.h" />
     <ClInclude Include="src\errors\ErrorHandler.h" />
     <ClInclude Include="src\models\RawModel.h" />
     <ClInclude Include="src\models\TexturedModel.h" />

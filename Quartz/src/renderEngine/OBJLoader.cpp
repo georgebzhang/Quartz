@@ -72,7 +72,7 @@ RawModel* OBJLoader::loadOBJModel(const std::string & filePath, Loader* loader) 
 		indices[i] = v_Indices[i];
 	}
 
-	return loader->loadToVAO(positions, p_count, texCoords, t_count, indices, i_count);
+	return loader->loadToVAO(positions, p_count, texCoords, t_count, normals, n_count, indices, i_count);
 }
 
 void OBJLoader::processVertex(const std::vector<std::string>& vertexTokens, const std::vector<glm::vec2>& v_TexCoords, const std::vector<glm::vec3>& v_Normals, std::vector<unsigned int>& v_Indices, float* texCoords, float* normals) {

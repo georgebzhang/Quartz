@@ -19,6 +19,7 @@
     <ClCompile Include="src\toolbox\Maths.cpp" />
     <ClCompile Include="src\entities\Camera.cpp" />
     <ClCompile Include="src\renderEngine\OBJLoader.cpp" />
+    <ClCompile Include="src\entities\Light.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\renderEngine\DisplayManager.h" />
@@ -278,6 +279,7 @@
     <ClInclude Include="src\toolbox\Maths.h" />
     <ClInclude Include="src\entities\Camera.h" />
     <ClInclude Include="src\renderEngine\OBJLoader.h" />
+    <ClInclude Include="src\entities\Light.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="res\shaders\fragmentShader.shader" />

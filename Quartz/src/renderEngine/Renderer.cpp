@@ -31,6 +31,7 @@ void Renderer::render(const Entity* entity, Shader* shader) const {
 	rawModel->getIB()->bind();
 	GLCall(glEnableVertexAttribArray(0));
 	GLCall(glEnableVertexAttribArray(1));
+	GLCall(glEnableVertexAttribArray(2));
 
 	glm::mat4 transformationMatrix = Maths::createTransformationMatrix(entity->getPosition(), entity->getRotation(), entity->getScale());
 	shader->setUniformMat4f("u_TransformationMatrix", transformationMatrix);
@@ -38,6 +39,7 @@ void Renderer::render(const Entity* entity, Shader* shader) const {
 	GLCall(glDrawElements(GL_TRIANGLES, rawModel->getIB()->getCount(), GL_UNSIGNED_INT, (const void*) 0));
 	GLCall(glDisableVertexAttribArray(0));
 	GLCall(glDisableVertexAttribArray(1));
+	GLCall(glDisableVertexAttribArray(2));
 	rawModel->getIB()->unbind();
 	rawModel->getVA()->unbind();
 }

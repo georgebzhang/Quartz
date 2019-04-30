@@ -1,15 +1,17 @@
 #version 330 core
 
-//in vec3 color;
-in vec2 v_texCoords;
+in vec2 v_TexCoords;
+in vec3 v_Normal;
+in vec3 v_ToLight;
 
 out vec4 out_Color;
 
-uniform vec4 u_Color;
 uniform sampler2D u_Texture;
+uniform vec3 u_LightColor;
 
 void main(void) {
-	//out_Color = vec4(color, 1.0);
-	//out_Color = u_Color;
-	out_Color = texture(u_Texture, v_texCoords);
+	vec3 unitNormal = normalize(v_Normal);
+	vec3 unitToLight = normalize(v_ToLight);
+	vec3 diffuse = max(dot(unitNormal, unitToLight), 0) * u_LightColor;
+	out_Color = vec4(diffuse, 1) * texture(u_Texture, v_TexCoords);
 }
