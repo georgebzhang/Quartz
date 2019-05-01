@@ -14,30 +14,30 @@
 
 #include <iostream>
 
-Camera* camera = new Camera(glm::vec3(0.0f, 3.0f, 0.0f));
+Camera camera(glm::vec3(0.0f, 3.0f, 0.0f));
 
 void keyCallback(GLFWwindow* window, int key, int scancode, int action, int mods) {
 	if (key == GLFW_KEY_ESCAPE) glfwSetWindowShouldClose(window, GLFW_TRUE);
-	if (key == GLFW_KEY_W) camera->translate(glm::vec3(0.0f, 0.0f, -0.5f));
-	if (key == GLFW_KEY_S) camera->translate(glm::vec3(0.0f, 0.0f, 0.5f));
-	if (key == GLFW_KEY_A) camera->translate(glm::vec3(-0.5f, 0.0f, 0.0f));
-	if (key == GLFW_KEY_D) camera->translate(glm::vec3(0.5f, 0.0f, 0.0f));
-	if (key == GLFW_KEY_Q) camera->translate(glm::vec3(0.0f, 0.5f, 0.0f));
-	if (key == GLFW_KEY_E) camera->translate(glm::vec3(0.0f, -0.5f, 0.0f));
+	if (key == GLFW_KEY_W) camera.translate(glm::vec3(0.0f, 0.0f, -0.5f));
+	if (key == GLFW_KEY_S) camera.translate(glm::vec3(0.0f, 0.0f, 0.5f));
+	if (key == GLFW_KEY_A) camera.translate(glm::vec3(-0.5f, 0.0f, 0.0f));
+	if (key == GLFW_KEY_D) camera.translate(glm::vec3(0.5f, 0.0f, 0.0f));
+	if (key == GLFW_KEY_Q) camera.translate(glm::vec3(0.0f, 0.5f, 0.0f));
+	if (key == GLFW_KEY_E) camera.translate(glm::vec3(0.0f, -0.5f, 0.0f));
 }
 
 int main(void) {
 	DisplayManager dm;
 	dm.open();
 
-	Loader* loader = new Loader();
+	Loader loader;
 
 	GLCall(glEnable(GL_BLEND));
 	GLCall(glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA));
 
-	RawModel* rawModel = OBJLoader::loadOBJModel("res/models/dragon.obj", loader);
-	Texture* texture = new Texture("res/textures/white.png");
-	TexturedModel* texturedModel = new TexturedModel(rawModel, texture);
+	RawModel* rawModel = OBJLoader::loadOBJModel("res/models/dragon.obj", &loader);
+	Texture texture("res/textures/white.png");
+	TexturedModel texturedModel(rawModel, &texture);
 
 	glm::vec3 intensity(1.0f, 1.0f, 1.0f);
 	intensity *= 500;
@@ -52,17 +52,17 @@ int main(void) {
 		glm::vec3 rotation(Maths::randFloat() * 180, Maths::randFloat() * 180, 0.0f);
 		glm::vec3 scale(1.0f, 1.0f, 1.0f);
 		scale *= Maths::randFloat() * 2;
-		dragons.emplace_back(new Entity(texturedModel, position, rotation, scale));
+		dragons.emplace_back(new Entity(&texturedModel, position, rotation, scale)); // new used here, since Entity(...) goes out of scope after for loop
 	}
 	
-	MasterRenderer renderer;
+	MasterRenderer masterRenderer;
 
 	while (dm.isOpen()) {
 		// render
 		for (Entity* dragon : dragons) {
-			renderer.processEntity(dragon);
+			masterRenderer.processEntity(dragon);
 		}
-		renderer.render(light, camera);
+		masterRenderer.render(light, &camera);
 
 		// finish loop
 		dm.finishLoop();
