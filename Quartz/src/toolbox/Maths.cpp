@@ -20,3 +20,7 @@ glm::mat4 Maths::createViewMatrix(const Camera* camera) {
 	matrix = glm::translate(matrix, -camera->getPosition());
 	return matrix;
 }
+
+float Maths::randFloat() {
+	return (float)rand() / RAND_MAX;
+}

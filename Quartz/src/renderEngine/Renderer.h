@@ -11,12 +11,13 @@ public:
 	Renderer(Shader* shader);
 	~Renderer() {}
 
-	void prepare() const;
-	//void render(const RawModel* model) const;
-	//void render(const TexturedModel* texturedModel) const;
-	void render(const Entity* entity, Shader* shader) const;
-	void draw(const VertexArray& va, const IndexBuffer& ib, const Shader& shader) const;
+	void clear() const;
+
+	void bindTexturedModel(const TexturedModel* texturedModel) const;
+	void unbindTexturedModel(const TexturedModel* texturedModel) const;
+	void bindEntity(const Entity* entity) const;
+	void render(std::unordered_map<TexturedModel*, std::vector<Entity*>> entities) const;
 
 private:
-
+	Shader* m_Shader;
 };
