@@ -36,7 +36,7 @@ private:
 	int m_Width, m_Height, m_BPP;
 
 	float m_ka = 0.3; // ambient reflection constant
-	float m_kd = 1; // diffuse reflection constant
+	float m_kd = 2; // diffuse reflection constant
 	float m_ks = 10; // specular reflection constant
-	float m_p = 100; // shininess constant
+	float m_p = 1000; // shininess constant
 };

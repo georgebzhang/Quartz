@@ -18,7 +18,7 @@ Renderer::Renderer(Shader* shader) : m_Shader(shader) {
 void Renderer::clear() const {
 	GLCall(glEnable(GL_DEPTH_TEST));
 	GLCall(glClear(GL_COLOR_BUFFER_BIT|GL_DEPTH_BUFFER_BIT)); // considers depth
-	GLCall(glClearColor(1, 0, 0, 1));
+	GLCall(glClearColor(0.8, 0, 0, 1));
 }
 
 void Renderer::bindTexturedModel(const TexturedModel* texturedModel) const {
