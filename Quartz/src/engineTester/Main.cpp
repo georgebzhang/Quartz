@@ -17,13 +17,14 @@
 Camera camera(glm::vec3(0.0f, 3.0f, 0.0f));
 
 void keyCallback(GLFWwindow* window, int key, int scancode, int action, int mods) {
+	float speed = 0.5;
 	if (key == GLFW_KEY_ESCAPE) glfwSetWindowShouldClose(window, GLFW_TRUE);
-	if (key == GLFW_KEY_W) camera.translate(glm::vec3(0.0f, 0.0f, -0.5f));
-	if (key == GLFW_KEY_S) camera.translate(glm::vec3(0.0f, 0.0f, 0.5f));
-	if (key == GLFW_KEY_A) camera.translate(glm::vec3(-0.5f, 0.0f, 0.0f));
-	if (key == GLFW_KEY_D) camera.translate(glm::vec3(0.5f, 0.0f, 0.0f));
-	if (key == GLFW_KEY_Q) camera.translate(glm::vec3(0.0f, 0.5f, 0.0f));
-	if (key == GLFW_KEY_E) camera.translate(glm::vec3(0.0f, -0.5f, 0.0f));
+	if (key == GLFW_KEY_W) camera.translate(speed * glm::vec3(0.0f, 0.0f, -1.0f));
+	if (key == GLFW_KEY_S) camera.translate(speed * glm::vec3(0.0f, 0.0f, 1.0f));
+	if (key == GLFW_KEY_A) camera.translate(speed * glm::vec3(-1.0f, 0.0f, 0.0f));
+	if (key == GLFW_KEY_D) camera.translate(speed * glm::vec3(1.0f, 0.0f, 0.0f));
+	if (key == GLFW_KEY_Q) camera.translate(speed * glm::vec3(0.0f, -1.0f, 0.0f));
+	if (key == GLFW_KEY_E) camera.translate(speed * glm::vec3(0.0f, 1.0f, 0.0f));
 }
 
 int main(void) {
@@ -32,21 +33,21 @@ int main(void) {
 
 	Loader loader;
 
-	GLCall(glEnable(GL_BLEND));
-	GLCall(glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA));
+	//GLCall(glEnable(GL_BLEND));
+	//GLCall(glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA));
 
 	RawModel* rawModel = OBJLoader::loadOBJModel("res/models/dragon.obj", &loader);
 	Texture texture("res/textures/white.png");
 	TexturedModel texturedModel(rawModel, &texture);
 
+	// light
 	glm::vec3 intensity(1.0f, 1.0f, 1.0f);
-	intensity *= 500;
-	glm::vec3 position2(0.0f, 0.0f, -20.0f);
+	intensity *= 700;
+	glm::vec3 position(0.0f, 0.0f, -20.0f);
 	glm::vec3 color(0.0f, 1.0f, 1.0f);
-	Light* light = new Light(intensity, position2, color);
+	Light light(intensity, position, color);
 
 	std::vector<Entity*> dragons;
-
 	for (int i = 0; i < 25; ++i) {
 		glm::vec3 position(Maths::randFloat() * 100 - 50, Maths::randFloat() * 100 - 50, Maths::randFloat() * -300);
 		glm::vec3 rotation(Maths::randFloat() * 180, Maths::randFloat() * 180, 0.0f);
@@ -62,7 +63,7 @@ int main(void) {
 		for (Entity* dragon : dragons) {
 			masterRenderer.processEntity(dragon);
 		}
-		masterRenderer.render(light, &camera);
+		masterRenderer.render(&light, &camera);
 
 		// finish loop
 		dm.finishLoop();

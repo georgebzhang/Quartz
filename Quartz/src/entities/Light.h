@@ -6,13 +6,13 @@
 
 class Light {
 public:
-	Light(glm::vec3 intensity, glm::vec3 position, glm::vec3 color) : m_Intensity(intensity), m_Position(position), m_Color(color) {}
+	Light(const glm::vec3& intensity, const glm::vec3& position, const glm::vec3& color) : m_Intensity(intensity), m_Position(position), m_Color(color) {}
 	~Light() {}
 
 	inline glm::vec3 getPosition() const { return m_Position; }
 	inline glm::vec3 getColor() const { return m_Color; }
-	inline void setPosition(glm::vec3 position) { m_Position = position; }
-	inline void setColor(glm::vec3 color) { m_Color = color; }
+	inline void setPosition(const glm::vec3& position) { m_Position = position; }
+	inline void setColor(const glm::vec3& color) { m_Color = color; }
 
 	void loadUniforms(Shader* shader) const;
 

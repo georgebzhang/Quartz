@@ -21,6 +21,7 @@
     <ClCompile Include="src\renderEngine\OBJLoader.cpp" />
     <ClCompile Include="src\entities\Light.cpp" />
     <ClCompile Include="src\renderEngine\MasterRenderer.cpp" />
+    <ClCompile Include="src\terrains\Terrain.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\renderEngine\DisplayManager.h" />
@@ -282,10 +283,9 @@
     <ClInclude Include="src\renderEngine\OBJLoader.h" />
     <ClInclude Include="src\entities\Light.h" />
     <ClInclude Include="src\renderEngine\MasterRenderer.h" />
+    <ClInclude Include="src\terrains\Terrain.h" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="res\shaders\fragmentShader.shader" />
-    <None Include="res\shaders\vertexShader.shader" />
     <None Include="src\vendor\glm\detail\func_common.inl" />
     <None Include="src\vendor\glm\detail\func_common_simd.inl" />
     <None Include="src\vendor\glm\detail\func_exponential.inl" />
@@ -418,6 +418,8 @@
     <None Include="src\vendor\glm\gtx\vector_angle.inl" />
     <None Include="src\vendor\glm\gtx\vector_query.inl" />
     <None Include="src\vendor\glm\gtx\wrap.inl" />
+    <None Include="res\shaders\entity.frag" />
+    <None Include="res\shaders\entity.vert" />
   </ItemGroup>
   <ItemGroup>
     <Image Include="res\textures\image.png" />

@@ -14,7 +14,7 @@ public:
 	void processEntity(Entity* entity);
 
 private:
-	Shader* m_Shader = new Shader("res/shaders/vertexShader.shader", "res/shaders/fragmentShader.shader");
+	Shader* m_Shader = new Shader("res/shaders/entity.vert", "res/shaders/entity.frag");
 	Renderer* m_Renderer = new Renderer(m_Shader);
 	std::unordered_map<TexturedModel*, std::vector<Entity*>> m_Entities;
 };
