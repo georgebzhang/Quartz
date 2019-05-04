@@ -14,7 +14,7 @@
 
 #include <iostream>
 
-Camera camera(glm::vec3(0, 3, 20));
+Camera camera(glm::vec3(0, 2, 0));
 
 void keyCallback(GLFWwindow* window, int key, int scancode, int action, int mods) {
 	float speed = 0.5;
@@ -38,15 +38,20 @@ int main(void) {
 	//GLCall(glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA));
 
 	// TexturedModel
-	RawModel* rawModel = OBJLoader::loadOBJModel("res/models/dragon.obj", &loader);
-	Texture texture("res/textures/white.png");
-	TexturedModel texturedModel(rawModel, &texture);
+	RawModel* rawModel = OBJLoader::loadOBJModel("res/models/tree.obj", &loader);
+	Texture entityTexture("res/textures/tree.png");
+	TexturedModel texturedModel(rawModel, &entityTexture);
 
 	// Entity
 	glm::vec3 entityPosition(0, 0, 0);
 	glm::vec3 entityRotation(0, 0, 0);
 	glm::vec3 entityScale(1, 1, 1);
 	Entity entity(&texturedModel, entityPosition, entityRotation, entityScale);
+
+	// Terrain
+	Texture terrainTexture("res/textures/grass.png");
+	Terrain terrain1(0, 0, &loader, &terrainTexture);
+	Terrain terrain2(1, 0, &loader, &terrainTexture);
 
 	// Light
 	glm::vec3 lightIntensity(1, 1, 1);
@@ -72,6 +77,7 @@ int main(void) {
 		//	masterRenderer.processEntity(dragon);
 		//}
 		masterRenderer.processEntity(&entity);
+		masterRenderer.processTerrain(&terrain1);
 		masterRenderer.render(&light, &camera);
 
 		// finish loop

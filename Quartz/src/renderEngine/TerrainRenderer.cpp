@@ -1,7 +1,7 @@
 #include "TerrainRenderer.h"
 #include "../toolbox/Maths.h"
 
-TerrainRenderer::TerrainRenderer(Shader * shader, const glm::mat4 & projectionMatrix) {
+TerrainRenderer::TerrainRenderer(Shader* shader, const glm::mat4 & projectionMatrix) : m_Shader(shader) {
 	shader->bind();
 	shader->setUniformMat4f("u_ProjectionMatrix", projectionMatrix);
 	shader->unbind();
