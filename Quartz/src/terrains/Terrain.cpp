@@ -1,8 +1,8 @@
 #include "Terrain.h"
 
-const float Terrain::SIZE = 800;
+const float Terrain::SIZE = 100;
 
-Terrain::Terrain(int x, int z, Loader* loader, Texture* texture) : m_X(x), m_Z(z), m_Position(glm::vec3(x, 0, z)), m_Texture(texture) {
+Terrain::Terrain(int x, int z, Loader* loader, Texture* texture) : m_X(x * SIZE), m_Z(z * SIZE), m_Position(glm::vec3(m_X, 0, m_Z)), m_Texture(texture) {
 	m_RawModel = loadTerrain(loader);
 }
 

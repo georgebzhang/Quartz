@@ -3,6 +3,7 @@
 in vec3 v_Position;
 in vec2 v_TexCoords;
 in vec3 v_Normal;
+in float v_Visibility;
 
 out vec4 out_Color;
 
@@ -21,6 +22,8 @@ uniform float u_kd; // diffuse reflection constant
 uniform float u_ks; // specular reflection constant
 uniform float u_p; // shininess constant
 
+uniform vec3 u_SkyColor;
+
 void main(void) {
 	vec3 n = normalize(v_Normal);
 	vec3 l = normalize(u_LightPosition - v_Position); // to light
@@ -35,4 +38,5 @@ void main(void) {
 
 	out_Color = (vec4(ambient, 1.0) + vec4(diffuse, 1.0)) * texture(u_Texture, v_TexCoords) + vec4(specular, 1.0);
 	out_Color.a = 1; // just in case u_ka, u_kd, u_ks scale alpha in above calculations
+	out_Color = mix(vec4(u_SkyColor, 1), out_Color, v_Visibility);
 }

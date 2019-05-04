@@ -19,8 +19,12 @@ public:
 	void processEntity(Entity* entity);
 	void processTerrain(Terrain* terrain);
 
+	void loadUniforms(Shader* shader) const;
+
 private:
 	static const float FOV, NEAR_PLANE, FAR_PLANE;
+
+	static const float SKY_R, SKY_G, SKY_B;
 
 	glm::mat4 m_ProjectionMatrix;
 

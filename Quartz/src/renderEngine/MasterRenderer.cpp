@@ -6,6 +6,10 @@ const float MasterRenderer::FOV = 70;
 const float MasterRenderer::NEAR_PLANE = 0.1f;
 const float MasterRenderer::FAR_PLANE = 1000;
 
+const float MasterRenderer::SKY_R = 0.5f;
+const float MasterRenderer::SKY_G = 0.5f;
+const float MasterRenderer::SKY_B = 0.5f;
+
 MasterRenderer::MasterRenderer() {
 	enableCulling();
 	m_ProjectionMatrix = glm::perspectiveFov(FOV, 640.0f * 2, 480.0f * 2, NEAR_PLANE, FAR_PLANE);
@@ -33,7 +37,7 @@ void MasterRenderer::disableCulling() {
 void MasterRenderer::clear() const {
 	GLCall(glEnable(GL_DEPTH_TEST));
 	GLCall(glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT)); // considers depth
-	GLCall(glClearColor(0.8, 0, 0, 1));
+	GLCall(glClearColor(SKY_R, SKY_G, SKY_B, 1));
 }
 
 void MasterRenderer::render(Light* light, Camera* camera) {
@@ -41,12 +45,14 @@ void MasterRenderer::render(Light* light, Camera* camera) {
 	m_EntityShader->bind();
 	light->loadUniforms(m_EntityShader);
 	camera->loadUniforms(m_EntityShader);
+	loadUniforms(m_EntityShader); // only sky color
 	m_EntityRenderer->render(m_Entities);
 	m_EntityShader->unbind();
 
 	m_TerrainShader->bind();
 	light->loadUniforms(m_TerrainShader);
 	camera->loadUniforms(m_TerrainShader);
+	loadUniforms(m_TerrainShader); // sky color
 	m_TerrainRenderer->render(m_Terrains);
 	m_TerrainShader->unbind();
 
@@ -65,4 +71,8 @@ void MasterRenderer::processEntity(Entity* entity) {
 
 void MasterRenderer::processTerrain(Terrain* terrain) {
 	m_Terrains.emplace_back(terrain);
+}
+
+void MasterRenderer::loadUniforms(Shader* shader) const {
+	shader->setUniform3fv("u_SkyColor", glm::vec3(SKY_R, SKY_G, SKY_B));
 }
