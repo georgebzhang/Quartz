@@ -11,6 +11,7 @@ public:
 
 	inline float getX() const { return m_X; }
 	inline float getZ() const { return m_Z; }
+	inline glm::vec3 getPosition() const { return m_Position; }
 	inline RawModel* getRawModel() const { return m_RawModel; }
 	inline Texture* getTexture() const { return m_Texture; }
 
@@ -19,6 +20,7 @@ private:
 	static const int VERTEX_SIDE_COUNT = 128;
 
 	float m_X, m_Z;
+	glm::vec3 m_Position;
 	RawModel* m_RawModel;
 	Texture* m_Texture;
 

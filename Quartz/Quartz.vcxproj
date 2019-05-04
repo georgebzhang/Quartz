@@ -33,7 +33,8 @@
     <ClCompile Include="src\renderEngine\Loader.cpp" />
     <ClCompile Include="src\renderEngine\MasterRenderer.cpp" />
     <ClCompile Include="src\renderEngine\OBJLoader.cpp" />
-    <ClCompile Include="src\renderEngine\Renderer.cpp" />
+    <ClCompile Include="src\renderEngine\EntityRenderer.cpp" />
+    <ClCompile Include="src\renderEngine\TerrainRenderer.cpp" />
     <ClCompile Include="src\shaders\Shader.cpp" />
     <ClCompile Include="src\terrains\Terrain.cpp" />
     <ClCompile Include="src\textures\Texture.cpp" />
@@ -55,7 +56,8 @@
     <ClInclude Include="src\renderEngine\Loader.h" />
     <ClInclude Include="src\renderEngine\MasterRenderer.h" />
     <ClInclude Include="src\renderEngine\OBJLoader.h" />
-    <ClInclude Include="src\renderEngine\Renderer.h" />
+    <ClInclude Include="src\renderEngine\EntityRenderer.h" />
+    <ClInclude Include="src\renderEngine\TerrainRenderer.h" />
     <ClInclude Include="src\shaders\Shader.h" />
     <ClInclude Include="src\terrains\Terrain.h" />
     <ClInclude Include="src\textures\Texture.h" />
@@ -304,8 +306,10 @@
     <ClInclude Include="src\vendor\stb_image\stb_image.h" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="res\shaders\entity.frag" />
-    <None Include="res\shaders\entity.vert" />
+    <None Include="res\shaders\entityFrag.shader" />
+    <None Include="res\shaders\entityVert.shader" />
+    <None Include="res\shaders\terrainFrag.shader" />
+    <None Include="res\shaders\terrainVert.shader" />
     <None Include="src\vendor\glm\detail\func_common.inl" />
     <None Include="src\vendor\glm\detail\func_common_simd.inl" />
     <None Include="src\vendor\glm\detail\func_exponential.inl" />

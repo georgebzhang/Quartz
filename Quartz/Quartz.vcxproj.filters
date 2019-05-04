@@ -4,7 +4,6 @@
     <ClCompile Include="src\renderEngine\DisplayManager.cpp" />
     <ClCompile Include="src\engineTester\Main.cpp" />
     <ClCompile Include="src\renderEngine\Loader.cpp" />
-    <ClCompile Include="src\renderEngine\Renderer.cpp" />
     <ClCompile Include="src\models\TexturedModel.cpp" />
     <ClCompile Include="src\textures\Texture.cpp" />
     <ClCompile Include="src\vendor\glm\detail\glm.cpp" />
@@ -22,11 +21,12 @@
     <ClCompile Include="src\entities\Light.cpp" />
     <ClCompile Include="src\renderEngine\MasterRenderer.cpp" />
     <ClCompile Include="src\terrains\Terrain.cpp" />
+    <ClCompile Include="src\renderEngine\EntityRenderer.cpp" />
+    <ClCompile Include="src\renderEngine\TerrainRenderer.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\renderEngine\DisplayManager.h" />
     <ClInclude Include="src\renderEngine\Loader.h" />
-    <ClInclude Include="src\renderEngine\Renderer.h" />
     <ClInclude Include="src\models\TexturedModel.h" />
     <ClInclude Include="src\textures\Texture.h" />
     <ClInclude Include="src\vendor\glm\detail\_features.hpp" />
@@ -284,6 +284,8 @@
     <ClInclude Include="src\entities\Light.h" />
     <ClInclude Include="src\renderEngine\MasterRenderer.h" />
     <ClInclude Include="src\terrains\Terrain.h" />
+    <ClInclude Include="src\renderEngine\EntityRenderer.h" />
+    <ClInclude Include="src\renderEngine\TerrainRenderer.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="src\vendor\glm\detail\func_common.inl" />
@@ -418,8 +420,10 @@
     <None Include="src\vendor\glm\gtx\vector_angle.inl" />
     <None Include="src\vendor\glm\gtx\vector_query.inl" />
     <None Include="src\vendor\glm\gtx\wrap.inl" />
-    <None Include="res\shaders\entity.frag" />
-    <None Include="res\shaders\entity.vert" />
+    <None Include="res\shaders\entityFrag.shader" />
+    <None Include="res\shaders\entityVert.shader" />
+    <None Include="res\shaders\terrainFrag.shader" />
+    <None Include="res\shaders\terrainVert.shader" />
   </ItemGroup>
   <ItemGroup>
     <Image Include="res\textures\image.png" />
