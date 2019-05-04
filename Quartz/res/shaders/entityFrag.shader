@@ -33,6 +33,9 @@ void main(void) {
 	vec3 diffuse = u_kd * I_falloff * max(dot(n, l), 0);
 	vec3 specular = u_ks * I_falloff * pow(max(dot(n, h), 0), u_p);
 
-	out_Color = (vec4(ambient, 1.0) + vec4(diffuse, 1.0)) * texture(u_Texture, v_TexCoords) + vec4(specular, 1.0);
+	vec4 texColor = texture(u_Texture, v_TexCoords);
+	if (texColor.a < 0.5) discard;
+
+	out_Color = (vec4(ambient, 1.0) + vec4(diffuse, 1.0)) * texColor + vec4(specular, 1.0);
 	out_Color.a = 1; // just in case u_ka, u_kd, u_ks scale alpha in above calculations
 }

@@ -7,8 +7,7 @@ const float MasterRenderer::NEAR_PLANE = 0.1f;
 const float MasterRenderer::FAR_PLANE = 1000;
 
 MasterRenderer::MasterRenderer() {
-	glEnable(GL_CULL_FACE);
-	glCullFace(GL_BACK); // optimization: does not render triangle that face inwards
+	enableCulling();
 	m_ProjectionMatrix = glm::perspectiveFov(FOV, 640.0f * 2, 480.0f * 2, NEAR_PLANE, FAR_PLANE);
 	m_EntityShader = new Shader("res/shaders/entityVert.shader", "res/shaders/entityFrag.shader");
 	m_EntityRenderer = new EntityRenderer(m_EntityShader, m_ProjectionMatrix);
@@ -20,6 +19,15 @@ MasterRenderer::~MasterRenderer() {
 	delete m_EntityShader;
 	delete m_EntityRenderer;
 	// handle hashmap deletion
+}
+
+void MasterRenderer::enableCulling() {
+	GLCall(glEnable(GL_CULL_FACE));
+	GLCall(glCullFace(GL_BACK)); // optimization: does not render triangle that face inwards
+}
+
+void MasterRenderer::disableCulling() {
+	GLCall(glDisable(GL_CULL_FACE));
 }
 
 void MasterRenderer::clear() const {

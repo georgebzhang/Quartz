@@ -11,6 +11,9 @@ public:
 	MasterRenderer();
 	~MasterRenderer();
 
+	static void enableCulling();
+	static void disableCulling();
+
 	void clear() const;
 	void render(Light* light, Camera* camera);
 	void processEntity(Entity* entity);

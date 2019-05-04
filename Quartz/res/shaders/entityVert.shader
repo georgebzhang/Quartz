@@ -13,9 +13,15 @@ uniform mat4 u_ProjectionMatrix;
 uniform mat4 u_ViewMatrix;
 uniform vec3 u_LightPosition;
 
+uniform float u_Has2DMesh;
+
 void main(void) {
 	v_Position = (u_TransformationMatrix * vec4(position, 1.0)).xyz;
 	gl_Position = u_ProjectionMatrix * u_ViewMatrix * vec4(v_Position, 1.0);
-	v_Normal = (u_TransformationMatrix * vec4(normal, 0)).xyz;
+
+	vec3 finalNormal = normal;
+	if (u_Has2DMesh > 0.5) finalNormal = vec3(0, 1, 0);
+
+	v_Normal = (u_TransformationMatrix * vec4(finalNormal, 0)).xyz;
 	v_TexCoords = texCoords;
 }

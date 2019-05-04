@@ -1,6 +1,7 @@
 #include "../errors/ErrorHandler.h"
 #include "EntityRenderer.h"
 #include "../toolbox/Maths.h"
+#include "MasterRenderer.h"
 
 #include <GL/glew.h>
 
@@ -12,6 +13,7 @@ EntityRenderer::EntityRenderer(Shader* shader, const glm::mat4& projectionMatrix
 
 void EntityRenderer::bindTexturedModel(const TexturedModel* texturedModel) const {
 	Texture* texture = texturedModel->getTexture();
+	if (texture->hasTransparency()) MasterRenderer::disableCulling();
 	texture->bind();
 	m_Shader->setUniform1i("u_Texture", 0); // read texture from slot 0
 	texture->loadUniforms(m_Shader);
@@ -24,6 +26,7 @@ void EntityRenderer::bindTexturedModel(const TexturedModel* texturedModel) const
 }
 
 void EntityRenderer::unbindTexturedModel(const TexturedModel* texturedModel) const {
+	MasterRenderer::enableCulling();
 	Texture* texture = texturedModel->getTexture();
 	texture->unbind();
 	RawModel* rawModel = texturedModel->getRawModel();

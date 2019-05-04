@@ -37,19 +37,40 @@ int main(void) {
 	//GLCall(glEnable(GL_BLEND));
 	//GLCall(glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA));
 
-	// TexturedModel
-	RawModel* rawModel = OBJLoader::loadOBJModel("res/models/tree.obj", &loader);
-	Texture entityTexture("res/textures/tree.png");
-	TexturedModel texturedModel(rawModel, &entityTexture);
+	// tree
+	RawModel* treeRawModel = OBJLoader::loadOBJModel("res/models/tree.obj", &loader);
+	Texture treeTexture("res/textures/tree.png");
+	TexturedModel treeTexturedModel(treeRawModel, &treeTexture);
+	glm::vec3 treePosition(10, 0, 10);
+	glm::vec3 treeRotation(0, 0, 0);
+	glm::vec3 treeScale(1, 1, 1);
+	treeScale *= 5;
+	Entity treeEntity(&treeTexturedModel, treePosition, treeRotation, treeScale);
 
-	// Entity
-	glm::vec3 entityPosition(0, 0, 0);
-	glm::vec3 entityRotation(0, 0, 0);
-	glm::vec3 entityScale(1, 1, 1);
-	Entity entity(&texturedModel, entityPosition, entityRotation, entityScale);
+	// grass
+	RawModel* grassRawModel = OBJLoader::loadOBJModel("res/models/grass.obj", &loader);
+	Texture grassTexture("res/textures/grass.png");
+	grassTexture.setHasTransparency(true);
+	grassTexture.setHas2DMesh(true);
+	TexturedModel grassTexturedModel(grassRawModel, &grassTexture);
+	glm::vec3 grassPosition(20, 0, 10);
+	glm::vec3 grassRotation(0, 0, 0);
+	glm::vec3 grassScale(1, 1, 1);
+	Entity grassEntity(&grassTexturedModel, grassPosition, grassRotation, grassScale);
+
+	// fern
+	RawModel* fernRawModel = OBJLoader::loadOBJModel("res/models/fern.obj", &loader);
+	Texture fernTexture("res/textures/fern.png");
+	fernTexture.setHasTransparency(true);
+	fernTexture.setHas2DMesh(true);
+	TexturedModel fernTexturedModel(fernRawModel, &fernTexture);
+	glm::vec3 fernPosition(10, 0, 20);
+	glm::vec3 fernRotation(0, 0, 0);
+	glm::vec3 fernScale(1, 1, 1);
+	Entity fernEntity(&fernTexturedModel, fernPosition, fernRotation, fernScale);
 
 	// Terrain
-	Texture terrainTexture("res/textures/grass.png");
+	Texture terrainTexture("res/textures/terrain.png");
 	Terrain terrain1(0, 0, &loader, &terrainTexture);
 	Terrain terrain2(1, 0, &loader, &terrainTexture);
 
@@ -76,7 +97,9 @@ int main(void) {
 		//for (Entity* dragon : dragons) {
 		//	masterRenderer.processEntity(dragon);
 		//}
-		masterRenderer.processEntity(&entity);
+		masterRenderer.processEntity(&treeEntity);
+		masterRenderer.processEntity(&grassEntity);
+		masterRenderer.processEntity(&fernEntity);
 		masterRenderer.processTerrain(&terrain1);
 		masterRenderer.render(&light, &camera);
 

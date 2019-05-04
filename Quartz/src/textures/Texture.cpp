@@ -40,6 +40,7 @@ void Texture::setConstants(float ka, float kd, float ks, float p) {
 }
 
 void Texture::loadUniforms(Shader* shader) const {
+	shader->setUniform1f("u_Has2DMesh", m_Has2DMesh);
 	shader->setUniform1f("u_ka", m_ka);
 	shader->setUniform1f("u_kd", m_kd);
 	shader->setUniform1f("u_ks", m_ks);
