@@ -55,8 +55,8 @@ int main(void) {
 
 	// Light
 	glm::vec3 lightIntensity(1, 1, 1);
-	lightIntensity *= 100;
-	glm::vec3 lightPosition(0, 0, 20);
+	lightIntensity *= 300;
+	glm::vec3 lightPosition(20, 20, 20);
 	glm::vec3 lightColor(0, 1, 1);
 	Light light(lightIntensity, lightPosition, lightColor);
 
