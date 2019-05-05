@@ -2,13 +2,14 @@
 
 const float Terrain::SIZE = 100;
 
-Terrain::Terrain(int x, int z, Loader* loader, Texture* texture) : m_X(x * SIZE), m_Z(z * SIZE), m_Position(glm::vec3(m_X, 0, m_Z)), m_Texture(texture) {
+Terrain::Terrain(int x, int z, Loader* loader, TexturePack* texturePack, Texture* blendMap) : m_X(x * SIZE), m_Z(z * SIZE), m_Position(glm::vec3(m_X, 0, m_Z)), m_TexturePack(texturePack), m_BlendMap(blendMap) {
 	m_RawModel = loadTerrain(loader);
 }
 
 Terrain::~Terrain() {
 	delete m_RawModel;
-	delete m_Texture;
+	delete m_TexturePack;
+	delete m_BlendMap;
 }
 
 RawModel* Terrain::loadTerrain(Loader* loader) {

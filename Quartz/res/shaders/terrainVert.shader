@@ -25,7 +25,7 @@ void main(void) {
 	gl_Position = u_ProjectionMatrix * positionRelativeToCam;
 
 	v_Normal = (u_TransformationMatrix * vec4(normal, 0)).xyz;
-	v_TexCoords = texCoords * 40;
+	v_TexCoords = texCoords;
 
 	float distance = length(positionRelativeToCam.xyz);
 	v_Visibility = exp(-pow((distance*density), gradient));

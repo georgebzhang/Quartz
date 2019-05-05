@@ -2,9 +2,10 @@
 #include "../toolbox/Maths.h"
 
 TerrainRenderer::TerrainRenderer(Shader* shader, const glm::mat4 & projectionMatrix) : m_Shader(shader) {
-	shader->bind();
-	shader->setUniformMat4f("u_ProjectionMatrix", projectionMatrix);
-	shader->unbind();
+	m_Shader->bind();
+	m_Shader->setUniformMat4f("u_ProjectionMatrix", projectionMatrix);
+	loadUniforms(m_Shader); // sampler2Ds
+	m_Shader->unbind();
 }
 
 void TerrainRenderer::render(const std::vector<Terrain*>& terrains) {
@@ -16,11 +17,36 @@ void TerrainRenderer::render(const std::vector<Terrain*>& terrains) {
 	}
 }
 
+void TerrainRenderer::bindTextures(const Terrain* terrain) const {
+	TexturePack* texturePack = terrain->getTexturePack();
+	Texture* backgroundTexture = texturePack->getBackgroundTexture();
+	backgroundTexture->bind();
+	//m_Shader->setUniform1i("u_BackgroundTexture", 0);
+	backgroundTexture->loadUniforms(m_Shader);
+
+	Texture* rTexture = texturePack->getRTexture();
+	rTexture->bind(1);
+	//m_Shader->setUniform1i("u_RTexture", 1);
+	rTexture->loadUniforms(m_Shader);
+
+	Texture* gTexture = texturePack->getGTexture();
+	gTexture->bind(2);
+	//m_Shader->setUniform1i("u_GTexture", 2);
+	gTexture->loadUniforms(m_Shader);
+
+	Texture* bTexture = texturePack->getBTexture();
+	bTexture->bind(3);
+	//m_Shader->setUniform1i("u_BTexture", 3);
+	bTexture->loadUniforms(m_Shader);
+
+	Texture* blendMap = terrain->getBlendMap();
+	blendMap->bind(4);
+	//m_Shader->setUniform1i("u_BlendMap", 4);
+	blendMap->loadUniforms(m_Shader);
+}
+
 void TerrainRenderer::bindTexturedModel(const Terrain* terrain) const {
-	Texture* texture = terrain->getTexture();
-	texture->bind();
-	m_Shader->setUniform1i("u_Texture", 0); // read texture from slot 0
-	texture->loadUniforms(m_Shader);
+	bindTextures(terrain);
 	RawModel* rawModel = terrain->getRawModel();
 	rawModel->getVA()->bind();
 	rawModel->getIB()->bind();
@@ -29,9 +55,17 @@ void TerrainRenderer::bindTexturedModel(const Terrain* terrain) const {
 	GLCall(glEnableVertexAttribArray(2));
 }
 
+void TerrainRenderer::unbindTextures(const Terrain* terrain) const {
+	TexturePack* texturePack = terrain->getTexturePack();
+	texturePack->getBackgroundTexture()->unbind();
+	texturePack->getRTexture()->unbind();
+	texturePack->getGTexture()->unbind();
+	texturePack->getBTexture()->unbind();
+	terrain->getBlendMap()->unbind();
+}
+
 void TerrainRenderer::unbindTexturedModel(const Terrain* terrain) const {
-	Texture* texture = terrain->getTexture();
-	texture->unbind();
+	unbindTextures(terrain);
 	RawModel* rawModel = terrain->getRawModel();
 	GLCall(glDisableVertexAttribArray(0));
 	GLCall(glDisableVertexAttribArray(1));
@@ -43,4 +77,12 @@ void TerrainRenderer::unbindTexturedModel(const Terrain* terrain) const {
 void TerrainRenderer::bindTerrain(const Terrain* terrain) const {
 	glm::mat4 transformationMatrix = Maths::createTransformationMatrix(terrain->getPosition(), glm::vec3(0, 0, 0), glm::vec3(1, 1, 1));
 	m_Shader->setUniformMat4f("u_TransformationMatrix", transformationMatrix);
+}
+
+void TerrainRenderer::loadUniforms(Shader* shader) const {
+	m_Shader->setUniform1i("u_BackgroundTexture", 0);
+	m_Shader->setUniform1i("u_RTexture", 1);
+	m_Shader->setUniform1i("u_GTexture", 2);
+	m_Shader->setUniform1i("u_BTexture", 3);
+	m_Shader->setUniform1i("u_BlendMap", 4);
 }

@@ -31,11 +31,18 @@ void keyCallback(GLFWwindow* window, int key, int scancode, int action, int mods
 int main(void) {
 	DisplayManager dm;
 	dm.open();
+	//GLCall(glEnable(GL_BLEND));
+	//GLCall(glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA));
 
 	Loader loader;
 
-	//GLCall(glEnable(GL_BLEND));
-	//GLCall(glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA));
+	Texture backgroundTexture("res/textures/grassy.png");
+	backgroundTexture.setConstants(0.3, 2, 0, 0);
+	Texture rTexture("res/textures/dirt.png");
+	Texture gTexture("res/textures/pinkFlowers.png");
+	Texture bTexture("res/textures/path.png");
+	TexturePack texturePack(&backgroundTexture, &rTexture, &gTexture, &bTexture);
+	Texture blendMap("res/textures/blendMap.png");
 
 	int side_count = 5;
 	int separation = 50;
@@ -82,7 +89,7 @@ int main(void) {
 	std::vector<Terrain*> terrains;
 	for (int j = -2; j < 0; ++j) {
 		for (int i = 0; i < 2; ++i) {
-			terrains.emplace_back(new Terrain(i, j, &loader, &terrainTexture));
+			terrains.emplace_back(new Terrain(i, j, &loader, &texturePack, &blendMap));
 		}
 	}
 

@@ -13,7 +13,13 @@ public:
 private:
 	Shader* m_Shader;
 
+	void bindTextures(const Terrain* terrain) const;
 	void bindTexturedModel(const Terrain* terrain) const;
+
+	void unbindTextures(const Terrain* terrain) const;
 	void unbindTexturedModel(const Terrain* terrain) const;
+
 	void bindTerrain(const Terrain* terrain) const;
+
+	void loadUniforms(Shader* shader) const;
 };

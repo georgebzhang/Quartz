@@ -38,6 +38,7 @@
     <ClCompile Include="src\shaders\Shader.cpp" />
     <ClCompile Include="src\terrains\Terrain.cpp" />
     <ClCompile Include="src\textures\Texture.cpp" />
+    <ClCompile Include="src\textures\TexturePack.cpp" />
     <ClCompile Include="src\toolbox\Maths.cpp" />
     <ClCompile Include="src\vendor\glm\detail\glm.cpp" />
     <ClCompile Include="src\vendor\stb_image\stb_image.cpp" />
@@ -61,6 +62,7 @@
     <ClInclude Include="src\shaders\Shader.h" />
     <ClInclude Include="src\terrains\Terrain.h" />
     <ClInclude Include="src\textures\Texture.h" />
+    <ClInclude Include="src\textures\TexturePack.h" />
     <ClInclude Include="src\toolbox\Maths.h" />
     <ClInclude Include="src\vendor\glm\common.hpp" />
     <ClInclude Include="src\vendor\glm\detail\compute_common.hpp" />

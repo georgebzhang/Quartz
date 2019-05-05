@@ -5,8 +5,6 @@ in vec2 v_TexCoords;
 in vec3 v_Normal;
 in float v_Visibility;
 
-out vec4 out_Color;
-
 // Camera
 uniform vec3 u_CamPosition;
 
@@ -39,7 +37,7 @@ void main(void) {
 	vec4 texColor = texture(u_Texture, v_TexCoords);
 	if (texColor.a < 0.5) discard;
 
-	out_Color = (vec4(ambient, 1) + vec4(diffuse, 1)) * texColor + vec4(specular, 1);
-	out_Color.a = 1; // just in case u_ka, u_kd, u_ks scale alpha in above calculations
-	out_Color = mix(vec4(u_SkyColor, 1), out_Color, v_Visibility);
+	gl_FragColor = (vec4(ambient, 1) + vec4(diffuse, 1)) * texColor + vec4(specular, 1);
+	gl_FragColor.a = 1; // just in case u_ka, u_kd, u_ks scale alpha in above calculations
+	gl_FragColor = mix(vec4(u_SkyColor, 1), gl_FragColor, v_Visibility);
 }

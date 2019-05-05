@@ -6,9 +6,9 @@
 #include <GL/glew.h>
 
 EntityRenderer::EntityRenderer(Shader* shader, const glm::mat4& projectionMatrix) : m_Shader(shader) {
-	shader->bind();
-	shader->setUniformMat4f("u_ProjectionMatrix", projectionMatrix);
-	shader->unbind();
+	m_Shader->bind();
+	m_Shader->setUniformMat4f("u_ProjectionMatrix", projectionMatrix);
+	m_Shader->unbind();
 }
 
 void EntityRenderer::bindTexturedModel(const TexturedModel* texturedModel) const {

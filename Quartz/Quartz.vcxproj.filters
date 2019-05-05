@@ -23,6 +23,7 @@
     <ClCompile Include="src\terrains\Terrain.cpp" />
     <ClCompile Include="src\renderEngine\EntityRenderer.cpp" />
     <ClCompile Include="src\renderEngine\TerrainRenderer.cpp" />
+    <ClCompile Include="src\textures\TexturePack.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\renderEngine\DisplayManager.h" />
@@ -286,6 +287,7 @@
     <ClInclude Include="src\terrains\Terrain.h" />
     <ClInclude Include="src\renderEngine\EntityRenderer.h" />
     <ClInclude Include="src\renderEngine\TerrainRenderer.h" />
+    <ClInclude Include="src\textures\TexturePack.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="src\vendor\glm\detail\func_common.inl" />
