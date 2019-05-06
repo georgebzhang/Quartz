@@ -7,7 +7,7 @@
 class Entity {
 public:
 	Entity(TexturedModel* texturedModel, glm::vec3 position, glm::vec3 rotation, glm::vec3 scale) : m_TexturedModel(texturedModel), m_Position(position), m_Rotation(rotation), m_Scale(scale) {}
-	~Entity();
+	virtual ~Entity();
 
 	inline TexturedModel* getTexturedModel() const { return m_TexturedModel; }
 	inline glm::vec3 getPosition() const { return m_Position; }
@@ -16,6 +16,7 @@ public:
 
 	inline void setTexturedModel(TexturedModel* texturedModel) { m_TexturedModel = texturedModel; }
 	inline void setPosition(glm::vec3 position) { m_Position = position; }
+	inline void setPositionY(float y) { m_Position.y = y; }
 	inline void setRotation(glm::vec3 rotation) { m_Rotation = rotation; }
 	inline void setScale(glm::vec3 scale) { m_Scale = scale; }
 

@@ -3,7 +3,12 @@
 
 #include <iostream>
 
+GLFWwindow* DisplayManager::m_Window;
+std::chrono::time_point<std::chrono::steady_clock> DisplayManager::lastFrameTime;
+std::chrono::duration<float> DisplayManager::delta;
+
 void keyCallback(GLFWwindow* window, int key, int scancode, int action, int mods);
+//void cursorPositionCallback(GLFWwindow* window, double xpos, double ypos);
 
 void DisplayManager::open() {
 	/* Initialize the library */
@@ -21,6 +26,8 @@ void DisplayManager::open() {
 	glfwSetKeyCallback(m_Window, keyCallback);
 	glfwSetInputMode(m_Window, GLFW_STICKY_KEYS, GLFW_TRUE);
 
+	//glfwSetCursorPosCallback(m_Window, cursorPositionCallback);
+
 	//glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 3);
 	//glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 3);
 	//glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE); // setting OpenGL profile to CORE instead of COMPAT
@@ -34,6 +41,8 @@ void DisplayManager::open() {
 		std::cout << "GLEW Error!" << std::endl;
 
 	std::cout << glGetString(GL_VERSION) << std::endl;
+
+	lastFrameTime = std::chrono::high_resolution_clock::now();
 }
 
 void DisplayManager::finishLoop() {
@@ -46,4 +55,8 @@ void DisplayManager::finishLoop() {
 
 	/* Poll for and process events */
 	glfwPollEvents();
+
+	auto currentFrameTime = std::chrono::high_resolution_clock::now();
+	delta = currentFrameTime - lastFrameTime;
+	lastFrameTime = currentFrameTime;
 }

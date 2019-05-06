@@ -11,38 +11,56 @@
 #include "../renderEngine/OBJLoader.h"
 #include "../entities/Light.h"
 #include "../renderEngine/MasterRenderer.h"
+#include "../entities/Player.h"
 
 #include <iostream>
 
+Player* player;
 Camera camera(glm::vec3(0, 2, 0));
 
 void keyCallback(GLFWwindow* window, int key, int scancode, int action, int mods) {
-	float speed = 3;
 	if (key == GLFW_KEY_ESCAPE) glfwSetWindowShouldClose(window, GLFW_TRUE);
-	if (key == GLFW_KEY_W) camera.translate(speed * glm::vec3(0, 0, -1));
-	if (key == GLFW_KEY_S) camera.translate(speed * glm::vec3(0, 0, 1));
-	if (key == GLFW_KEY_A) camera.translate(speed * glm::vec3(-1, 0, 0));
-	if (key == GLFW_KEY_D) camera.translate(speed * glm::vec3(1, 0, 0));
-	if (key == GLFW_KEY_Q) camera.translate(speed * glm::vec3(0, -1, 0));
-	if (key == GLFW_KEY_E) camera.translate(speed * glm::vec3(0, 1, 0));
-	if (key == GLFW_KEY_E) camera.translate(speed * glm::vec3(0, 1, 0));
+
+	if (key == GLFW_KEY_W) player->run(true);
+	else if (key == GLFW_KEY_S) player->run(false);
+	else player->stopMove();
+
+	if (key == GLFW_KEY_A) player->turn(true);
+	else if (key == GLFW_KEY_D) player->turn(false);
+	else player->stopTurn();
+
+	if (key == GLFW_KEY_SPACE) player->jump();
+
+	float speed = 3;
+	if (key == GLFW_KEY_I) camera.translate(speed * glm::vec3(0, 0, -1));
+	if (key == GLFW_KEY_K) camera.translate(speed * glm::vec3(0, 0, 1));
+	if (key == GLFW_KEY_J) camera.translate(speed * glm::vec3(-1, 0, 0));
+	if (key == GLFW_KEY_L) camera.translate(speed * glm::vec3(1, 0, 0));
+	if (key == GLFW_KEY_U) camera.translate(speed * glm::vec3(0, -1, 0));
+	if (key == GLFW_KEY_O) camera.translate(speed * glm::vec3(0, 1, 0));
 }
 
 int main(void) {
-	DisplayManager dm;
-	dm.open();
+	DisplayManager::open();
 	//GLCall(glEnable(GL_BLEND));
 	//GLCall(glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA));
-
 	Loader loader;
 
 	Texture backgroundTexture("res/textures/grassy.png");
-	backgroundTexture.setConstants(0.3, 2, 0, 0);
 	Texture rTexture("res/textures/dirt.png");
 	Texture gTexture("res/textures/pinkFlowers.png");
 	Texture bTexture("res/textures/path.png");
 	TexturePack texturePack(&backgroundTexture, &rTexture, &gTexture, &bTexture);
 	Texture blendMap("res/textures/blendMap.png");
+
+	RawModel* playerRawModel = OBJLoader::loadOBJModel("res/models/stanfordBunny.obj", &loader);
+	Texture playerTexture("res/textures/white.png");
+	TexturedModel playerTexturedModel(playerRawModel, &playerTexture);
+	glm::vec3 playerPosition(20, 0, -20);
+	glm::vec3 playerRotation(0, 0, 0);
+	glm::vec3 playerScale(1, 1, 1);
+	playerScale *= 0.5;
+	player = new Player(&playerTexturedModel, playerPosition, playerRotation, playerScale);
 
 	int side_count = 5;
 	int separation = 50;
@@ -96,14 +114,16 @@ int main(void) {
 	// Light
 	glm::vec3 lightIntensity(1, 1, 1);
 	lightIntensity *= 300;
-	glm::vec3 lightPosition(20, 20, 20);
-	glm::vec3 lightColor(0, 1, 1);
+	glm::vec3 lightPosition(20, 20, -20);
+	glm::vec3 lightColor(1, 1, 1);
 	Light light(lightIntensity, lightPosition, lightColor);
 	
 	MasterRenderer masterRenderer;
 
-	while (dm.isOpen()) {
+	while (DisplayManager::isOpen()) {
 		// render
+		player->move();
+		masterRenderer.processEntity(player);
 		for (Entity* tree : trees) masterRenderer.processEntity(tree);
 		for (Entity* grass : grasses) masterRenderer.processEntity(grass);
 		for (Entity* fern : ferns) masterRenderer.processEntity(fern);
@@ -111,8 +131,8 @@ int main(void) {
 		masterRenderer.render(&light, &camera);
 
 		// finish loop
-		dm.finishLoop();
+		DisplayManager::finishLoop();
 	}
 
-	dm.close();
+	DisplayManager::close();
 }
