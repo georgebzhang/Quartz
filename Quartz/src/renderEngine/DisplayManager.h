@@ -13,7 +13,8 @@ public:
 	static void finishLoop();
 	static void close() { glfwTerminate(); }
 
-	inline static float getFrameDuration() { return delta.count(); }
+	//inline static float getFrameDuration() { return delta.count(); }
+	inline static float getFrameDuration() { return m_DeltaTime; }
 
 private:
 	static GLFWwindow* m_Window;
@@ -21,6 +22,8 @@ private:
 	static const int WIDTH = 640 * DIM_SCALE;
 	static const int HEIGHT = 480 * DIM_SCALE;
 
-	static std::chrono::time_point<std::chrono::steady_clock> lastFrameTime;
-	static std::chrono::duration<float> delta;
+	//static std::chrono::time_point<std::chrono::steady_clock> lastFrameTime;
+	//static std::chrono::duration<float> delta;
+	static float m_LastFrameTime;
+	static float m_DeltaTime;
 };

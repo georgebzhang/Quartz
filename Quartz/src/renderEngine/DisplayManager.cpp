@@ -4,8 +4,10 @@
 #include <iostream>
 
 GLFWwindow* DisplayManager::m_Window;
-std::chrono::time_point<std::chrono::steady_clock> DisplayManager::lastFrameTime;
-std::chrono::duration<float> DisplayManager::delta;
+//std::chrono::time_point<std::chrono::steady_clock> DisplayManager::lastFrameTime;
+//std::chrono::duration<float> DisplayManager::delta;
+float DisplayManager::m_LastFrameTime = 0.0f;
+float DisplayManager::m_DeltaTime = 0.0f;
 
 void keyCallback(GLFWwindow* window, int key, int scancode, int action, int mods);
 //void cursorPositionCallback(GLFWwindow* window, double xpos, double ypos);
@@ -42,7 +44,8 @@ void DisplayManager::open() {
 
 	std::cout << glGetString(GL_VERSION) << std::endl;
 
-	lastFrameTime = std::chrono::high_resolution_clock::now();
+	//lastFrameTime = std::chrono::high_resolution_clock::now();
+	m_LastFrameTime = glfwGetTime();
 }
 
 void DisplayManager::finishLoop() {
@@ -56,7 +59,10 @@ void DisplayManager::finishLoop() {
 	/* Poll for and process events */
 	glfwPollEvents();
 
-	auto currentFrameTime = std::chrono::high_resolution_clock::now();
-	delta = currentFrameTime - lastFrameTime;
-	lastFrameTime = currentFrameTime;
+	//auto currentFrameTime = std::chrono::high_resolution_clock::now();
+	//delta = currentFrameTime - lastFrameTime;
+	//lastFrameTime = currentFrameTime;
+	float currentFrameTime = glfwGetTime();
+	m_DeltaTime = currentFrameTime - m_LastFrameTime;
+	m_LastFrameTime = currentFrameTime;
 }
