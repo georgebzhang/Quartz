@@ -19,25 +19,69 @@ Player* player;
 Camera camera(glm::vec3(0, 2, 0));
 
 void keyCallback(GLFWwindow* window, int key, int scancode, int action, int mods) {
-	if (key == GLFW_KEY_ESCAPE) glfwSetWindowShouldClose(window, GLFW_TRUE);
-
-	if (key == GLFW_KEY_W) player->run(true);
-	else if (key == GLFW_KEY_S) player->run(false);
-	else player->stopMove();
-
-	if (key == GLFW_KEY_A) player->turn(true);
-	else if (key == GLFW_KEY_D) player->turn(false);
-	else player->stopTurn();
-
-	if (key == GLFW_KEY_SPACE) player->jump();
-
 	float speed = 3;
-	if (key == GLFW_KEY_I) camera.translate(speed * glm::vec3(0, 0, -1));
-	if (key == GLFW_KEY_K) camera.translate(speed * glm::vec3(0, 0, 1));
-	if (key == GLFW_KEY_J) camera.translate(speed * glm::vec3(-1, 0, 0));
-	if (key == GLFW_KEY_L) camera.translate(speed * glm::vec3(1, 0, 0));
-	if (key == GLFW_KEY_U) camera.translate(speed * glm::vec3(0, -1, 0));
-	if (key == GLFW_KEY_O) camera.translate(speed * glm::vec3(0, 1, 0));
+	switch (key) {
+	case GLFW_KEY_ESCAPE:
+		glfwSetWindowShouldClose(window, GLFW_TRUE);
+		break;
+
+	// player
+	case GLFW_KEY_W:
+		player->run(true);
+		switch (action) {
+		case GLFW_RELEASE:
+			player->stopMove();
+			break;
+		}
+		break;
+	case GLFW_KEY_S:
+		player->run(false);
+		switch (action) {
+		case GLFW_RELEASE:
+			player->stopMove();
+			break;
+		}
+		break;
+	case GLFW_KEY_A:
+		player->turn(true);
+		switch (action) {
+		case GLFW_RELEASE:
+			player->stopTurn();
+			break;
+		}
+		break;
+	case GLFW_KEY_D:
+		player->turn(false);
+		switch (action) {
+		case GLFW_RELEASE:
+			player->stopTurn();
+			break;
+		}
+		break;
+	case GLFW_KEY_SPACE:
+		player->jump();
+		break;
+
+	// camera
+	case GLFW_KEY_UP:
+		camera.translate(speed * glm::vec3(0, 0, -1));
+		break;
+	case GLFW_KEY_DOWN:
+		camera.translate(speed * glm::vec3(0, 0, 1));
+		break;
+	case GLFW_KEY_LEFT:
+		camera.translate(speed * glm::vec3(-1, 0, 0));
+		break;
+	case GLFW_KEY_RIGHT:
+		camera.translate(speed * glm::vec3(1, 0, 0));
+		break;
+	case GLFW_KEY_PAGE_UP:
+		camera.translate(speed * glm::vec3(0, -1, 0));
+		break;
+	case GLFW_KEY_PAGE_DOWN:
+		camera.translate(speed * glm::vec3(0, 1, 0));
+		break;
+	}
 }
 
 int main(void) {

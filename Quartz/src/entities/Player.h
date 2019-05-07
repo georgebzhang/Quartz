@@ -8,7 +8,7 @@ public:
 	~Player() {}
 
 	void run(bool forward);
-	inline void stopMove() { m_VertSpeed = 0; }
+	inline void stopMove() { m_HorizSpeed = 0; }
 	void turn(bool forward);
 	inline void stopTurn() { m_RotateSpeed = 0; }
 	void jump();
