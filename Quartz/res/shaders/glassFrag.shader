@@ -22,6 +22,13 @@ uniform float u_p; // shininess constant
 
 uniform vec3 u_SkyColor;
 
+uniform samplerCube u_SkyBox;
+
+const float nAir = 1;
+const float nGlass = 1.51714;
+const float eta = nAir / nGlass;
+const float R0 = pow(nAir - nGlass, 2) / pow(nAir + nGlass, 2);
+
 void main(void) {
 	vec3 n = normalize(v_Normal);
 	vec3 l = normalize(u_LightPosition - v_Position); // to light
@@ -35,9 +42,10 @@ void main(void) {
 	vec3 specular = u_ks * I_falloff * pow(max(dot(n, h), 0), u_p);
 
 	vec4 texColor = texture(u_Texture, v_TexCoords);
-	if (texColor.a < 0.5) discard;
+	//if (texColor.a < 0.5) discard;
 
-	gl_FragColor = (vec4(ambient, 1) + vec4(diffuse, 1)) * texColor + vec4(specular, 1);
+	gl_FragColor = (vec4(ambient, 1) + vec4(diffuse, 1) + vec4(specular, 1)) * texColor;
 	gl_FragColor.a = 1; // just in case u_ka, u_kd, u_ks scale alpha in above calculations
 	gl_FragColor = mix(vec4(u_SkyColor, 1), gl_FragColor, v_Visibility);
+	gl_FragColor.a = 0.5;
 }

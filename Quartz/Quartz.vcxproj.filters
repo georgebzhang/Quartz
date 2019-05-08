@@ -25,6 +25,7 @@
     <ClCompile Include="src\renderEngine\TerrainRenderer.cpp" />
     <ClCompile Include="src\textures\TexturePack.cpp" />
     <ClCompile Include="src\entities\Player.cpp" />
+    <ClCompile Include="src\textures\CubeMap.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\renderEngine\DisplayManager.h" />
@@ -290,6 +291,7 @@
     <ClInclude Include="src\renderEngine\TerrainRenderer.h" />
     <ClInclude Include="src\textures\TexturePack.h" />
     <ClInclude Include="src\entities\Player.h" />
+    <ClInclude Include="src\textures\CubeMap.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="src\vendor\glm\detail\func_common.inl" />
@@ -428,6 +430,8 @@
     <None Include="res\shaders\entityVert.shader" />
     <None Include="res\shaders\terrainFrag.shader" />
     <None Include="res\shaders\terrainVert.shader" />
+    <None Include="res\shaders\glassVert.shader" />
+    <None Include="res\shaders\glassFrag.shader" />
   </ItemGroup>
   <ItemGroup>
     <Image Include="res\textures\image.png" />

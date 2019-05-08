@@ -13,7 +13,7 @@ const float MasterRenderer::SKY_B = 0.5f;
 MasterRenderer::MasterRenderer() {
 	enableCulling();
 	m_ProjectionMatrix = glm::perspectiveFov(FOV, 640.0f * 2, 480.0f * 2, NEAR_PLANE, FAR_PLANE);
-	m_EntityShader = new Shader("res/shaders/entityVert.shader", "res/shaders/entityFrag.shader");
+	m_EntityShader = new Shader("res/shaders/glassVert.shader", "res/shaders/glassFrag.shader");
 	m_EntityRenderer = new EntityRenderer(m_EntityShader, m_ProjectionMatrix);
 	m_TerrainShader = new Shader("res/shaders/terrainVert.shader", "res/shaders/terrainFrag.shader");
 	m_TerrainRenderer = new TerrainRenderer(m_TerrainShader, m_ProjectionMatrix);
@@ -42,6 +42,13 @@ void MasterRenderer::clear() const {
 
 void MasterRenderer::render(Light* light, Camera* camera) {
 	clear();
+	m_TerrainShader->bind();
+	light->loadUniforms(m_TerrainShader);
+	camera->loadUniforms(m_TerrainShader);
+	loadUniforms(m_TerrainShader); // sky color
+	m_TerrainRenderer->render(m_Terrains);
+	m_TerrainShader->unbind();
+
 	m_EntityShader->bind();
 	light->loadUniforms(m_EntityShader);
 	camera->loadUniforms(m_EntityShader);
@@ -49,12 +56,6 @@ void MasterRenderer::render(Light* light, Camera* camera) {
 	m_EntityRenderer->render(m_Entities);
 	m_EntityShader->unbind();
 
-	m_TerrainShader->bind();
-	light->loadUniforms(m_TerrainShader);
-	camera->loadUniforms(m_TerrainShader);
-	loadUniforms(m_TerrainShader); // sky color
-	m_TerrainRenderer->render(m_Terrains);
-	m_TerrainShader->unbind();
 
 	m_Entities.clear();
 	m_Terrains.clear();

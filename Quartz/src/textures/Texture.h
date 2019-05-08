@@ -44,6 +44,6 @@ private:
 
 	float m_ka = 0.3; // ambient reflection constant
 	float m_kd = 2; // diffuse reflection constant
-	float m_ks = 10; // specular reflection constant
-	float m_p = 1000; // shininess constant
+	float m_ks = 100; // specular reflection constant
+	float m_p = 100; // shininess constant
 };

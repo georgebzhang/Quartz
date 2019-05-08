@@ -38,6 +38,7 @@
     <ClCompile Include="src\renderEngine\TerrainRenderer.cpp" />
     <ClCompile Include="src\shaders\Shader.cpp" />
     <ClCompile Include="src\terrains\Terrain.cpp" />
+    <ClCompile Include="src\textures\CubeMap.cpp" />
     <ClCompile Include="src\textures\Texture.cpp" />
     <ClCompile Include="src\textures\TexturePack.cpp" />
     <ClCompile Include="src\toolbox\Maths.cpp" />
@@ -63,6 +64,7 @@
     <ClInclude Include="src\renderEngine\TerrainRenderer.h" />
     <ClInclude Include="src\shaders\Shader.h" />
     <ClInclude Include="src\terrains\Terrain.h" />
+    <ClInclude Include="src\textures\CubeMap.h" />
     <ClInclude Include="src\textures\Texture.h" />
     <ClInclude Include="src\textures\TexturePack.h" />
     <ClInclude Include="src\toolbox\Maths.h" />
@@ -312,6 +314,8 @@
   <ItemGroup>
     <None Include="res\shaders\entityFrag.shader" />
     <None Include="res\shaders\entityVert.shader" />
+    <None Include="res\shaders\glassFrag.shader" />
+    <None Include="res\shaders\glassVert.shader" />
     <None Include="res\shaders\terrainFrag.shader" />
     <None Include="res\shaders\terrainVert.shader" />
     <None Include="src\vendor\glm\detail\func_common.inl" />

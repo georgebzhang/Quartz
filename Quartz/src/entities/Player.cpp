@@ -31,8 +31,8 @@ void Player::move() {
 
 	// run
 	float distance = m_HorizSpeed * DisplayManager::getFrameDuration();
-	float dx = distance * sin(Maths::toRadians(getRotation().y));
-	float dz = distance * cos(Maths::toRadians(getRotation().y));
+	float dx = distance * sin(glm::radians(getRotation().y));
+	float dz = distance * cos(glm::radians(getRotation().y));
 	translate(glm::vec3(dx, 0, dz));
 
 	// jump

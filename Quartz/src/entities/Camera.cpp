@@ -20,12 +20,12 @@ void Camera::updateAngle(float d) {
 }
 
 void Camera::move() {
-	float horizDistanceFromPlayer = m_DistanceFromPlayer * cos(Maths::toRadians(m_Pitch));
-	float vertDistanceFromPlayer = m_DistanceFromPlayer * sin(Maths::toRadians(m_Pitch));
+	float horizDistanceFromPlayer = m_DistanceFromPlayer * cos(glm::radians(m_Pitch));
+	float vertDistanceFromPlayer = m_DistanceFromPlayer * sin(glm::radians(m_Pitch));
 
 	float theta = m_Player->getRotation().y + m_AngleAroundPlayer;
-	float offsetX = horizDistanceFromPlayer * sin(Maths::toRadians(theta));
-	float offsetZ = horizDistanceFromPlayer * cos(Maths::toRadians(theta));
+	float offsetX = horizDistanceFromPlayer * sin(glm::radians(theta));
+	float offsetZ = horizDistanceFromPlayer * cos(glm::radians(theta));
 
 	glm::vec3 newPosition(m_Player->getPosition().x - offsetX, m_Player->getPosition().y + vertDistanceFromPlayer, m_Player->getPosition().z - offsetZ);
 	setPosition(newPosition);

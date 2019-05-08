@@ -24,10 +24,7 @@ void main(void) {
 	vec4 positionRelativeToCam = u_ViewMatrix * vec4(v_Position, 1.0);
 	gl_Position = u_ProjectionMatrix * positionRelativeToCam;
 
-	vec3 finalNormal = normal;
-	if (u_Has2DMesh > 0.5) finalNormal = vec3(0, 1, 0);
-
-	v_Normal = (u_TransformationMatrix * vec4(finalNormal, 0)).xyz;
+	v_Normal = (u_TransformationMatrix * vec4(normal, 0)).xyz;
 	v_TexCoords = texCoords;
 
 	float distance = length(positionRelativeToCam.xyz);
