@@ -26,6 +26,7 @@
     <ClCompile Include="src\textures\TexturePack.cpp" />
     <ClCompile Include="src\entities\Player.cpp" />
     <ClCompile Include="src\textures\CubeMap.cpp" />
+    <ClCompile Include="src\renderEngine\SkyRenderer.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\renderEngine\DisplayManager.h" />
@@ -292,6 +293,7 @@
     <ClInclude Include="src\textures\TexturePack.h" />
     <ClInclude Include="src\entities\Player.h" />
     <ClInclude Include="src\textures\CubeMap.h" />
+    <ClInclude Include="src\renderEngine\SkyRenderer.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="src\vendor\glm\detail\func_common.inl" />

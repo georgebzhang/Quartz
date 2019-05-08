@@ -25,19 +25,19 @@ void Player::jump() {
 	}
 }
 
-void Player::move() {
+void Player::move(float frameDuration) {
 	// turn
-	rotate(glm::vec3(0, m_RotateSpeed * DisplayManager::getFrameDuration(), 0));
+	rotate(glm::vec3(0, m_RotateSpeed * frameDuration, 0));
 
 	// run
-	float distance = m_HorizSpeed * DisplayManager::getFrameDuration();
+	float distance = m_HorizSpeed * frameDuration;
 	float dx = distance * sin(glm::radians(getRotation().y));
 	float dz = distance * cos(glm::radians(getRotation().y));
 	translate(glm::vec3(dx, 0, dz));
 
 	// jump
-	m_VertSpeed += GRAVITY * DisplayManager::getFrameDuration();
-	translate(glm::vec3(0, m_VertSpeed * DisplayManager::getFrameDuration(), 0));
+	m_VertSpeed += GRAVITY * frameDuration;
+	translate(glm::vec3(0, m_VertSpeed * frameDuration, 0));
 
 	if (getPosition().y < TERRAIN_HEIGHT) {
 		setPositionY(TERRAIN_HEIGHT);

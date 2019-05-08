@@ -19,8 +19,8 @@
 
 Player* player;
 Camera* camera;
-bool mouseLeftPressed = false, mouseRightPressed = false;
 
+bool mouseLeftPressed = false, mouseRightPressed = false;
 bool posUnitialized = true;
 float lastXPos = 0, lastYPos = 0;
 
@@ -118,13 +118,66 @@ void scrollCallback(GLFWwindow* window, double xoffset, double yoffset) {
 	camera->updateZoom(yoffset*2);
 }
 
-
 int main(void) {
 	DisplayManager::open();
 	GLCall(glEnable(GL_BLEND));
 	GLCall(glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA));
 	Loader loader;
 
+	float skyPositions[] = {  
+		-1.0f,  1.0f, -1.0f,
+		-1.0f, -1.0f, -1.0f,
+		 1.0f, -1.0f, -1.0f,
+		 1.0f, -1.0f, -1.0f,
+		 1.0f,  1.0f, -1.0f,
+		-1.0f,  1.0f, -1.0f,
+
+		-1.0f, -1.0f,  1.0f,
+		-1.0f, -1.0f, -1.0f,
+		-1.0f,  1.0f, -1.0f,
+		-1.0f,  1.0f, -1.0f,
+		-1.0f,  1.0f,  1.0f,
+		-1.0f, -1.0f,  1.0f,
+
+		 1.0f, -1.0f, -1.0f,
+		 1.0f, -1.0f,  1.0f,
+		 1.0f,  1.0f,  1.0f,
+		 1.0f,  1.0f,  1.0f,
+		 1.0f,  1.0f, -1.0f,
+		 1.0f, -1.0f, -1.0f,
+
+		-1.0f, -1.0f,  1.0f,
+		-1.0f,  1.0f,  1.0f,
+		 1.0f,  1.0f,  1.0f,
+		 1.0f,  1.0f,  1.0f,
+		 1.0f, -1.0f,  1.0f,
+		-1.0f, -1.0f,  1.0f,
+
+		-1.0f,  1.0f, -1.0f,
+		 1.0f,  1.0f, -1.0f,
+		 1.0f,  1.0f,  1.0f,
+		 1.0f,  1.0f,  1.0f,
+		-1.0f,  1.0f,  1.0f,
+		-1.0f,  1.0f, -1.0f,
+
+		-1.0f, -1.0f, -1.0f,
+		-1.0f, -1.0f,  1.0f,
+		 1.0f, -1.0f, -1.0f,
+		 1.0f, -1.0f, -1.0f,
+		-1.0f, -1.0f,  1.0f,
+		 1.0f, -1.0f,  1.0f
+	};
+	unsigned int skyVAO, skyVBO;
+	glGenVertexArrays(1, &skyVAO);
+	glGenBuffers(1, &skyVBO);
+	glBindVertexArray(skyVAO);
+	glBindBuffer(GL_ARRAY_BUFFER, skyVBO);
+	glBufferData(GL_ARRAY_BUFFER, sizeof(skyPositions), &skyPositions, GL_STATIC_DRAW);
+	glEnableVertexAttribArray(0);
+	glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(float), (void*)0);
+
+
+	// Terrain
 	Texture backgroundTexture("res/textures/grassy.png");
 	Texture rTexture("res/textures/dirt.png");
 	Texture gTexture("res/textures/pinkFlowers.png");
@@ -132,8 +185,17 @@ int main(void) {
 	TexturePack texturePack(&backgroundTexture, &rTexture, &gTexture, &bTexture);
 	Texture blendMap("res/textures/blendMap.png");
 
+	Texture terrainTexture("res/textures/terrain.png");
+	std::vector<Terrain*> terrains;
+	for (int j = -2; j < 0; ++j) {
+		for (int i = 0; i < 2; ++i) {
+			terrains.emplace_back(new Terrain(i, j, &loader, &texturePack, &blendMap));
+		}
+	}
+
+	// Player
 	RawModel* playerRawModel = OBJLoader::loadOBJModel("res/models/sphere.obj", &loader);
-	Texture playerTexture("res/textures/white.png");
+	Texture playerTexture("res/textures/sphere1.png");
 	TexturedModel playerTexturedModel(playerRawModel, &playerTexture);
 	glm::vec3 playerPosition(20, 0, -20);
 	glm::vec3 playerRotation(0, 0, 0);
@@ -144,9 +206,9 @@ int main(void) {
 	int side_count = 5;
 	int separation = 50;
 
-	// tree
+	// Entity
 	RawModel* treeRawModel = OBJLoader::loadOBJModel("res/models/sphere.obj", &loader);
-	Texture treeTexture("res/textures/white.png");
+	Texture treeTexture("res/textures/sphere1.png");
 	TexturedModel treeTexturedModel(treeRawModel, &treeTexture);
 	std::vector<Entity*> trees;
 	for (int j = 0; j < side_count; ++j) {
@@ -181,15 +243,6 @@ int main(void) {
 	//	}
 	//}
 
-	// Terrain
-	Texture terrainTexture("res/textures/terrain.png");
-	std::vector<Terrain*> terrains;
-	for (int j = -2; j < 0; ++j) {
-		for (int i = 0; i < 2; ++i) {
-			terrains.emplace_back(new Terrain(i, j, &loader, &texturePack, &blendMap));
-		}
-	}
-
 	// Light
 	glm::vec3 lightIntensity(1, 1, 1);
 	lightIntensity *= 300;
@@ -201,7 +254,7 @@ int main(void) {
 
 	while (DisplayManager::isOpen()) {
 		// render
-		player->move();
+		player->move(DisplayManager::getFrameDuration());
 		camera->move();
 		masterRenderer.processEntity(player);
 		for (Entity* tree : trees) masterRenderer.processEntity(tree);

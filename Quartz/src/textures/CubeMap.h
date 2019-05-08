@@ -9,7 +9,7 @@
 class CubeMap {
 public:
 	CubeMap();
-	~CubeMap();
+	~CubeMap() { GLCall(glDeleteTextures(1, &m_ID)); }
 
 	void bind() const;
 	void unbind() const;

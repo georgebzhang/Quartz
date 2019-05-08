@@ -30,5 +30,5 @@ void Camera::move() {
 	glm::vec3 newPosition(m_Player->getPosition().x - offsetX, m_Player->getPosition().y + vertDistanceFromPlayer, m_Player->getPosition().z - offsetZ);
 	setPosition(newPosition);
 
-	m_Yaw = 180 - theta;
+	m_Yaw = 180.0f - theta;
 }

@@ -56,7 +56,6 @@ void MasterRenderer::render(Light* light, Camera* camera) {
 	m_EntityRenderer->render(m_Entities);
 	m_EntityShader->unbind();
 
-
 	m_Entities.clear();
 	m_Terrains.clear();
 }

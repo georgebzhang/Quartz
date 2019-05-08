@@ -13,7 +13,7 @@ public:
 	inline void stopTurn() { m_RotateSpeed = 0; }
 	void jump();
 
-	void move();
+	void move(float frameDuration);
 
 private:
 	static const float RUN_SPEED; // units/sec
