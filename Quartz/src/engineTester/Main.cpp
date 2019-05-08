@@ -102,8 +102,6 @@ void cursorPositionCallback(GLFWwindow* window, double xpos, double ypos) {
 	float dy = ypos - lastYPos;
 	if (mouseLeftPressed) {
 		camera->updateAngle(dx * 0.1f);
-	}
-	if (mouseRightPressed) {
 		camera->updatePitch(-dy * 0.1f);
 	}
 	lastXPos = xpos;
@@ -155,7 +153,7 @@ int main(void) {
 	TexturePack texturePack(&backgroundTexture, &rTexture, &gTexture, &bTexture);
 	Texture blendMap("res/textures/blendMap.png");
 
-	RawModel* playerRawModel = OBJLoader::loadOBJModel("res/models/stanfordBunny.obj", &loader);
+	RawModel* playerRawModel = OBJLoader::loadOBJModel("res/models/sphere.obj", &loader);
 	Texture playerTexture("res/textures/white.png");
 	TexturedModel playerTexturedModel(playerRawModel, &playerTexture);
 	glm::vec3 playerPosition(20, 0, -20);
