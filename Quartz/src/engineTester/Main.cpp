@@ -15,8 +15,15 @@
 
 #include <iostream>
 
+#define LOG(x) std::cout << x << std::endl;
+
 Player* player;
-Camera camera(glm::vec3(0, 2, 0));
+Camera* camera;
+bool mouseLeftPressed = false, mouseRightPressed = false;
+
+bool posUnitialized = true;
+float lastXPos = 0, lastYPos = 0;
+
 
 void keyCallback(GLFWwindow* window, int key, int scancode, int action, int mods) {
 	float speed = 3;
@@ -63,26 +70,77 @@ void keyCallback(GLFWwindow* window, int key, int scancode, int action, int mods
 		break;
 
 	// camera
-	case GLFW_KEY_UP:
-		camera.translate(speed * glm::vec3(0, 0, -1));
+	//case GLFW_KEY_UP:
+	//	camera->translate(speed * glm::vec3(0, 0, -1));
+	//	break;
+	//case GLFW_KEY_DOWN:
+	//	camera->translate(speed * glm::vec3(0, 0, 1));
+	//	break;
+	//case GLFW_KEY_LEFT:
+	//	camera->translate(speed * glm::vec3(-1, 0, 0));
+	//	break;
+	//case GLFW_KEY_RIGHT:
+	//	camera->translate(speed * glm::vec3(1, 0, 0));
+	//	break;
+	//case GLFW_KEY_PAGE_UP:
+	//	camera->translate(speed * glm::vec3(0, -1, 0));
+	//	break;
+	//case GLFW_KEY_PAGE_DOWN:
+	//	camera->translate(speed * glm::vec3(0, 1, 0));
+	//	break;
+	}
+}
+
+void cursorPositionCallback(GLFWwindow* window, double xpos, double ypos) {
+	if (posUnitialized) {
+		lastXPos = xpos;
+		lastYPos = ypos;
+		posUnitialized = false;
+		return;
+	}
+	float dx = xpos - lastXPos;
+	float dy = ypos - lastYPos;
+	if (mouseLeftPressed) {
+		camera->updateAngle(dx * 0.1f);
+	}
+	if (mouseRightPressed) {
+		camera->updatePitch(-dy * 0.1f);
+	}
+	lastXPos = xpos;
+	lastYPos = ypos;
+}
+
+void mouseButtonCallback(GLFWwindow* window, int button, int action, int mods) {
+	switch (button) {
+	case GLFW_MOUSE_BUTTON_LEFT:
+		mouseLeftPressed = true;
+		switch (action) {
+		case GLFW_PRESS:
+			mouseLeftPressed = true;
+			break;
+		case GLFW_RELEASE:
+			mouseLeftPressed = false;
+			break;
+		}
 		break;
-	case GLFW_KEY_DOWN:
-		camera.translate(speed * glm::vec3(0, 0, 1));
-		break;
-	case GLFW_KEY_LEFT:
-		camera.translate(speed * glm::vec3(-1, 0, 0));
-		break;
-	case GLFW_KEY_RIGHT:
-		camera.translate(speed * glm::vec3(1, 0, 0));
-		break;
-	case GLFW_KEY_PAGE_UP:
-		camera.translate(speed * glm::vec3(0, -1, 0));
-		break;
-	case GLFW_KEY_PAGE_DOWN:
-		camera.translate(speed * glm::vec3(0, 1, 0));
+	case GLFW_MOUSE_BUTTON_RIGHT:
+		mouseRightPressed = true;
+		switch (action) {
+		case GLFW_PRESS:
+			mouseRightPressed = true;
+			break;
+		case GLFW_RELEASE:
+			mouseRightPressed = false;
+			break;
+		}
 		break;
 	}
 }
+
+void scrollCallback(GLFWwindow* window, double xoffset, double yoffset) {
+	camera->updateZoom(yoffset);
+}
+
 
 int main(void) {
 	DisplayManager::open();
@@ -105,6 +163,7 @@ int main(void) {
 	glm::vec3 playerScale(1, 1, 1);
 	playerScale *= 0.5;
 	player = new Player(&playerTexturedModel, playerPosition, playerRotation, playerScale);
+	camera = new Camera(player);
 
 	int side_count = 5;
 	int separation = 50;
@@ -167,12 +226,13 @@ int main(void) {
 	while (DisplayManager::isOpen()) {
 		// render
 		player->move();
+		camera->move();
 		masterRenderer.processEntity(player);
 		for (Entity* tree : trees) masterRenderer.processEntity(tree);
 		for (Entity* grass : grasses) masterRenderer.processEntity(grass);
 		for (Entity* fern : ferns) masterRenderer.processEntity(fern);
 		for (Terrain* terrain : terrains) masterRenderer.processTerrain(terrain);
-		masterRenderer.render(&light, &camera);
+		masterRenderer.render(&light, camera);
 
 		// finish loop
 		DisplayManager::finishLoop();
