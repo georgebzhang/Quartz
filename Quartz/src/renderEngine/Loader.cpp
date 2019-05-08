@@ -21,3 +21,12 @@ RawModel* Loader::loadToVAO(float* positions, int p_count, float* texCoords, int
 	delete[] indices;
 	return new RawModel(va, ib);
 }
+
+RawModel* Loader::loadToVAO(float* positions, int p_count) {
+	VertexArray* va = new VertexArray();
+	VertexBuffer* vb0 = new VertexBuffer(positions, p_count * sizeof(float));
+	va->addBuffer(vb0, 0, 3);
+	// delete heap-allocated arrays after glBufferData(...)
+	delete[] positions;
+	return new RawModel(va, nullptr);
+}

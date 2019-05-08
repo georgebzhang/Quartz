@@ -123,8 +123,9 @@ int main(void) {
 	GLCall(glEnable(GL_BLEND));
 	GLCall(glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA));
 	Loader loader;
-
-	float skyPositions[] = {  
+	
+	Shader skyShader("res/shaders/skyVert.shader", "res/shaders/skyFrag.shader");
+	float* skyPositions = new float[6*6*3] {  
 		-1.0f,  1.0f, -1.0f,
 		-1.0f, -1.0f, -1.0f,
 		 1.0f, -1.0f, -1.0f,
@@ -167,15 +168,16 @@ int main(void) {
 		-1.0f, -1.0f,  1.0f,
 		 1.0f, -1.0f,  1.0f
 	};
-	unsigned int skyVAO, skyVBO;
-	glGenVertexArrays(1, &skyVAO);
-	glGenBuffers(1, &skyVBO);
-	glBindVertexArray(skyVAO);
-	glBindBuffer(GL_ARRAY_BUFFER, skyVBO);
-	glBufferData(GL_ARRAY_BUFFER, sizeof(skyPositions), &skyPositions, GL_STATIC_DRAW);
-	glEnableVertexAttribArray(0);
-	glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(float), (void*)0);
-
+	int p_count = sizeof(skyPositions) / sizeof(skyPositions[0]);
+	RawModel* skyRawModel = loader.loadToVAO(skyPositions, p_count);
+	//unsigned int skyVAO, skyVBO;
+	//glGenVertexArrays(1, &skyVAO);
+	//glGenBuffers(1, &skyVBO);
+	//glBindVertexArray(skyVAO);
+	//glBindBuffer(GL_ARRAY_BUFFER, skyVBO);
+	//glBufferData(GL_ARRAY_BUFFER, sizeof(skyPositions), &skyPositions, GL_STATIC_DRAW);
+	//glEnableVertexAttribArray(0);
+	//glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(float), (void*)0);
 
 	// Terrain
 	Texture backgroundTexture("res/textures/grassy.png");

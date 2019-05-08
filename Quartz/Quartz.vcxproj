@@ -318,6 +318,8 @@
     <None Include="res\shaders\entityVert.shader" />
     <None Include="res\shaders\glassFrag.shader" />
     <None Include="res\shaders\glassVert.shader" />
+    <None Include="res\shaders\skyFrag.shader" />
+    <None Include="res\shaders\skyVert.shader" />
     <None Include="res\shaders\terrainFrag.shader" />
     <None Include="res\shaders\terrainVert.shader" />
     <None Include="src\vendor\glm\detail\func_common.inl" />

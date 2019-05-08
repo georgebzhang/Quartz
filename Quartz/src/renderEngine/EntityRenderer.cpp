@@ -19,7 +19,8 @@ void EntityRenderer::bindTexturedModel(const TexturedModel* texturedModel) const
 	texture->loadUniforms(m_Shader);
 	RawModel* rawModel = texturedModel->getRawModel();
 	rawModel->getVA()->bind();
-	rawModel->getIB()->bind();
+	if (rawModel->getIB() != nullptr)
+		rawModel->getIB()->bind();
 	GLCall(glEnableVertexAttribArray(0));
 	GLCall(glEnableVertexAttribArray(1));
 	GLCall(glEnableVertexAttribArray(2));
@@ -33,7 +34,8 @@ void EntityRenderer::unbindTexturedModel(const TexturedModel* texturedModel) con
 	GLCall(glDisableVertexAttribArray(0));
 	GLCall(glDisableVertexAttribArray(1));
 	GLCall(glDisableVertexAttribArray(2));
-	rawModel->getIB()->unbind();
+	if (rawModel->getIB() != nullptr)
+		rawModel->getIB()->unbind();
 	rawModel->getVA()->unbind();
 }
 

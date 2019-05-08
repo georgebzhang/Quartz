@@ -17,6 +17,8 @@ MasterRenderer::MasterRenderer() {
 	m_EntityRenderer = new EntityRenderer(m_EntityShader, m_ProjectionMatrix);
 	m_TerrainShader = new Shader("res/shaders/terrainVert.shader", "res/shaders/terrainFrag.shader");
 	m_TerrainRenderer = new TerrainRenderer(m_TerrainShader, m_ProjectionMatrix);
+	m_SkyShader = new Shader("res/shaders/skyVert.shader", "res/shaders/skyFrag.shader");
+	m_SkyRenderer = new SkyRenderer(m_SkyShader, m_ProjectionMatrix);
 }
 
 MasterRenderer::~MasterRenderer() {
@@ -55,6 +57,11 @@ void MasterRenderer::render(Light* light, Camera* camera) {
 	loadUniforms(m_EntityShader); // only sky color
 	m_EntityRenderer->render(m_Entities);
 	m_EntityShader->unbind();
+
+	m_SkyShader->bind();
+	camera->loadUniforms(m_SkyShader);
+	m_SkyRenderer->render();
+	m_SkyShader->unbind();
 
 	m_Entities.clear();
 	m_Terrains.clear();

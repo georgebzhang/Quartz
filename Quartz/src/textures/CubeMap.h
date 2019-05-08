@@ -14,8 +14,9 @@ public:
 	void bind() const;
 	void unbind() const;
 
-private:
 	unsigned int m_ID;
+
+private:
 	std::vector<std::string> m_Faces = { "posx.jpg", "negx.jpg", "posy.jpg", "negy.jpg", "posz.jpg", "negz.jpg" };
 
 };
