@@ -219,6 +219,7 @@ int main(void) {
 	glm::vec3 playerPosition(0, 0, 0);
 	glm::vec3 playerRotation(0, 0, 0);
 	glm::vec3 playerScale(1, 1, 1);
+	playerScale *= 3;
 	player = new Player(&playerTexturedModel, playerPosition, playerRotation, playerScale);
 	camera = new Camera(player);
 
@@ -276,10 +277,10 @@ int main(void) {
 		player->move(DisplayManager::getFrameDuration());
 		camera->move();
 		masterRenderer.processEntity(player);
-		//for (Entity* tree : trees) masterRenderer.processEntity(tree);
+		for (Entity* tree : trees) masterRenderer.processEntity(tree);
 		//for (Entity* grass : grasses) masterRenderer.processEntity(grass);
 		//for (Entity* fern : ferns) masterRenderer.processEntity(fern);
-		for (Terrain* terrain : terrains) masterRenderer.processTerrain(terrain);
+		//for (Terrain* terrain : terrains) masterRenderer.processTerrain(terrain);
 		masterRenderer.processSky(&sky);
 		masterRenderer.render(&light, camera);
 

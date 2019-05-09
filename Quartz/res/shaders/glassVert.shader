@@ -4,30 +4,43 @@ layout(location = 0) in vec3 position;
 layout(location = 1) in vec2 texCoords;
 layout(location = 2) in vec3 normal;
 
-out vec3 v_Position;
-out vec2 v_TexCoords;
-out vec3 v_Normal;
-out float v_Visibility;
+out vec3 v_Reflection;
+out vec3 v_Refraction;
+out float v_Fresnel;
 
 uniform mat4 u_TransformationMatrix;
 uniform mat4 u_ProjectionMatrix;
 uniform mat4 u_ViewMatrix;
 uniform vec3 u_LightPosition;
 
-uniform float u_Has2DMesh;
+// Camera
+uniform vec3 u_CamPosition;
 
-const float density = 0.007;
-const float gradient = 1.5;
+//const float density = 0.007;
+//const float gradient = 1.5;
+
+const float nAir = 1;
+const float nGlass = 1.51714;
+const float eta = nAir / nGlass;
+const float R0 = pow(nAir - nGlass, 2) / pow(nAir + nGlass, 2);
 
 void main(void) {
-	v_Position = (u_TransformationMatrix * vec4(position, 1.0)).xyz;
-	vec4 positionRelativeToCam = u_ViewMatrix * vec4(v_Position, 1.0);
+	vec3 w_Position = (u_TransformationMatrix * vec4(position, 1.0)).xyz;
+	vec4 positionRelativeToCam = u_ViewMatrix * vec4(w_Position, 1.0);
 	gl_Position = u_ProjectionMatrix * positionRelativeToCam;
 
-	v_Normal = (u_TransformationMatrix * vec4(normal, 0)).xyz;
-	v_TexCoords = texCoords;
+	vec3 incident = normalize(w_Position - u_CamPosition);
 
-	float distance = length(positionRelativeToCam.xyz);
-	v_Visibility = exp(-pow((distance*density), gradient));
-	v_Visibility = clamp(v_Visibility, 0, 1);
+	vec3 n = normalize(normal);
+	n = mat3(u_ViewMatrix * u_TransformationMatrix) * n;
+	n = normalize(n);
+
+	v_Refraction = refract(incident, n, eta);
+	v_Reflection = reflect(incident, n);
+
+	v_Fresnel = R0 + (1.0 - R0) * pow((1.0 - dot(-incident, n)), 5.0);
+
+	//float distance = length(positionRelativeToCam.xyz);
+	//v_Visibility = exp(-pow((distance*density), gradient));
+	//v_Visibility = clamp(v_Visibility, 0, 1);
 }

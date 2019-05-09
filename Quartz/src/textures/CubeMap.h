@@ -11,7 +11,7 @@ public:
 	CubeMap();
 	~CubeMap() { GLCall(glDeleteTextures(1, &m_ID)); }
 
-	void bind() const;
+	void bind(unsigned int slot = 0) const;
 	void unbind() const;
 
 private:

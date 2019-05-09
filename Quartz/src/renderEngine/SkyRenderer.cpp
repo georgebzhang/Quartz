@@ -17,7 +17,7 @@ void SkyRenderer::render(CubeMapModel* sky) const {
 	GLCall(glDrawArrays(GL_TRIANGLES, 0, 36));
 	//GLCall(glDrawElements(GL_TRIANGLES, rawModel->getIB()->getCount(), GL_UNSIGNED_INT, (const void*)0));
 
-	cubeMap->unbind();
+	//cubeMap->unbind();
 	GLCall(glDisableVertexAttribArray(0));
 	rawModel->getVA()->unbind();
 }

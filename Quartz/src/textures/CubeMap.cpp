@@ -26,8 +26,8 @@ CubeMap::CubeMap() {
 	GLCall(glBindTexture(GL_TEXTURE_CUBE_MAP, 0));
 }
 
-void CubeMap::bind() const {
-	GLCall(glActiveTexture(GL_TEXTURE0));
+void CubeMap::bind(unsigned int slot) const {
+	GLCall(glActiveTexture(GL_TEXTURE0 + slot));
 	GLCall(glBindTexture(GL_TEXTURE_CUBE_MAP, m_ID));
 }
 

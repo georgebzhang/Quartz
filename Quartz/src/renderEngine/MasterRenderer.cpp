@@ -47,14 +47,14 @@ void MasterRenderer::render(Light* light, Camera* camera) {
 	m_TerrainShader->bind();
 	light->loadUniforms(m_TerrainShader);
 	camera->loadUniforms(m_TerrainShader);
-	loadUniforms(m_TerrainShader); // sky color
+	loadUniforms(m_TerrainShader); // sky
 	m_TerrainRenderer->render(m_Terrains);
 	m_TerrainShader->unbind();
 
 	m_EntityShader->bind();
 	light->loadUniforms(m_EntityShader);
 	camera->loadUniforms(m_EntityShader);
-	loadUniforms(m_EntityShader); // only sky color
+	loadUniforms(m_EntityShader); // sky
 	m_EntityRenderer->render(m_Entities);
 	m_EntityShader->unbind();
 
@@ -84,4 +84,5 @@ void MasterRenderer::processTerrain(Terrain* terrain) {
 
 void MasterRenderer::loadUniforms(Shader* shader) const {
 	shader->setUniform3fv("u_SkyColor", glm::vec3(SKY_R, SKY_G, SKY_B));
+	shader->setUniform1i("u_SkyBox", 0);
 }
