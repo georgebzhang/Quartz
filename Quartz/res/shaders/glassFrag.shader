@@ -1,6 +1,9 @@
 #version 330 core
 
 in vec3 v_Refraction;
+in vec3 v_RefractionR;
+in vec3 v_RefractionG;
+in vec3 v_RefractionB;
 in vec3 v_Reflection;
 in float v_Fresnel;
 
@@ -48,7 +51,11 @@ void main(void) {
 	//gl_FragColor.a = 1; // just in case u_ka, u_kd, u_ks scale alpha in above calculations
 	//gl_FragColor = mix(vec4(u_SkyColor, 1), gl_FragColor, v_Visibility);
 
-	vec4 refractionColor = texture(u_SkyBox, normalize(v_Refraction));
+	//vec4 refractionColor = texture(u_SkyBox, normalize(v_Refraction));
+	vec4 refractionColor;
+	refractionColor.r = texture(u_SkyBox, normalize(v_RefractionR)).r;
+	refractionColor.g = texture(u_SkyBox, normalize(v_RefractionG)).g;
+	refractionColor.b = texture(u_SkyBox, normalize(v_RefractionB)).b;
 	vec4 reflectionColor = texture(u_SkyBox, normalize(v_Reflection));
 
 	gl_FragColor = mix(refractionColor, reflectionColor, v_Fresnel);

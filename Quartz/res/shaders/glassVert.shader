@@ -6,6 +6,9 @@ layout(location = 2) in vec3 normal;
 
 out vec3 v_Reflection;
 out vec3 v_Refraction;
+out vec3 v_RefractionR;
+out vec3 v_RefractionG;
+out vec3 v_RefractionB;
 out float v_Fresnel;
 
 out vec3 v_Position;
@@ -26,7 +29,11 @@ uniform vec3 u_CamPosition;
 const float nAir = 1;
 const float nGlass = 1.51714;
 const float eta = nAir / nGlass;
-const float R0 = pow(nAir - nGlass, 2) / pow(nAir + nGlass, 2);
+const float etaR = 0.65;
+const float etaG = 0.67;
+const float etaB = 0.69;
+//const float R0 = pow(nAir - nGlass, 2) / pow(nAir + nGlass, 2);
+const float R0 = pow(1 - etaG, 2) / pow(1 + etaG, 2);
 
 void main(void) {
 	vec3 w_Position = (u_TransformationMatrix * vec4(position, 1.0)).xyz;
@@ -41,9 +48,12 @@ void main(void) {
 	n = normalize(n);
 
 	v_Refraction = refract(incident, n, eta);
+	v_RefractionR = refract(incident, n, etaR);
+	v_RefractionG = refract(incident, n, etaG);
+	v_RefractionB = refract(incident, n, etaB);
 	v_Reflection = reflect(incident, n);
 
-	v_Fresnel = R0 + (1.0 - R0) * pow((1.0 - max(0, dot(-incident, n))), 5.0);
+	v_Fresnel = R0 + (1.0 - R0) * pow((1.0 - max(0, dot(-incident, n))), 5);
 	//v_Fresnel = R0 + (1.0 - R0) * pow((1.0 - dot(-incident, n)), 5.0);
 
 	v_Position = (u_TransformationMatrix * vec4(position, 1.0)).xyz;
