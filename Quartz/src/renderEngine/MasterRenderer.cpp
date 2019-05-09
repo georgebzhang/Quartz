@@ -44,12 +44,12 @@ void MasterRenderer::clear() const {
 
 void MasterRenderer::render(Light* light, Camera* camera) {
 	clear();
-	m_TerrainShader->bind();
-	light->loadUniforms(m_TerrainShader);
-	camera->loadUniforms(m_TerrainShader);
-	loadUniforms(m_TerrainShader); // sky
-	m_TerrainRenderer->render(m_Terrains);
-	m_TerrainShader->unbind();
+	//m_TerrainShader->bind();
+	//light->loadUniforms(m_TerrainShader);
+	//camera->loadUniforms(m_TerrainShader);
+	//loadUniforms(m_TerrainShader); // sky
+	//m_TerrainRenderer->render(m_Terrains);
+	//m_TerrainShader->unbind();
 
 	m_EntityShader->bind();
 	light->loadUniforms(m_EntityShader);

@@ -24,3 +24,7 @@ glm::mat4 Maths::createViewMatrix(const Camera* camera) {
 float Maths::randFloat() {
 	return (float)rand() / RAND_MAX;
 }
+
+int Maths::randSign() {
+	return rand() % 2 ? 1 : -1;
+}

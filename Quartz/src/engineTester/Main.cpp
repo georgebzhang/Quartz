@@ -145,7 +145,6 @@ int main(void) {
 	GLCall(glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA));
 	Loader loader;
 	
-	//Shader skyShader("res/shaders/skyVert.shader", "res/shaders/skyFrag.shader");
 	const float SIZE = 500.0f;
 	int p_count = 6 * 6 * 3;
 	float* skyPositions = new float[p_count] {  
@@ -213,8 +212,8 @@ int main(void) {
 
 	// Player
 	RawModel* playerRawModel = OBJLoader::loadOBJModel("res/models/sphere.obj", &loader);
-	//Texture playerTexture("res/textures/sphere.png");
-	Texture playerTexture("res/textures/Lycksele/posx.jpg");
+	Texture playerTexture("res/textures/white.png");
+	//Texture playerTexture("res/textures/Lycksele/posx.jpg");
 	TexturedModel playerTexturedModel(playerRawModel, &playerTexture);
 	glm::vec3 playerPosition(0, 0, 0);
 	glm::vec3 playerRotation(0, 0, 0);
@@ -267,7 +266,7 @@ int main(void) {
 	glm::vec3 lightIntensity(1, 1, 1);
 	lightIntensity *= 300;
 	glm::vec3 lightPosition(20, 20, -20);
-	glm::vec3 lightColor(1, 1, 1);
+	glm::vec3 lightColor(1, 0, 0);
 	Light light(lightIntensity, lightPosition, lightColor);
 	
 	MasterRenderer masterRenderer;
@@ -277,6 +276,9 @@ int main(void) {
 		player->move(DisplayManager::getFrameDuration());
 		camera->move();
 		masterRenderer.processEntity(player);
+		for (Entity* tree : trees) {
+			tree->translate(glm::vec3(Maths::randSign() * Maths::randFloat(), Maths::randSign() * Maths::randFloat(), Maths::randSign() * Maths::randFloat()));
+		}
 		for (Entity* tree : trees) masterRenderer.processEntity(tree);
 		//for (Entity* grass : grasses) masterRenderer.processEntity(grass);
 		//for (Entity* fern : ferns) masterRenderer.processEntity(fern);

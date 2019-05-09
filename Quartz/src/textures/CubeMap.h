@@ -16,5 +16,6 @@ public:
 
 private:
 	unsigned int m_ID;
-	std::vector<std::string> m_Faces = { "res/textures/right.png", "res/textures/left.png", "res/textures/top.png", "res/textures/bottom.png", "res/textures/back.png", "res/textures/front.png" };
+	//std::vector<std::string> m_Faces = { "res/textures/right.png", "res/textures/left.png", "res/textures/top.png", "res/textures/bottom.png", "res/textures/back.png", "res/textures/front.png" };
+	std::vector<std::string> m_Faces = { "res/textures/Lycksele/right.jpg", "res/textures/Lycksele/left.jpg", "res/textures/Lycksele/top.jpg", "res/textures/Lycksele/bottom.jpg", "res/textures/Lycksele/back.jpg", "res/textures/Lycksele/front.jpg" };
 };
