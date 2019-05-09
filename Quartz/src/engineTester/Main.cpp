@@ -12,6 +12,8 @@
 #include "../entities/Light.h"
 #include "../renderEngine/MasterRenderer.h"
 #include "../entities/Player.h"
+#include "../textures/CubeMap.h"
+#include "../models/CubeMapModel.h"
 
 #include <iostream>
 
@@ -67,6 +69,25 @@ void keyCallback(GLFWwindow* window, int key, int scancode, int action, int mods
 	case GLFW_KEY_SPACE:
 		player->jump();
 		break;
+
+	//case GLFW_KEY_UP:
+	//	camera->translate(speed * glm::vec3(0, 0, -1));
+	//	break;
+	//case GLFW_KEY_DOWN:
+	//	camera->translate(speed * glm::vec3(0, 0, 1));
+	//	break;
+	//case GLFW_KEY_LEFT:
+	//	camera->translate(speed * glm::vec3(-1, 0, 0));
+	//	break;
+	//case GLFW_KEY_RIGHT:
+	//	camera->translate(speed * glm::vec3(1, 0, 0));
+	//	break;
+	//case GLFW_KEY_PAGE_UP:
+	//	camera->translate(speed * glm::vec3(0, -1, 0));
+	//	break;
+	//case GLFW_KEY_PAGE_DOWN:
+	//	camera->translate(speed * glm::vec3(0, 1, 0));
+	//	break;
 	}
 }
 
@@ -124,60 +145,55 @@ int main(void) {
 	GLCall(glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA));
 	Loader loader;
 	
-	Shader skyShader("res/shaders/skyVert.shader", "res/shaders/skyFrag.shader");
-	float* skyPositions = new float[6*6*3] {  
-		-1.0f,  1.0f, -1.0f,
-		-1.0f, -1.0f, -1.0f,
-		 1.0f, -1.0f, -1.0f,
-		 1.0f, -1.0f, -1.0f,
-		 1.0f,  1.0f, -1.0f,
-		-1.0f,  1.0f, -1.0f,
+	//Shader skyShader("res/shaders/skyVert.shader", "res/shaders/skyFrag.shader");
+	const float SIZE = 500.0f;
+	int p_count = 6 * 6 * 3;
+	float* skyPositions = new float[p_count] {  
+		-SIZE,  SIZE, -SIZE,
+	    -SIZE, -SIZE, -SIZE,
+	     SIZE, -SIZE, -SIZE,
+	     SIZE, -SIZE, -SIZE,
+	     SIZE,  SIZE, -SIZE,
+	    -SIZE,  SIZE, -SIZE,
 
-		-1.0f, -1.0f,  1.0f,
-		-1.0f, -1.0f, -1.0f,
-		-1.0f,  1.0f, -1.0f,
-		-1.0f,  1.0f, -1.0f,
-		-1.0f,  1.0f,  1.0f,
-		-1.0f, -1.0f,  1.0f,
+	    -SIZE, -SIZE,  SIZE,
+	    -SIZE, -SIZE, -SIZE,
+	    -SIZE,  SIZE, -SIZE,
+	    -SIZE,  SIZE, -SIZE,
+	    -SIZE,  SIZE,  SIZE,
+	    -SIZE, -SIZE,  SIZE,
 
-		 1.0f, -1.0f, -1.0f,
-		 1.0f, -1.0f,  1.0f,
-		 1.0f,  1.0f,  1.0f,
-		 1.0f,  1.0f,  1.0f,
-		 1.0f,  1.0f, -1.0f,
-		 1.0f, -1.0f, -1.0f,
+	     SIZE, -SIZE, -SIZE,
+	     SIZE, -SIZE,  SIZE,
+	     SIZE,  SIZE,  SIZE,
+	     SIZE,  SIZE,  SIZE,
+	     SIZE,  SIZE, -SIZE,
+	     SIZE, -SIZE, -SIZE,
 
-		-1.0f, -1.0f,  1.0f,
-		-1.0f,  1.0f,  1.0f,
-		 1.0f,  1.0f,  1.0f,
-		 1.0f,  1.0f,  1.0f,
-		 1.0f, -1.0f,  1.0f,
-		-1.0f, -1.0f,  1.0f,
+	    -SIZE, -SIZE,  SIZE,
+	    -SIZE,  SIZE,  SIZE,
+	     SIZE,  SIZE,  SIZE,
+	     SIZE,  SIZE,  SIZE,
+	     SIZE, -SIZE,  SIZE,
+	    -SIZE, -SIZE,  SIZE,
 
-		-1.0f,  1.0f, -1.0f,
-		 1.0f,  1.0f, -1.0f,
-		 1.0f,  1.0f,  1.0f,
-		 1.0f,  1.0f,  1.0f,
-		-1.0f,  1.0f,  1.0f,
-		-1.0f,  1.0f, -1.0f,
+	    -SIZE,  SIZE, -SIZE,
+	     SIZE,  SIZE, -SIZE,
+	     SIZE,  SIZE,  SIZE,
+	     SIZE,  SIZE,  SIZE,
+	    -SIZE,  SIZE,  SIZE,
+	    -SIZE,  SIZE, -SIZE,
 
-		-1.0f, -1.0f, -1.0f,
-		-1.0f, -1.0f,  1.0f,
-		 1.0f, -1.0f, -1.0f,
-		 1.0f, -1.0f, -1.0f,
-		-1.0f, -1.0f,  1.0f,
-		 1.0f, -1.0f,  1.0f
+	    -SIZE, -SIZE, -SIZE,
+	    -SIZE, -SIZE,  SIZE,
+	     SIZE, -SIZE, -SIZE,
+	     SIZE, -SIZE, -SIZE,
+	    -SIZE, -SIZE,  SIZE,
+	     SIZE, -SIZE,  SIZE
 	};
-	int p_count = sizeof(skyPositions) / sizeof(skyPositions[0]);
 	RawModel* skyRawModel = loader.loadToVAO(skyPositions, p_count);
-	//unsigned int skyVAO, skyVBO;
-	//glGenVertexArrays(1, &skyVAO);
-	//glGenBuffers(1, &skyVBO);
-	//glBindVertexArray(skyVAO);
-	//glBindBuffer(GL_ARRAY_BUFFER, skyVBO);
-	//glBufferData(GL_ARRAY_BUFFER, sizeof(skyPositions), &skyPositions, GL_STATIC_DRAW);
-	//glEnableVertexAttribArray(0);
-	//glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(float), (void*)0);
+	CubeMap skyCubeMap;
+	CubeMapModel sky(skyRawModel, &skyCubeMap);
 
 	// Terrain
 	Texture backgroundTexture("res/textures/grassy.png");
@@ -197,9 +213,10 @@ int main(void) {
 
 	// Player
 	RawModel* playerRawModel = OBJLoader::loadOBJModel("res/models/sphere.obj", &loader);
-	Texture playerTexture("res/textures/sphere1.png");
+	//Texture playerTexture("res/textures/sphere.png");
+	Texture playerTexture("res/textures/Lycksele/posx.jpg");
 	TexturedModel playerTexturedModel(playerRawModel, &playerTexture);
-	glm::vec3 playerPosition(20, 0, -20);
+	glm::vec3 playerPosition(0, 0, 0);
 	glm::vec3 playerRotation(0, 0, 0);
 	glm::vec3 playerScale(1, 1, 1);
 	player = new Player(&playerTexturedModel, playerPosition, playerRotation, playerScale);
@@ -210,7 +227,7 @@ int main(void) {
 
 	// Entity
 	RawModel* treeRawModel = OBJLoader::loadOBJModel("res/models/sphere.obj", &loader);
-	Texture treeTexture("res/textures/sphere1.png");
+	Texture treeTexture("res/textures/sphere.png");
 	TexturedModel treeTexturedModel(treeRawModel, &treeTexture);
 	std::vector<Entity*> trees;
 	for (int j = 0; j < side_count; ++j) {
@@ -259,10 +276,11 @@ int main(void) {
 		player->move(DisplayManager::getFrameDuration());
 		camera->move();
 		masterRenderer.processEntity(player);
-		for (Entity* tree : trees) masterRenderer.processEntity(tree);
+		//for (Entity* tree : trees) masterRenderer.processEntity(tree);
 		//for (Entity* grass : grasses) masterRenderer.processEntity(grass);
 		//for (Entity* fern : ferns) masterRenderer.processEntity(fern);
 		for (Terrain* terrain : terrains) masterRenderer.processTerrain(terrain);
+		masterRenderer.processSky(&sky);
 		masterRenderer.render(&light, camera);
 
 		// finish loop

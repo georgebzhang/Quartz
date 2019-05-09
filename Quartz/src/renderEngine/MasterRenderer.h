@@ -6,6 +6,7 @@
 #include "../entities/Camera.h"
 #include "../renderEngine/TerrainRenderer.h"
 #include "SkyRenderer.h"
+#include "../models/CubeMapModel.h"
 
 class MasterRenderer {
 public:
@@ -19,7 +20,7 @@ public:
 	void render(Light* light, Camera* camera);
 	void processEntity(Entity* entity);
 	void processTerrain(Terrain* terrain);
-	void processSky(TexturedModel* sky);
+	inline void processSky(CubeMapModel* sky) { m_Sky = sky; }
 
 	void loadUniforms(Shader* shader) const;
 
@@ -40,4 +41,5 @@ private:
 
 	Shader* m_SkyShader;
 	SkyRenderer* m_SkyRenderer;
+	CubeMapModel* m_Sky;
 };

@@ -25,6 +25,7 @@
     <ClCompile Include="src\entities\Light.cpp" />
     <ClCompile Include="src\entities\Player.cpp" />
     <ClCompile Include="src\errors\ErrorHandler.cpp" />
+    <ClCompile Include="src\models\CubeMapModel.cpp" />
     <ClCompile Include="src\models\RawModel.cpp" />
     <ClCompile Include="src\models\TexturedModel.cpp" />
     <ClCompile Include="src\objects\IndexBuffer.cpp" />
@@ -52,6 +53,7 @@
     <ClInclude Include="src\entities\Light.h" />
     <ClInclude Include="src\entities\Player.h" />
     <ClInclude Include="src\errors\ErrorHandler.h" />
+    <ClInclude Include="src\models\CubeMapModel.h" />
     <ClInclude Include="src\models\RawModel.h" />
     <ClInclude Include="src\models\TexturedModel.h" />
     <ClInclude Include="src\objects\IndexBuffer.h" />

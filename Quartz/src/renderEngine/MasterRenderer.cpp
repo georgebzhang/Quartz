@@ -58,10 +58,12 @@ void MasterRenderer::render(Light* light, Camera* camera) {
 	m_EntityRenderer->render(m_Entities);
 	m_EntityShader->unbind();
 
+	//glDepthFunc(GL_LEQUAL);
 	m_SkyShader->bind();
-	camera->loadUniforms(m_SkyShader);
-	m_SkyRenderer->render();
+	camera->loadUniforms2(m_SkyShader);
+	m_SkyRenderer->render(m_Sky);
 	m_SkyShader->unbind();
+	//glDepthFunc(GL_LESS);
 
 	m_Entities.clear();
 	m_Terrains.clear();

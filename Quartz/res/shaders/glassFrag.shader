@@ -46,6 +46,6 @@ void main(void) {
 
 	gl_FragColor = (vec4(ambient, 1) + vec4(diffuse, 1) + vec4(specular, 1)) * texColor;
 	gl_FragColor.a = 1; // just in case u_ka, u_kd, u_ks scale alpha in above calculations
-	gl_FragColor = mix(vec4(u_SkyColor, 1), gl_FragColor, v_Visibility);
-	gl_FragColor.a = 0.5;
+	//gl_FragColor = mix(vec4(u_SkyColor, 1), gl_FragColor, v_Visibility);
+	//gl_FragColor.a = 0.5;
 }

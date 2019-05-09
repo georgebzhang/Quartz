@@ -19,6 +19,7 @@ public:
 	inline void setPosition(const glm::vec3& position) { m_Position = position; }
 
 	void loadUniforms(Shader* shader) const;
+	void loadUniforms2(Shader* shader) const;
 
 	void updateZoom(float d);
 	void updatePitch(float d);

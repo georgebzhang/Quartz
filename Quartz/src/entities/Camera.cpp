@@ -7,6 +7,11 @@ void Camera::loadUniforms(Shader* shader) const {
 	shader->setUniformMat4f("u_ViewMatrix", viewMatrix);
 }
 
+void Camera::loadUniforms2(Shader* shader) const {
+	glm::mat4 viewMatrix = Maths::createViewMatrix(this);
+	shader->setUniformMat4f("u_ViewMatrix", glm::mat4(glm::mat3(viewMatrix)));
+}
+
 void Camera::updateZoom(float d) {
 	m_DistanceFromPlayer -= d;
 }
