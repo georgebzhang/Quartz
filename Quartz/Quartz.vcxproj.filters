@@ -28,6 +28,7 @@
     <ClCompile Include="src\textures\CubeMap.cpp" />
     <ClCompile Include="src\renderEngine\SkyRenderer.cpp" />
     <ClCompile Include="src\models\CubeMapModel.cpp" />
+    <ClCompile Include="src\entities\AnimatedEntity.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\renderEngine\DisplayManager.h" />
@@ -296,6 +297,7 @@
     <ClInclude Include="src\textures\CubeMap.h" />
     <ClInclude Include="src\renderEngine\SkyRenderer.h" />
     <ClInclude Include="src\models\CubeMapModel.h" />
+    <ClInclude Include="src\entities\AnimatedEntity.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="src\vendor\glm\detail\func_common.inl" />

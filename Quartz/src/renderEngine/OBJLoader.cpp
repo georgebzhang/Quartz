@@ -1,4 +1,5 @@
 #include "OBJLoader.h"
+#include "../toolbox/Maths.h"
 
 #include <fstream>
 #include <sstream>
@@ -71,6 +72,11 @@ RawModel* OBJLoader::loadOBJModel(const std::string & filePath, Loader* loader) 
 	for (int i = 0; i < v_Indices.size(); ++i) {
 		indices[i] = v_Indices[i];
 	}
+
+	//float offset = 0.1;
+	//for (int i = 0; i < p_count; ++i) {
+	//	positions[i] += Maths::randSign() * offset;
+	//}
 
 	return loader->loadToVAO(positions, p_count, texCoords, t_count, normals, n_count, indices, i_count);
 }

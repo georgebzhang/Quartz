@@ -14,6 +14,7 @@
 #include "../entities/Player.h"
 #include "../textures/CubeMap.h"
 #include "../models/CubeMapModel.h"
+#include "../entities/AnimatedEntity.h"
 
 #include <iostream>
 
@@ -210,6 +211,7 @@ int main(void) {
 		}
 	}
 
+
 	// Player
 	RawModel* playerRawModel = OBJLoader::loadOBJModel("res/models/sphere.obj", &loader);
 	Texture playerTexture("res/textures/white.png");
@@ -221,6 +223,8 @@ int main(void) {
 	playerScale *= 3;
 	player = new Player(&playerTexturedModel, playerPosition, playerRotation, playerScale);
 	camera = new Camera(player);
+
+	AnimatedEntity animatedEntity(&loader, 15, playerPosition, playerRotation, playerScale);
 
 	int side_count = 5;
 	int separation = 50;
@@ -266,16 +270,18 @@ int main(void) {
 	glm::vec3 lightIntensity(1, 1, 1);
 	lightIntensity *= 300;
 	glm::vec3 lightPosition(20, 20, -20);
-	glm::vec3 lightColor(1, 0, 0);
+	glm::vec3 lightColor(1, 1, 1);
 	Light light(lightIntensity, lightPosition, lightColor);
 	
 	MasterRenderer masterRenderer;
-
 	while (DisplayManager::isOpen()) {
+		animatedEntity.setIsAnimating(true);
+		animatedEntity.nextFrame();
 		// render
-		player->move(DisplayManager::getFrameDuration());
+		//player->move(DisplayManager::getFrameDuration());
 		camera->move();
-		masterRenderer.processEntity(player);
+		//masterRenderer.processEntity(player);
+		masterRenderer.processEntity(animatedEntity.getEntity());
 		for (Entity* tree : trees) {
 			tree->translate(glm::vec3(Maths::randSign() * Maths::randFloat(), Maths::randSign() * Maths::randFloat(), Maths::randSign() * Maths::randFloat()));
 		}

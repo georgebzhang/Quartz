@@ -42,9 +42,8 @@ void main(void) {
 
 	vec3 incident = normalize(w_Position - u_CamPosition);
 
-	vec3 n = normalize(normal);
 	//n = mat3(u_ViewMatrix * u_TransformationMatrix) * n;
-	n = mat3(u_TransformationMatrix) * n; // don't know why this works instead of above
+	vec3 n = mat3(u_TransformationMatrix) * normal; // don't know why this works instead of above
 	n = normalize(n);
 
 	v_Refraction = refract(incident, n, eta);

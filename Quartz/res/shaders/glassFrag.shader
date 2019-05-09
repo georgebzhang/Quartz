@@ -59,7 +59,7 @@ void main(void) {
 	vec4 reflectionColor = texture(u_SkyBox, normalize(v_Reflection));
 
 	gl_FragColor = mix(refractionColor, reflectionColor, v_Fresnel);
-	gl_FragColor = mix(gl_FragColor, total, 0);
+	gl_FragColor = mix(gl_FragColor, total, 0.25);
 	//gl_FragColor = refractionColor;
 	//gl_FragColor = reflectionColor;
 	gl_FragColor.a = 1;
