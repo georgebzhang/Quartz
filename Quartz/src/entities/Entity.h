@@ -23,6 +23,8 @@ public:
 	inline void translate(const glm::vec3& translation) { m_Position += translation; }
 	inline void rotate(const glm::vec3& rotation) { m_Rotation += rotation; }
 
+	float xspeed;
+
 private:
 	TexturedModel* m_TexturedModel;
 	glm::vec3 m_Position;

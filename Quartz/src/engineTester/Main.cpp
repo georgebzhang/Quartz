@@ -34,7 +34,11 @@ void keyCallback(GLFWwindow* window, int key, int scancode, int action, int mods
 		glfwSetWindowShouldClose(window, GLFW_TRUE);
 		break;
 
-	// player
+	case GLFW_KEY_P:
+		std::cin.get();
+		break;
+
+		// player
 	case GLFW_KEY_W:
 		player->run(true);
 		switch (action) {
@@ -71,24 +75,24 @@ void keyCallback(GLFWwindow* window, int key, int scancode, int action, int mods
 		player->jump();
 		break;
 
-	//case GLFW_KEY_UP:
-	//	camera->translate(speed * glm::vec3(0, 0, -1));
-	//	break;
-	//case GLFW_KEY_DOWN:
-	//	camera->translate(speed * glm::vec3(0, 0, 1));
-	//	break;
-	//case GLFW_KEY_LEFT:
-	//	camera->translate(speed * glm::vec3(-1, 0, 0));
-	//	break;
-	//case GLFW_KEY_RIGHT:
-	//	camera->translate(speed * glm::vec3(1, 0, 0));
-	//	break;
-	//case GLFW_KEY_PAGE_UP:
-	//	camera->translate(speed * glm::vec3(0, -1, 0));
-	//	break;
-	//case GLFW_KEY_PAGE_DOWN:
-	//	camera->translate(speed * glm::vec3(0, 1, 0));
-	//	break;
+		//case GLFW_KEY_UP:
+		//	camera->translate(speed * glm::vec3(0, 0, -1));
+		//	break;
+		//case GLFW_KEY_DOWN:
+		//	camera->translate(speed * glm::vec3(0, 0, 1));
+		//	break;
+		//case GLFW_KEY_LEFT:
+		//	camera->translate(speed * glm::vec3(-1, 0, 0));
+		//	break;
+		//case GLFW_KEY_RIGHT:
+		//	camera->translate(speed * glm::vec3(1, 0, 0));
+		//	break;
+		//case GLFW_KEY_PAGE_UP:
+		//	camera->translate(speed * glm::vec3(0, -1, 0));
+		//	break;
+		//case GLFW_KEY_PAGE_DOWN:
+		//	camera->translate(speed * glm::vec3(0, 1, 0));
+		//	break;
 	}
 }
 
@@ -137,7 +141,7 @@ void mouseButtonCallback(GLFWwindow* window, int button, int action, int mods) {
 }
 
 void scrollCallback(GLFWwindow* window, double xoffset, double yoffset) {
-	camera->updateZoom(yoffset*2);
+	camera->updateZoom(yoffset * 2);
 }
 
 int main(void) {
@@ -145,51 +149,51 @@ int main(void) {
 	GLCall(glEnable(GL_BLEND));
 	GLCall(glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA));
 	Loader loader;
-	
-	const float SIZE = 500.0f;
+
+	const float SIZE = 200.0f;
 	int p_count = 6 * 6 * 3;
-	float* skyPositions = new float[p_count] {  
-		-SIZE,  SIZE, -SIZE,
-	    -SIZE, -SIZE, -SIZE,
-	     SIZE, -SIZE, -SIZE,
-	     SIZE, -SIZE, -SIZE,
-	     SIZE,  SIZE, -SIZE,
-	    -SIZE,  SIZE, -SIZE,
+	float* skyPositions = new float[p_count] {
+		-SIZE, SIZE, -SIZE,
+			-SIZE, -SIZE, -SIZE,
+			SIZE, -SIZE, -SIZE,
+			SIZE, -SIZE, -SIZE,
+			SIZE, SIZE, -SIZE,
+			-SIZE, SIZE, -SIZE,
 
-	    -SIZE, -SIZE,  SIZE,
-	    -SIZE, -SIZE, -SIZE,
-	    -SIZE,  SIZE, -SIZE,
-	    -SIZE,  SIZE, -SIZE,
-	    -SIZE,  SIZE,  SIZE,
-	    -SIZE, -SIZE,  SIZE,
+			-SIZE, -SIZE, SIZE,
+			-SIZE, -SIZE, -SIZE,
+			-SIZE, SIZE, -SIZE,
+			-SIZE, SIZE, -SIZE,
+			-SIZE, SIZE, SIZE,
+			-SIZE, -SIZE, SIZE,
 
-	     SIZE, -SIZE, -SIZE,
-	     SIZE, -SIZE,  SIZE,
-	     SIZE,  SIZE,  SIZE,
-	     SIZE,  SIZE,  SIZE,
-	     SIZE,  SIZE, -SIZE,
-	     SIZE, -SIZE, -SIZE,
+			SIZE, -SIZE, -SIZE,
+			SIZE, -SIZE, SIZE,
+			SIZE, SIZE, SIZE,
+			SIZE, SIZE, SIZE,
+			SIZE, SIZE, -SIZE,
+			SIZE, -SIZE, -SIZE,
 
-	    -SIZE, -SIZE,  SIZE,
-	    -SIZE,  SIZE,  SIZE,
-	     SIZE,  SIZE,  SIZE,
-	     SIZE,  SIZE,  SIZE,
-	     SIZE, -SIZE,  SIZE,
-	    -SIZE, -SIZE,  SIZE,
+			-SIZE, -SIZE, SIZE,
+			-SIZE, SIZE, SIZE,
+			SIZE, SIZE, SIZE,
+			SIZE, SIZE, SIZE,
+			SIZE, -SIZE, SIZE,
+			-SIZE, -SIZE, SIZE,
 
-	    -SIZE,  SIZE, -SIZE,
-	     SIZE,  SIZE, -SIZE,
-	     SIZE,  SIZE,  SIZE,
-	     SIZE,  SIZE,  SIZE,
-	    -SIZE,  SIZE,  SIZE,
-	    -SIZE,  SIZE, -SIZE,
+			-SIZE, SIZE, -SIZE,
+			SIZE, SIZE, -SIZE,
+			SIZE, SIZE, SIZE,
+			SIZE, SIZE, SIZE,
+			-SIZE, SIZE, SIZE,
+			-SIZE, SIZE, -SIZE,
 
-	    -SIZE, -SIZE, -SIZE,
-	    -SIZE, -SIZE,  SIZE,
-	     SIZE, -SIZE, -SIZE,
-	     SIZE, -SIZE, -SIZE,
-	    -SIZE, -SIZE,  SIZE,
-	     SIZE, -SIZE,  SIZE
+			-SIZE, -SIZE, -SIZE,
+			-SIZE, -SIZE, SIZE,
+			SIZE, -SIZE, -SIZE,
+			SIZE, -SIZE, -SIZE,
+			-SIZE, -SIZE, SIZE,
+			SIZE, -SIZE, SIZE
 	};
 	RawModel* skyRawModel = loader.loadToVAO(skyPositions, p_count);
 	CubeMap skyCubeMap;
@@ -211,60 +215,39 @@ int main(void) {
 		}
 	}
 
-
 	// Player
 	RawModel* playerRawModel = OBJLoader::loadOBJModel("res/models/sphere.obj", &loader);
 	Texture playerTexture("res/textures/white.png");
 	//Texture playerTexture("res/textures/Lycksele/posx.jpg");
 	TexturedModel playerTexturedModel(playerRawModel, &playerTexture);
-	glm::vec3 playerPosition(0, 0, 0);
+	glm::vec3 playerPosition(0, -50, 0);
 	glm::vec3 playerRotation(0, 0, 0);
 	glm::vec3 playerScale(1, 1, 1);
 	playerScale *= 3;
 	player = new Player(&playerTexturedModel, playerPosition, playerRotation, playerScale);
 	camera = new Camera(player);
 
-	AnimatedEntity animatedEntity(&loader, 15, playerPosition, playerRotation, playerScale);
+	//AnimatedEntity animatedEntity(&loader, 15, playerPosition, playerRotation, playerScale);
 
 	int side_count = 5;
 	int separation = 50;
 
 	// Entity
-	RawModel* treeRawModel = OBJLoader::loadOBJModel("res/models/sphere.obj", &loader);
-	Texture treeTexture("res/textures/sphere.png");
-	TexturedModel treeTexturedModel(treeRawModel, &treeTexture);
-	std::vector<Entity*> trees;
+	RawModel* bubbleRawModel = OBJLoader::loadOBJModel("res/models/sphere.obj", &loader);
+	Texture bubbleTexture("res/textures/sphere.png");
+	TexturedModel bubbleTexturedModel(bubbleRawModel, &bubbleTexture);
+	std::vector<Entity*> bubbles;
+	//for (int j = 0; j < side_count; ++j) {
+	//	for (int i = 0; i < side_count; ++i) {
+	//		bubbles.emplace_back(new Entity(&bubbleTexturedModel, glm::vec3(-50 + i*separation, 0, -j * separation), glm::vec3(0, 0, 0), 10.0f * glm::vec3(1, 1, 1)));
+	//	}
+	//}
 	for (int j = 0; j < side_count; ++j) {
-		for (int i = 0; i < side_count; ++i) {
-			trees.emplace_back(new Entity(&treeTexturedModel, glm::vec3(i*separation, 0, -j * separation), glm::vec3(0, 0, 0), 5.0f * glm::vec3(1, 1, 1)));
-		}
+		bubbles.emplace_back(new Entity(&bubbleTexturedModel, glm::vec3(-50, -60, 150 - j * separation), glm::vec3(0, 0, 0), Maths::randFloat() * 10.0f * glm::vec3(1, 1, 1)));
+		bubbles.emplace_back(new Entity(&bubbleTexturedModel, glm::vec3(-50, -75, 150 - j * separation), glm::vec3(0, 0, 0), Maths::randFloat() * 10.0f * glm::vec3(1, 1, 1)));
+		bubbles.emplace_back(new Entity(&bubbleTexturedModel, glm::vec3(-50, -90, 150 - j * separation), glm::vec3(0, 0, 0), Maths::randFloat() * 10.0f * glm::vec3(1, 1, 1)));
+		bubbles.emplace_back(new Entity(&bubbleTexturedModel, glm::vec3(-50, -105, 150 - j * separation), glm::vec3(0, 0, 0), Maths::randFloat() * 10.0f * glm::vec3(1, 1, 1)));
 	}
-
-	// grass
-	//RawModel* grassRawModel = OBJLoader::loadOBJModel("res/models/grass.obj", &loader);
-	//Texture grassTexture("res/textures/grass.png");
-	//grassTexture.setHasTransparency(true);
-	//grassTexture.setHas2DMesh(true);
-	//TexturedModel grassTexturedModel(grassRawModel, &grassTexture);
-	//std::vector<Entity*> grasses;
-	//for (int j = 0; j < side_count; ++j) {
-	//	for (int i = 0; i < side_count; ++i) {
-	//		grasses.emplace_back(new Entity(&grassTexturedModel, glm::vec3(10 + i * separation, 0, -j * separation), glm::vec3(0, 0, 0), glm::vec3(1, 1, 1)));
-	//	}
-	//}
-
-	// fern
-	//RawModel* fernRawModel = OBJLoader::loadOBJModel("res/models/fern.obj", &loader);
-	//Texture fernTexture("res/textures/fern.png");
-	//fernTexture.setHasTransparency(true);
-	//fernTexture.setHas2DMesh(true);
-	//TexturedModel fernTexturedModel(fernRawModel, &fernTexture);
-	//std::vector<Entity*> ferns;
-	//for (int j = 0; j < side_count; ++j) {
-	//	for (int i = 0; i < side_count; ++i) {
-	//		ferns.emplace_back(new Entity(&fernTexturedModel, glm::vec3(20 + i * separation, 0, -j * separation), glm::vec3(0, 0, 0), glm::vec3(1, 1, 1)));
-	//	}
-	//}
 
 	// Light
 	glm::vec3 lightIntensity(1, 1, 1);
@@ -272,20 +255,25 @@ int main(void) {
 	glm::vec3 lightPosition(20, 20, -20);
 	glm::vec3 lightColor(1, 1, 1);
 	Light light(lightIntensity, lightPosition, lightColor);
-	
+
+	for (Entity* bubble : bubbles) {
+		bubble->xspeed = 0.05 + Maths::randFloat() * 0.5f;
+	}
+
 	MasterRenderer masterRenderer;
 	while (DisplayManager::isOpen()) {
-		animatedEntity.setIsAnimating(true);
-		animatedEntity.nextFrame();
+		//animatedEntity.setIsAnimating(true);
+		//animatedEntity.nextFrame();
 		// render
-		//player->move(DisplayManager::getFrameDuration());
+		player->move(DisplayManager::getFrameDuration());
 		camera->move();
-		//masterRenderer.processEntity(player);
-		masterRenderer.processEntity(animatedEntity.getEntity());
-		for (Entity* tree : trees) {
-			tree->translate(glm::vec3(Maths::randSign() * Maths::randFloat(), Maths::randSign() * Maths::randFloat(), Maths::randSign() * Maths::randFloat()));
+		masterRenderer.processEntity(player);
+		//masterRenderer.processEntity(animatedEntity.getEntity());
+		for (Entity* bubble : bubbles) {
+			bubble->translate(glm::vec3(bubble->xspeed, 0, 0));
+			//LOG(bubble->getPosition().x);
 		}
-		for (Entity* tree : trees) masterRenderer.processEntity(tree);
+		for (Entity* bubble : bubbles) masterRenderer.processEntity(bubble);
 		//for (Entity* grass : grasses) masterRenderer.processEntity(grass);
 		//for (Entity* fern : ferns) masterRenderer.processEntity(fern);
 		//for (Terrain* terrain : terrains) masterRenderer.processTerrain(terrain);
@@ -297,4 +285,5 @@ int main(void) {
 	}
 
 	DisplayManager::close();
+	return 0;
 }
