@@ -23,6 +23,7 @@
     <ClCompile Include="src\entities\AnimatedEntity.cpp" />
     <ClCompile Include="src\entities\Camera.cpp" />
     <ClCompile Include="src\entities\Entity.cpp" />
+    <ClCompile Include="src\entities\LerpEntity.cpp" />
     <ClCompile Include="src\entities\Light.cpp" />
     <ClCompile Include="src\entities\Player.cpp" />
     <ClCompile Include="src\errors\ErrorHandler.cpp" />
@@ -52,6 +53,7 @@
     <ClInclude Include="src\entities\AnimatedEntity.h" />
     <ClInclude Include="src\entities\Camera.h" />
     <ClInclude Include="src\entities\Entity.h" />
+    <ClInclude Include="src\entities\LerpEntity.h" />
     <ClInclude Include="src\entities\Light.h" />
     <ClInclude Include="src\entities\Player.h" />
     <ClInclude Include="src\errors\ErrorHandler.h" />

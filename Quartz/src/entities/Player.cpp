@@ -1,6 +1,5 @@
 #include "Player.h"
 #include "../renderEngine/DisplayManager.h"
-#include "../toolbox/Maths.h"
 
 const float Player::RUN_SPEED = 20;
 const float Player::TURN_SPEED = 160;

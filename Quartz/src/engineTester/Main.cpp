@@ -15,6 +15,7 @@
 #include "../textures/CubeMap.h"
 #include "../models/CubeMapModel.h"
 #include "../entities/AnimatedEntity.h"
+#include "../entities/LerpEntity.h"
 
 #include <iostream>
 
@@ -216,11 +217,11 @@ int main(void) {
 	}
 
 	// Player
-	RawModel* playerRawModel = OBJLoader::loadOBJModel("res/models/sphere.obj", &loader);
+	RawModel* playerRawModel = OBJLoader::loadOBJModel("res/models/spherelerp.obj", &loader);
 	Texture playerTexture("res/textures/white.png");
 	//Texture playerTexture("res/textures/Lycksele/posx.jpg");
 	TexturedModel playerTexturedModel(playerRawModel, &playerTexture);
-	glm::vec3 playerPosition(0, -50, 0);
+	glm::vec3 playerPosition(0, 0, 0);
 	glm::vec3 playerRotation(0, 0, 0);
 	glm::vec3 playerScale(1, 1, 1);
 	playerScale *= 3;
@@ -228,6 +229,7 @@ int main(void) {
 	camera = new Camera(player);
 
 	//AnimatedEntity animatedEntity(&loader, 15, playerPosition, playerRotation, playerScale);
+	LerpEntity lerpEntity(&loader, "res/models/spherelerp.obj", "res/models/spherelerp2.obj", playerPosition, playerRotation, playerScale);
 
 	int side_count = 5;
 	int separation = 50;
@@ -267,13 +269,15 @@ int main(void) {
 		// render
 		player->move(DisplayManager::getFrameDuration());
 		camera->move();
-		masterRenderer.processEntity(player);
+		//masterRenderer.processEntity(player);
 		//masterRenderer.processEntity(animatedEntity.getEntity());
+		//LOG(lerpEntity.getEntity());
+		masterRenderer.processEntity(lerpEntity.getEntity());
 		for (Entity* bubble : bubbles) {
 			bubble->translate(glm::vec3(bubble->xspeed, 0, 0));
 			//LOG(bubble->getPosition().x);
 		}
-		for (Entity* bubble : bubbles) masterRenderer.processEntity(bubble);
+		//for (Entity* bubble : bubbles) masterRenderer.processEntity(bubble);
 		//for (Entity* grass : grasses) masterRenderer.processEntity(grass);
 		//for (Entity* fern : ferns) masterRenderer.processEntity(fern);
 		//for (Terrain* terrain : terrains) masterRenderer.processTerrain(terrain);
