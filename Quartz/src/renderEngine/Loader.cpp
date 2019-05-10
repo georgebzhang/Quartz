@@ -15,10 +15,10 @@ RawModel* Loader::loadToVAO(float* positions, int p_count, float* texCoords, int
 	va->addBuffer(vb2, 2, 3);
 	IndexBuffer* ib = new IndexBuffer(indices, i_count);
 	// delete heap-allocated arrays after glBufferData(...)
-	delete[] positions;
-	delete[] texCoords;
-	delete[] normals;
-	delete[] indices;
+	//delete[] positions;
+	//delete[] texCoords;
+	//delete[] normals;
+	//delete[] indices;
 	return new RawModel(va, ib);
 }
 

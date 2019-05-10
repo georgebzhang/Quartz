@@ -2,6 +2,7 @@
 
 #include "Entity.h"
 #include "../renderEngine/Loader.h"
+#include "../renderEngine/OBJLoader.h"
 
 class LerpEntity {
 public:
@@ -12,15 +13,27 @@ public:
 
 	inline Entity* getEntity() const { return m_Entity; }
 
+	bool done = false;
+
 private:
+	const std::string& m_FilePath1;
+	const std::string& m_FilePath2;
+
 	Loader* m_Loader;
+
+	Buffer* m_Buffer1, *m_Buffer2, *m_Buffer;
+
+	float* m_dPositions;
+	float* m_dNormals;
+
+	Texture* m_Texture = new Texture("res/textures/white.png");
+	TexturedModel* m_TexturedModel;
+
 	Entity* m_Entity;
 	glm::vec3 m_Position;
 	glm::vec3 m_Rotation;
 	glm::vec3 m_Scale;
 
-	float* m_Positions1;
-	float* m_Positions2;
-	int mCount;
-	int numSteps = 10;
+	int m_NumSteps = 25;
+	int m_CurrStep = 1;
 };

@@ -23,6 +23,7 @@
 
 Player* player;
 Camera* camera;
+LerpEntity* lerpEntity;
 
 bool mouseLeftPressed = false, mouseRightPressed = false;
 bool posUnitialized = true;
@@ -37,6 +38,10 @@ void keyCallback(GLFWwindow* window, int key, int scancode, int action, int mods
 
 	case GLFW_KEY_P:
 		std::cin.get();
+		break;
+
+	case GLFW_KEY_L:
+		lerpEntity->lerp();
 		break;
 
 		// player
@@ -229,7 +234,7 @@ int main(void) {
 	camera = new Camera(player);
 
 	//AnimatedEntity animatedEntity(&loader, 15, playerPosition, playerRotation, playerScale);
-	LerpEntity lerpEntity(&loader, "res/models/spherelerp.obj", "res/models/spherelerp2.obj", playerPosition, playerRotation, playerScale);
+	lerpEntity = new LerpEntity(&loader, std::string("res/models/spherelerp.obj"), std::string("res/models/spherelerp2.obj"), playerPosition, playerRotation, playerScale);
 
 	int side_count = 5;
 	int separation = 50;
@@ -272,12 +277,11 @@ int main(void) {
 		//masterRenderer.processEntity(player);
 		//masterRenderer.processEntity(animatedEntity.getEntity());
 		//LOG(lerpEntity.getEntity());
-		masterRenderer.processEntity(lerpEntity.getEntity());
+		masterRenderer.processEntity(lerpEntity->getEntity());
 		for (Entity* bubble : bubbles) {
 			bubble->translate(glm::vec3(bubble->xspeed, 0, 0));
-			//LOG(bubble->getPosition().x);
 		}
-		//for (Entity* bubble : bubbles) masterRenderer.processEntity(bubble);
+		for (Entity* bubble : bubbles) masterRenderer.processEntity(bubble);
 		//for (Entity* grass : grasses) masterRenderer.processEntity(grass);
 		//for (Entity* fern : ferns) masterRenderer.processEntity(fern);
 		//for (Terrain* terrain : terrains) masterRenderer.processTerrain(terrain);

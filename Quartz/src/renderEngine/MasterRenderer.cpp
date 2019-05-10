@@ -12,7 +12,7 @@ const float MasterRenderer::SKY_B = 0.5f;
 
 MasterRenderer::MasterRenderer() {
 	enableCulling();
-	m_ProjectionMatrix = glm::perspectiveFov(FOV, 640.0f * 2, 480.0f * 2, NEAR_PLANE, FAR_PLANE);
+	m_ProjectionMatrix = glm::perspectiveFov(FOV, 640.0f * 3, 480.0f * 3, NEAR_PLANE, FAR_PLANE);
 	m_EntityShader = new Shader("res/shaders/glassVert.shader", "res/shaders/glassFrag.shader");
 	m_EntityRenderer = new EntityRenderer(m_EntityShader, m_ProjectionMatrix);
 	m_TerrainShader = new Shader("res/shaders/terrainVert.shader", "res/shaders/terrainFrag.shader");
