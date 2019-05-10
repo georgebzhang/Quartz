@@ -29,11 +29,9 @@ LerpEntity::~LerpEntity() {
 }
 
 void LerpEntity::lerp() {
-	std::cout << m_CurrStep << std::endl;
 	if (m_CurrStep == m_NumSteps) {
-		std::cout << m_FilePath1 << std::endl;
-		m_Buffer = OBJLoader::loadOBJModel2("res/models/spherelerp.obj", m_Loader);
-		//m_Buffer = OBJLoader::loadOBJModel2(m_FilePath1, m_Loader);
+		//m_Buffer = OBJLoader::loadOBJModel2("res/models/spherelerp.obj", m_Loader);
+		m_Buffer = OBJLoader::loadOBJModel2(m_FilePath1, m_Loader);
 		RawModel* rawModel = m_Loader->loadToVAO(m_Buffer->m_Positions, m_Buffer->m_Pcount, m_Buffer->m_TexCoords, m_Buffer->m_Tcount, m_Buffer->m_Normals, m_Buffer->m_Ncount, m_Buffer->m_Indices, m_Buffer->m_Icount);
 		m_TexturedModel->setRawModel(rawModel);
 		//m_Entity = new Entity(m_TexturedModel, m_Position, m_Rotation, m_Scale);

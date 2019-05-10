@@ -16,8 +16,8 @@ public:
 	bool done = false;
 
 private:
-	const std::string& m_FilePath1;
-	const std::string& m_FilePath2;
+	std::string m_FilePath1;
+	std::string m_FilePath2;
 
 	Loader* m_Loader;
 

@@ -234,7 +234,7 @@ int main(void) {
 	camera = new Camera(player);
 
 	//AnimatedEntity animatedEntity(&loader, 15, playerPosition, playerRotation, playerScale);
-	lerpEntity = new LerpEntity(&loader, std::string("res/models/spherelerp.obj"), std::string("res/models/spherelerp2.obj"), playerPosition, playerRotation, playerScale);
+	lerpEntity = new LerpEntity(&loader, "res/models/spherelerp.obj", "res/models/spherelerp2.obj", playerPosition, playerRotation, playerScale);
 
 	int side_count = 5;
 	int separation = 50;
