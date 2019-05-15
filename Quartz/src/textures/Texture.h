@@ -42,6 +42,10 @@ private:
 	bool m_HasTransparency = false;
 	bool m_Has2DMesh = false; // if true, set normals to (0, 1, 0)
 
+	//float m_ka = 0.1; // ambient reflection constant
+	//float m_kd = 2; // diffuse reflection constant
+	//float m_ks = 500; // specular reflection constant
+	//float m_p = 500; // shininess constant
 	float m_ka = 1; // ambient reflection constant
 	float m_kd = 0.64; // diffuse reflection constant
 	float m_ks = 5; // specular reflection constant

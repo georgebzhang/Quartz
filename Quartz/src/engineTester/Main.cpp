@@ -212,6 +212,7 @@ int main(void) {
 	Texture bTexture("res/textures/path.png");
 	TexturePack texturePack(&backgroundTexture, &rTexture, &gTexture, &bTexture);
 	Texture blendMap("res/textures/blendMap.png");
+	blendMap.setSpecularReflectionConstant(0);
 
 	Texture terrainTexture("res/textures/terrain.png");
 	std::vector<Terrain*> terrains;
@@ -222,7 +223,7 @@ int main(void) {
 	}
 
 	// Player
-	RawModel* playerRawModel = OBJLoader::loadOBJModel("res/models/spherelerp.obj", &loader);
+	RawModel* playerRawModel = OBJLoader::loadOBJModel("res/models/stanfordBunny.obj", &loader);
 	Texture playerTexture("res/textures/white.png");
 	//Texture playerTexture("res/textures/Lycksele/posx.jpg");
 	TexturedModel playerTexturedModel(playerRawModel, &playerTexture);
@@ -239,16 +240,49 @@ int main(void) {
 	int side_count = 5;
 	int separation = 50;
 
+	// trees
+	RawModel* treeRawModel = OBJLoader::loadOBJModel("res/models/tree.obj", &loader);
+	Texture treeTexture("res/textures/tree.png");
+	TexturedModel treeTexturedModel(treeRawModel, &treeTexture);
+	std::vector<Entity*> trees;
+	for (int j = 0; j < side_count; ++j) {
+		for (int i = 0; i < side_count; ++i) {
+			trees.emplace_back(new Entity(&treeTexturedModel, glm::vec3(i * separation, 0, -j * separation), glm::vec3(0, 0, 0), 3.0f*glm::vec3(1, 1, 1)));
+		}
+	}
+
+	// grasses
+	RawModel* grassRawModel = OBJLoader::loadOBJModel("res/models/grass.obj", &loader);
+	Texture grassTexture("res/textures/grass.png");
+	grassTexture.setHasTransparency(true);
+	grassTexture.setHas2DMesh(true);
+	TexturedModel grassTexturedModel(grassRawModel, &grassTexture);
+	std::vector<Entity*> grasses;
+	for (int j = 0; j < side_count; ++j) {
+		for (int i = 0; i < side_count; ++i) {
+			grasses.emplace_back(new Entity(&grassTexturedModel, glm::vec3(10 + i * separation, 0, -j * separation), glm::vec3(0, 0, 0), glm::vec3(1, 1, 1)));
+		}
+	}
+
+	// ferns
+	RawModel* fernRawModel = OBJLoader::loadOBJModel("res/models/fern.obj", &loader);
+	Texture fernTexture("res/textures/fern.png");
+	fernTexture.setHasTransparency(true);
+	fernTexture.setHas2DMesh(true);
+	TexturedModel fernTexturedModel(fernRawModel, &fernTexture);
+	std::vector<Entity*> ferns;
+	for (int j = 0; j < side_count; ++j) {
+		for (int i = 0; i < side_count; ++i) {
+			ferns.emplace_back(new Entity(&fernTexturedModel, glm::vec3(20 + i * separation, 0, -j * separation), glm::vec3(0, 0, 0), glm::vec3(1, 1, 1)));
+		}
+	}
+
 	// Entity
 	RawModel* bubbleRawModel = OBJLoader::loadOBJModel("res/models/sphere.obj", &loader);
 	Texture bubbleTexture("res/textures/sphere.png");
 	TexturedModel bubbleTexturedModel(bubbleRawModel, &bubbleTexture);
 	std::vector<Entity*> bubbles;
-	//for (int j = 0; j < side_count; ++j) {
-	//	for (int i = 0; i < side_count; ++i) {
-	//		bubbles.emplace_back(new Entity(&bubbleTexturedModel, glm::vec3(-50 + i*separation, 0, -j * separation), glm::vec3(0, 0, 0), 10.0f * glm::vec3(1, 1, 1)));
-	//	}
-	//}
+
 	for (int j = 0; j < side_count; ++j) {
 		bubbles.emplace_back(new Entity(&bubbleTexturedModel, glm::vec3(-50, -60, 150 - j * separation), glm::vec3(0, 0, 0), Maths::randFloat() * 10.0f * glm::vec3(1, 1, 1)));
 		bubbles.emplace_back(new Entity(&bubbleTexturedModel, glm::vec3(-50, -75, 150 - j * separation), glm::vec3(0, 0, 0), Maths::randFloat() * 10.0f * glm::vec3(1, 1, 1)));
@@ -276,12 +310,12 @@ int main(void) {
 		camera->move();
 		//masterRenderer.processEntity(player);
 		//masterRenderer.processEntity(animatedEntity.getEntity());
-		//LOG(lerpEntity.getEntity());
 		masterRenderer.processEntity(lerpEntity->getEntity());
 		for (Entity* bubble : bubbles) {
 			bubble->translate(glm::vec3(bubble->xspeed, 0, 0));
 		}
 		for (Entity* bubble : bubbles) masterRenderer.processEntity(bubble);
+		//for (Entity* tree : trees) masterRenderer.processEntity(tree);
 		//for (Entity* grass : grasses) masterRenderer.processEntity(grass);
 		//for (Entity* fern : ferns) masterRenderer.processEntity(fern);
 		//for (Terrain* terrain : terrains) masterRenderer.processTerrain(terrain);

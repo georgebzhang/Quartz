@@ -18,7 +18,7 @@ void DisplayManager::open() {
 		return;
 
 	/* Create a windowed mode window and its OpenGL context */
-	m_Window = glfwCreateWindow(WIDTH, HEIGHT, "Hello World", NULL, NULL);
+	m_Window = glfwCreateWindow(WIDTH, HEIGHT, "CS284A Bubble Simulator", NULL, NULL);
 	if (!m_Window)
 	{
 		glfwTerminate();
